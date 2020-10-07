@@ -1,0 +1,130 @@
+<ion-header class="ion-no-border" *ngIf="!isSignInEmailSent">
+  <app-notes-toolbar 
+    [showSearchBar]="false" 
+    [showHomeButton]="showHomeButton" 
+    [showLibraryButton]="authService.isLoggedIn()"
+    [showActivityButton]="authService.isLoggedIn()"
+    [showProfileButton]="authService.isLoggedIn()" 
+    [showMoreOptionsButton]="false"
+    [isSmallDisplay]="sharedService.isLessThanMediumWindowWidth()"
+    (notesEvent)="notesEventHandler($event)">
+  </app-notes-toolbar>
+</ion-header>
+
+<ion-content id="profile-content-scrollbar">
+
+  <ion-toolbar *ngIf="authService.isLoggedIn() &&
+    !authService.isAnonymousLoggedIn() &&
+    !isSignInEmailSent"
+    class="page-borders padding-top" color="tertiary">
+    <ion-label class="capitalize basic-text" color="dark ion-text-start">
+      <p class="toolbar-title">Profile</p>
+    </ion-label>
+    <ion-buttons @fade @translateYUp slot="end" *ngIf="canSave">
+      <ion-button [disabled]="!canSave" color="primary" 
+        fill="clear" shape="round" (click)="cancel()">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons @fade @translateYUp slot="end" *ngIf="canSave">
+      <ion-button [disabled]="!canSave" color="primary"
+        fill="clear" shape="round" (click)="save()">
+        Save
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <app-sign-in *ngIf="!isDeletedAccount &&
+    authService.isSubscribe &&
+    (!authService.isLoggedIn() || authService.isAnonymousLoggedIn())"
+    [showGuestLogin]="true"
+    (loadingEvent)="loginAfterProcess()" 
+    (successSigninEvent)="successSignin($event)"
+    (emailSentEvent)="signInEmailSent($event)">
+  </app-sign-in>
+
+  <ion-list class="page-borders" *ngIf="authService.isLoggedIn() &&
+    !authService.isAnonymousLoggedIn() &&
+    !isSignInEmailSent">
+    <ion-item lines="none">
+      <ion-avatar>
+        <img [src]="userProfilePicture" alt="Profile">
+      </ion-avatar>
+      <ion-label class="ion-text-wrap basic-text profile-label">
+        <h2><b>{{user?.email}}</b></h2>
+        <label for="update-picture" class="as-button">Change Profile Picture</label>
+        <input id="update-picture" type="file" (change)="updatePicture($event)">
+        <p class="profile-error">{{ profileErrorMessgae }}</p>
+      </ion-label>
+    </ion-item>
+    
+    <br>
+    <ion-item>
+      <ion-label class="basic-text" position="floating" autofocus="true" color="primary">Display Name</ion-label>
+      <ion-input 
+        [value]="displayName" 
+        [maxlength]="nameMaxLength" 
+        (ionChange)="displayNameInput($event)">
+      </ion-input>
+    </ion-item>
+    <div style="height: 15px;"></div>
+    <ion-item lines="none">
+      <ion-label class="basic-text" color="primary">Gender</ion-label>
+    </ion-item>
+    <ion-radio-group [value]="gender" (ionChange)="setGender($event)">
+      <ion-item>
+        <ion-label class="basic-text">{{genderType.Male}}</ion-label>
+        <ion-radio color="primary" mode="ios" value="Male">
+        </ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label class="basic-text">{{genderType.Female}}</ion-label>
+        <ion-radio color="primary" mode="ios" value="Female">
+        </ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label class="basic-text">{{genderType.None}}</ion-label>
+        <ion-radio color="primary" mode="ios" value="None">
+        </ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    <div style="height: 15px;"></div>
+    <ion-item lines="none">
+      <ion-label class="basic-text" color="primary">About You</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea [value]="about" [maxlength]="aboutMaxLength" (ionChange)="aboutInput($event)">
+      </ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-button *ngIf="authService.isLoggedIn() &&
+    !authService.isAnonymousLoggedIn() && 
+    !isSignInEmailSent"
+    class="capitalize"
+    color="danger" expand="full" fill="clear" (click)="delete()">
+    <ion-label class="ion-text-center basic-text" color="danger">Delete Account</ion-label>
+  </ion-button>
+
+  <ng-container *ngIf="isDeletedAccount">
+    <div class="padding-bottom"></div>
+    <p class="delete-account">“The story of life is quicker than the wink of an eye,</p>
+    <p class="delete-account">the story of love is hello and goodbye... until we meet again”</p>
+    <p class="delete-account">― Jimi Hendrix</p>
+    <app-contact-details></app-contact-details>
+  </ng-container>
+</ion-content>
+
+<ion-footer *ngIf="!isDeletedAccount && authService.isSubscribe &&
+  (!authService.isLoggedIn() || authService.isAnonymousLoggedIn())">
+  <p class="ion-text-wrap ion-text-center basic-text" style="padding: 0 10px;">
+    By signing up, you agree to our
+    <a href="/terms" target="_blank">Terms</a> 
+    and
+    <a href="/privacy" target="_blank">Privacy Policy.</a>
+  </p>
+  <div class="padding-bottom" *ngIf="authService.isLoggedIn() && 
+    !authService.isAnonymousLoggedIn() && 
+    !isSignInEmailSent">
+  </div>
+</ion-footer>

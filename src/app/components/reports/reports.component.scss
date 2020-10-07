@@ -1,0 +1,44 @@
+@import '../../styles/text-and-fonts';
+
+.top {
+  --inner-padding-end: 0;
+}
+
+.top ion-button {
+  height: 44px;
+  color: var(--ion-color-tertiary);
+}
+
+.top ion-label {
+  margin: 0 5px;
+}
+
+ion-label {
+  white-space: pre-line !important;
+}
+
+.font-t {
+  @extend .basic-text;
+}
+
+ion-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.reports {
+  position: relative;
+  margin: 0;
+  margin-top: 10px;
+  padding-bottom: 20px;
+}
+
+.chart-container {
+  position: relative;
+}
+
+.label-start {
+  text-align: start;
+}

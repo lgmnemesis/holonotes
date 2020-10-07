@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'today'"
+    (click)="selected('today')">
+    <ion-label class="basic-text">Today</ion-label>
+  </div>
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'yesterday'"
+    (click)="selected('yesterday')">
+    <ion-label class="basic-text">Yesterday</ion-label>
+  </div>
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'this week'"
+    (click)="selected('this week')">
+    <ion-label class="basic-text">This Week</ion-label>
+  </div>
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'last week'"
+    (click)="selected('last week')">
+    <ion-label class="basic-text">Last Week</ion-label>
+  </div>
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'this month'"
+    (click)="selected('this month')">
+    <ion-label class="basic-text">This Month</ion-label>
+  </div>
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'last month'"
+    (click)="selected('last month')">
+    <ion-label class="basic-text">Last Month</ion-label>
+  </div>
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'this year'"
+    (click)="selected('this year')">
+    <ion-label class="basic-text">This Year</ion-label>
+  </div>
+  <div class="button" 
+    [class.button-active]="activeButton?.picker === 'last Year'"
+    (click)="selected('last year')">
+    <ion-label class="basic-text">Last Year</ion-label>
+  </div>
+</div>

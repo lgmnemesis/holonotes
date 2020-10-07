@@ -1,0 +1,17 @@
+<div 
+  id="{{videoPlayer.playerId}}"
+  class="plyr__video-embed">
+</div>
+<div 
+  class="show-view-name" 
+  [class.show-view-name-active]="showViewName">
+  {{viewName}}
+</div>
+<div *ngIf="canUnmute" class="can-unmute">
+  <ion-button 
+    class="can-unmute-button" 
+    color="tertiary" 
+    (click)="unmute()">
+    Tap to unmute
+  </ion-button>
+</div>

@@ -1,0 +1,113 @@
+<div class="loader-line" [class.loader-line-active]="isSearching"></div>
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="12">
+      <p class="title">
+        Search for a song or paste video's link
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col class="input-col" size="auto"> 
+      <ion-input
+        class="input-name"
+        [class.input-focus]="isInputFocused"
+        placeholder="e.g. https://www.youtube.com/watch?v=WrWSzUh7aRQ"
+        autofocus="true"
+        debounce="5"
+        [maxlength]="60" 
+        [value]="name"
+        (ionFocus)="inputFocused(true)" 
+        (ionBlur)="inputFocused(false)"
+        (keypress)="nextOnEnter($event)"
+        (ionChange)="inputName($event)">
+      </ion-input>
+    </ion-col>
+    <ion-col size="auto">
+        <ion-button
+          class="back-button"
+          fill="outline"
+          shape="round"
+          (click)="cancel()">
+          <ion-label color="primary" class="basic-text">Cancel</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button
+          class="next-button"
+          [class.next-button-active]="isShowSelectedVideo && !isUrl"
+          color="primary"
+          fill="solid" 
+          shape="round"
+          (click)="back()">
+          <ion-label color="tertiary" class="basic-text">Back</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button
+          class="next-button"
+          [class.next-button-active]="canNext"
+          color="primary"
+          fill="solid" 
+          shape="round"
+          (click)="next()">
+          <ion-label color="tertiary" class="basic-text">Next</ion-label>
+        </ion-button>
+      </ion-col>
+  </ion-row>
+
+  <ion-row @fade @translateYUp class="ion-justify-content-center" [class.hidden]="!errorMessage">
+    <ion-col size="auto">
+      <ion-label
+        class="basic-text"
+        color="danger">
+        {{errorMessage}}
+      </ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="isSearchUrl && !isShowSelectedVideo">
+    <ion-col size="12">
+      <ion-list>
+        <ion-item @fade @translateYUp class="as-a-button" *ngFor="let item of searchResult"
+          (keypress)="clickedOnSearchRes(item)" (click)="clickedOnSearchRes(item)">
+          <ion-thumbnail slot="start">
+            <img [src]="item.snippet.thumbnails.default.url">
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap">{{item.snippet.title}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+  <ion-row @fade @translateYUp class="ion-justify-content-center"
+    *ngIf="isShowSelectedVideo && (isSearchUrl || isUrl)">
+    <ion-col size="auto">
+      <div class="feed-no-hover with_cover">
+        <img class="img-feed" [src]="thumbnail?.thumbnail_url" alt="Thumbnail">
+        <ion-item lines="inset">
+          <ion-label position="floating">Name</ion-label>
+          <ion-input
+            class="text-label"
+            [maxlength]="inputNameMaxLength" 
+            [value]="thumbnail.name"
+            (ionChange)="thumbnailInputName($event)">
+          </ion-input>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-label position="floating">Artist</ion-label>
+          <ion-input
+            class="text-artist"
+            [maxlength]="inputNameMaxLength" 
+            [value]="thumbnail.artist"
+            (ionChange)="thumbnailInputArtist($event)">
+          </ion-input>
+        </ion-item>
+      </div>
+      <div class="indication-tooltip" (click)="switchNameAndArtist()">
+        SWAP
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

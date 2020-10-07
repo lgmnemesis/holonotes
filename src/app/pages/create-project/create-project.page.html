@@ -1,0 +1,20 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar page-borders" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+      <ion-button class="not-a-button capitalize" fill="clear" shape="round">
+        <ion-label class="ion-text-center header-label" color="primary">
+          Create Project
+        </ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    
+  <app-name-and-url *ngIf="currentView == view.NameAndURL"
+    (nextEvent)="next($event)">
+  </app-name-and-url>
+
+</ion-content>

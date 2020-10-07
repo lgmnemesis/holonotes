@@ -1,0 +1,47 @@
+<ion-grid no-padding *ngIf="canShowContent">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="auto">
+      <div class="container">
+        <div class="spacing"></div>
+        <p class="header-4-text">You are invited to join the '{{ sharedChallenge?.name }}' Challenge.</p>
+        <p class="header-4-text">Are you up to it?</p>
+      
+        <div class="spacing"></div>
+        <p class="u-line header-5-text">Details</p>
+        <ng-container *ngFor="let desc of sharedChallenge?.challenge?.description">
+          <p class="content-text">{{ desc }}</p>
+        </ng-container>
+      
+        <ng-container *ngIf="sharedChallenge?.challenge?.goal">
+          <div class="spacing"></div>
+          <p class="u-line header-5-text">Goal</p>
+          <p class="content-text">{{ sharedChallenge?.challenge?.goal }}</p>
+        </ng-container>
+      
+        <ng-container *ngIf="thisWeekGoal || sharedChallenge?.challenge?.project?.id">
+          <div class="spacing"></div>
+          <ng-container *ngIf="thisWeekGoal">
+            <div class="u-line content-text">This Week's Song</div>
+            <div @fade @translateYDownLong class="content-text">
+              {{ thisWeekGoal?.text }} {{ thisWeekGoal?.sub_text ? 'by ' + thisWeekGoal.sub_text : '' }}
+            </div>
+          </ng-container>
+          <ion-button [disabled]="inProgress" color="tertiary" shape="round" (click)="gotoProject()">
+            <ion-label color="primary" class="basic-text capitalize">Song Lesson</ion-label>
+          </ion-button>
+        </ng-container>
+
+        <div class="spacing"></div>
+        <p class="besic-text">{{ sharedChallenge?.challenge | challengeTimeLeft }}</p>
+        <p class="basic-text" *ngIf="sharedChallenge?.challenge?.stats?.participants > 0">
+          {{ sharedChallenge?.challenge?.stats?.participants }} Joined
+        </p>
+      
+        <div class="spacing-join"></div>
+        <ion-button [disabled]="inProgress" class="join" color="tertiary" shape="round" (click)="joinChallenge()">
+          <ion-label color="primary" class="basic-text">join the challenge</ion-label>
+        </ion-button>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

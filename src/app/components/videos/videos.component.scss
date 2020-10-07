@@ -1,0 +1,43 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+
+ion-item {
+  --border-color: var(--ion-color-light);
+  background: var(--ion-color-tertiary);
+  z-index: 11;
+}
+
+.activeColor {
+  color: var(--ion-color-primary);
+}
+
+.active {
+  @extend .activeColor;
+  background: var(--ion-color-light);
+}
+
+.as-a-button {
+  cursor: pointer;
+}
+
+.more-button {
+  color: var(--ion-color-tertiary);
+  --padding-end: 0;
+}
+
+ion-item:hover .more-button {
+  color: var(--ion-color-secondary);
+}
+
+@media only screen and (max-width: $MEDIUM_WINDOW_WIDTH - 1px) {
+  .more-button {
+    color: var(--ion-color-secondary);
+  }
+}
+
+.empty-text {
+  @extend .header-4-text;
+  text-align: center;
+  margin-top: 50px;
+  color: var(--ion-color-secondary);
+}

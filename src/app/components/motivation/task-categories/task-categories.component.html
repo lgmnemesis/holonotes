@@ -1,0 +1,103 @@
+<ion-toolbar color="tertiary">
+  <ion-label color="dark">
+    <p class="toolbar-title">{{ title }}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" shape="round" 
+      color="tertiary"
+      disabled="true"
+      (keypress)="cancel()" (click)="cancel()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button slot="end" fill="clear" shape="round" 
+      color="primary"
+      (keypress)="close()" (click)="close()">
+      Done
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-searchbar
+  class="search-bar-md"
+  [class.search-bar-focus]="isSearchBarFocused"
+  placeholder="Search or create a new category"
+  autocorrect="off" 
+  autocomplete="on" 
+  spellcheck="true" 
+  type="text"
+  animated="true"
+  debounce="100"
+  (ionFocus)="setSearchBarFocused(true)" 
+  (ionBlur)="setSearchBarFocused(false)"
+  (ionChange)="search($event)">
+</ion-searchbar>
+
+<ion-item @fade [@heightDownChangeState]="showAddCategory ? 'final' : 'initial'"
+  class="height-for-animation" lines="none">
+  <ion-icon color="primary" name="leaf"></ion-icon>
+  <ion-label class="margin-left">{{ searchText }}</ion-label>
+  <ion-button 
+    class="new-button"
+    [class.new-button-hidden]="!showAddCategory"
+    shape="round" 
+    (click)="addCategory()">
+    <ion-label class="capitalize" color="tertiary">New</ion-label>
+  </ion-button>
+</ion-item>
+<div class="bottom-line" *ngIf="showAddCategory"></div>
+
+<ion-content>
+  <ion-list lines="none">
+    <ion-reorder-group (ionItemReorder)="reorder($event)" [disabled]="false">
+      <ng-container *ngFor="let category of taskCategories | searchFilter: searchText; trackBy: trackById">
+        <div style="position: relative" @fade @translateYUp>
+          <ion-item class="as-a-button" (click)="openCategory(category)">
+            <ion-label class="ion-text-wrap margin-left">
+              <p class="capitalize">{{ category.name }}</p>
+              <ion-text color="secondary">
+                <p>{{ category.duration | minHours }} </p>
+              </ion-text>
+            </ion-label>
+            <ion-reorder class="reorder" slot="start">
+              <ion-icon color="primary" size="large" name="reorder-three"></ion-icon>
+            </ion-reorder>
+          </ion-item>
+          <ion-checkbox
+            class="check-box"
+            color="primary"
+            mode="ios" 
+            [checked]="true" 
+            (ionChange)="toggleChecked($event, category)">
+          </ion-checkbox> 
+        </div>
+      </ng-container>
+    </ion-reorder-group>
+  </ion-list>
+  <div class="is-checked-bottom-line" *ngIf="taskCategories?.length > 0"></div>
+  
+  <ion-list lines="none">
+    <ng-container *ngFor="let category of categories | searchFilter: searchText: sortByName; trackBy: trackById">
+      <div style="position: relative" @fade @translateYUp
+        *ngIf="category.id | filterInArray: taskCategories">
+        <ion-item class="as-a-button" (click)="openCategory(category)">
+          <ion-icon color="primary" name="leaf"></ion-icon>
+          <ion-label class="ion-text-wrap margin-left">
+            <p class="capitalize">{{ category.name }}</p>
+            <ion-text color="secondary">
+              <p>{{ category.duration | minHours }} </p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-checkbox
+          class="check-box"
+          color="primary"
+          mode="ios" 
+          [checked]="false" 
+          (ionChange)="toggleChecked($event, category)">
+        </ion-checkbox> 
+      </div>
+    </ng-container>
+  </ion-list>
+</ion-content>

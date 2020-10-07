@@ -1,0 +1,77 @@
+<ion-toolbar color="tertiary">
+  <ion-label class="basic-text" color="dark">
+    <p class="toolbar-title">{{modalTitle}}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" color="primary" shape="round" 
+      (keypress)="close()" (click)="close()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button slot="end" fill="clear" color="primary" [disabled]="!canSave"
+      shape="round" (keypress)="save()" (click)="save()">
+      Save
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="ion-padding">
+
+  <ion-list lines="none">
+    <ion-item lines="inset">
+      <ion-label class="basic-text" position="floating" autofocus="true">Title</ion-label>
+      <ion-input [maxlength]="nameMaxLength" [value]="name" (ionChange)="inputName($event)"></ion-input>
+    </ion-item>
+    <ion-item lines="inset">
+      <ion-label class="basic-text" position="floating">Description</ion-label>
+      <ion-input [maxlength]="descMaxLength" [value]="description" (ionChange)="inputDescription($event)"></ion-input>
+    </ion-item>
+    <ion-item lines="inset">
+      <ion-label class="basic-text" position="floating">Label</ion-label>
+      <ion-input [maxlength]="nameMaxLength" [value]="currentTagName" (ionChange)="inputTagName($event)"></ion-input>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label class="basic-text">Show as Marker on timeline</ion-label>
+      <ion-checkbox 
+        slot="start"
+        mode="ios"
+        [checked]="isShowOnTimelineChecked" 
+        (ionChange)="toggleTimelineItem($event)">
+      </ion-checkbox>
+    </ion-item>
+    <div id="timeline-item" class="animated">
+      <ion-item lines="inset">
+        <ion-label class="basic-text" position="floating">Marker Name</ion-label>
+        <ion-input [maxlength]="20" [value]="currentMarkerName" (ionChange)="inputMarkerName($event)"></ion-input>
+      </ion-item>
+      <br>
+      <ion-item>
+        <ion-label class="basic-text">Marker suggestion</ion-label>
+        <ion-select #markerSelect
+          (ionFocus)="enableDisableKeyboard(false)"
+          (ionBlur)="enableDisableKeyboard(true)"
+          (ionChange)="markerSuggestionDidChange($event)" 
+          interface="alert"
+          [interfaceOptions]="customAlertOptions"
+          placeholder="Select One">
+          <ion-select-option>Intro</ion-select-option>
+          <ion-select-option>Verse</ion-select-option>
+          <ion-select-option>Chorus</ion-select-option>
+          <ion-select-option>Solo</ion-select-option>
+          <ion-select-option>Bridge</ion-select-option>
+          <ion-select-option>Outro</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button class="footer-border" color="primary" expand="full" fill="clear" (click)="setCurrentSettings()">
+    <ion-label class="ion-text-center basic-text">Overwrite with Current Settings</ion-label>
+  </ion-button>
+  <p class="ion-text-center footer-text">{{overWriteMessageText}}</p>
+</ion-footer>

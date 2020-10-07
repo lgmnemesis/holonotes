@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border">
+  <ion-item lines="full">
+    <ion-label class="content-text" color="primary">{{title}}</ion-label>
+
+    <ion-button fill="clear" slot="end" shape="round" (click)="open($event)">
+      <ion-icon color="primary" name="open"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="_name==='videos'" fill="clear" shape="round"
+      slot="end" (click)="add($event)">
+      <ion-icon color="primary" name="add"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="_name==='timeline'" fill="clear" shape="round"
+      slot="end" (click)="sort($event)">
+      <ion-icon color="primary" name="funnel"></ion-icon>
+    </ion-button>
+    
+  </ion-item>
+</ion-header>
+
+<div class="content">
+
+  <app-timeline 
+    *ngIf="_name==='timeline'" 
+    [inputEvent]="timelineEvent" 
+    (selectedEvent)="emitSelectedEvent($event)">
+  </app-timeline>
+
+  <app-videos 
+    *ngIf="_name==='videos'" 
+    [inputEvent]="videosEvent" 
+    (selectedEvent)="emitSelectedEvent($event)">
+  </app-videos>
+
+  <!-- <div class="cover-bar"></div> -->
+</div>

@@ -1,0 +1,25 @@
+@import '../../styles/text-and-fonts';
+
+ion-label {
+  text-transform: capitalize;
+}
+
+.opacity-0-5 {
+  opacity: 0.5;
+}
+
+.mediumColor {
+  color: var(--ion-color-medium);
+}
+
+.activeColor {
+  color: var(--ion-color-primary);
+}
+
+.display-inline {
+  display: inline-block;
+}
+
+.padding-right {
+  padding-right: 10px;
+}

@@ -1,0 +1,28 @@
+@import '../../styles/text-and-fonts';
+
+ion-label {
+  white-space: pre-line !important;
+}
+
+.container {
+  padding: 10px;
+}
+
+.button {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--ion-color-light);
+  color: var(--ion-color-primary);
+  text-align: center;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--ion-color-secondary) !important;
+}
+
+.button-active {
+  background: var(--ion-color-primary) !important;
+  color: var(--ion-color-tertiary) !important;
+}

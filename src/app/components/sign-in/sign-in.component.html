@@ -1,0 +1,107 @@
+<div id="preload">
+  <img src="/assets/imgs/btn_google_signin_dark_focus_web.png" />
+  <img src="/assets/imgs/btn_google_signin_dark_pressed_web.png" />
+</div>
+
+<ion-grid *ngIf="showSignIn">
+  <ion-row class="ion-justify-content-center ion-align-items-center about-section" *ngIf="showTitle">
+    <ion-col size="auto">
+      <p class="top-header"
+        [class.transition-down]="emailSent">
+        Perfecting Your Repertoire
+      </p>
+    </ion-col>
+  </ion-row>
+
+  <!-- Loader Spiner for google signin -->
+  <ion-row class="ion-justify-content-center" *ngIf="signInInProgress">
+    <ion-col size="auto">
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col size="auto">
+      <p class="sign-in-email basic-text center"
+        [class.hide-item]="signInInProgress || emailSent">
+        Sign in with your email address
+      </p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center ion-align-items-center"
+    [class.hide-row]="signInInProgress || emailSent">
+    <ion-col size="auto">
+      <ion-input [class.hide-item]="signInInProgress || emailSent"
+        placeholder="Your email address"
+        type="email"
+        name="email" 
+        id="email-id"
+        autocomplete="email"
+        debounce="100"
+        maxlength="30"
+        (keypress)="sendOnEnter($event)"
+        (ionChange)="inputId($event)">
+      </ion-input>
+
+      <ion-button
+        class="sign-button"
+        [class.hide-item]="signInInProgress || emailSent"
+        fill="clear"
+        shape="round"
+        (keypress)="sendEmailLink()"
+        (click)="sendEmailLink()">
+        <ion-icon mode="md" name="log-in"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center" *ngIf="errorMessage && !signInInProgress && !emailSent">
+    <ion-col @fade @heightDown @translateYUp size="auto">
+      <ion-label class="ion-text-center" color="danger">{{ errorMessage }}</ion-label>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col size="auto">
+      <ion-button fill="clear"
+        id="google-signin-button"
+        [class.hide-item]="signInInProgress || emailSent"
+        (click)="googleSignInClicked()">
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="showGuestLogin && !user?.isAnonymous"
+    class="ion-justify-content-center ion-align-items-center">
+    <ion-col size="auto">
+      <ion-button
+        class="guest-signin-button"
+        [class.hide-item]="signInInProgress || emailSent"
+        color="good"
+        (click)="guestSignInClicked()">
+        <ion-icon color="tertiary" name="walk"></ion-icon>
+        <ion-label color="tertiary">Continue as Guest</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ng-container *ngIf="emailSent && showEmailSentMessage">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-label class="ion-text-wrap ion-text-center email-sent" color="dark">
+          We sent an email to {{email}}. Please follow the instructions in that email to proceed.
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-label class="ion-text-center email-sent" color="secondary">
+          You can safely close this tab.
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+</ion-grid>

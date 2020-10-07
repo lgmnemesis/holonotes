@@ -1,0 +1,115 @@
+@import '../../styles/global-style';
+@import '../../styles/global-scroll-style.scss';
+@import '../../styles/text-and-fonts';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 200px) {
+  .page-borders {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .fab-borders {
+    margin-left: 7%;
+    margin-right: 7%;
+  }
+}
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 400px) {
+  .fab-borders {
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}
+
+@media only screen and (max-width: $SMALL_WINDOW_WIDTH - 1px) {
+  .library-item {
+    min-width: 100px;
+    max-width: 160px;
+    height: 130px;
+  }
+}
+
+.sort-by-filter-label {
+  @extend .basic-text;
+  @extend .capitalize;
+  width: 100px;
+}
+
+.library-item {
+  width: 230px;
+  height: 150px;
+  --border-style: none !important;
+  border-radius: 15px;
+  border: 1px solid;
+  border-color: var(--ion-color-primary);
+  padding: 5px;
+}
+
+.library-item:hover {
+  border-color: var(--ion-color-primary-shade);
+  cursor: pointer;
+}
+
+.item-desc {
+  @extend .basic-text;
+  padding-top: 5px;
+  color: var(--ion-color-secondary) !important;
+}
+
+.item-label {
+  @extend .basic-text;
+  flex: auto;
+}
+
+.animate-collection {
+  transition: transform .3s, -webkit-transform .3s;
+  margin: 4px 0;
+  padding: 5px;
+}
+
+.animate-collection:hover {
+  -webkit-transform: translateY(-3px);
+  transform: translateY(-3px);
+}
+
+.fab {
+  position: absolute;
+  bottom: 40px;
+  right: 75px;
+}
+
+.top-fab {
+  bottom: unset !important;
+  top: 95px;
+}
+
+.fab-c {
+  position: relative;
+  cursor: pointer;
+}
+
+.fab-label {
+  position: absolute;
+  width: 150px;
+  left: -150px;
+  top: 8px;
+  padding: 10px;
+  border: 1px solid var(--ion-color-light);
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  border-radius: 20px;
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-primary);
+  text-align: center;
+}
+
+.tab-name-container {
+  position: relative;
+}
+
+.tab-name {
+  @extend .basic-text;
+  text-align: center;
+  padding: 2px 10px;
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-primary);
+}

@@ -1,0 +1,58 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH) {
+  .page-borders {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media only screen and (min-width: $EXTRA_LARGE_WINDOW_WIDTH) {
+  .page-borders {
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+}
+
+.s-h {
+  @extend .header-3-text;
+  text-align: center;
+}
+
+.comment-b {
+  cursor: pointer;
+  color: var(--ion-color-primary);
+}
+
+.comment-b-s {
+  cursor: initial;
+  color: var(--ion-color-dark);
+}
+
+.paypal {
+  cursor: pointer;
+}
+
+.patron {
+  border-radius: 20px;
+  height: 34px;
+  cursor: pointer;
+}
+
+.c-paypal {
+  color: #009CDE;
+  letter-spacing: 0.1px;
+}
+
+.c-medium {
+  color: var(--ion-color-medium);
+}
+
+.c-primary {
+  color: var(--ion-color-primary);
+}
+
+p {
+  margin: 12px 5px;
+}

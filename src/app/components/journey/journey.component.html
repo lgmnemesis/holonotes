@@ -1,0 +1,19 @@
+<ion-grid class="page-borders">
+  <ng-container *ngIf="mode === 'TIME_TRACKER'">
+    <ion-row class="ion-justify-content-center ion-align-items-start margin-row">
+      <ion-col class="input-col" size="12">
+        <app-journey-input-container>
+        </app-journey-input-container>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ion-align-items-start">
+      <ion-col class="history-col" size="12" *ngFor="let list of history?.journey_list | historySort">
+        <app-journey-history [list]="list" (action)="histroyAction($event)"></app-journey-history>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
+  <ng-container *ngIf="mode === 'REPORTS'">
+    <app-reports></app-reports>
+  </ng-container>
+</ion-grid>

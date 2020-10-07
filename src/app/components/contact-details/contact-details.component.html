@@ -1,0 +1,84 @@
+<ion-grid @translateYDownLong class="ion-no-padding">
+  <ion-row class="ion-justify-content-center contact-section spacing-top">
+    <ion-col size="auto" [class.fade-out]="isTextMessageSent">
+      <p class="section-header">Get in touch with us.</p>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="!isTextMessageSent"
+    class="ion-justify-content-center contact-section">
+    <ion-col size="auto">
+      <p class="section-sub-header">We want to hear from you!</p>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center contact-section">
+    <ion-col size="auto" [class.text-area-col]="!isTextMessageSent">
+      <label for="l-comment">
+        <p class="section-content ion-text-wrap" *ngIf="!isTextMessageSent">
+          Leave a comment, send us your feedback, good or bad, we want to hear it.
+        </p>
+      </label>
+      <textarea #textarea id="l-comment"
+        class="text-input contact-section" 
+        [class.fade-out]="isTextMessageSent"
+        [class.text-focus]="(isTextAreaFocused || commentInput?.trim().length > 0) 
+        && !isTextMessageSent" 
+        placeholder="Leave a comment..."
+        (keyup)="inputComment(textarea)" 
+        (focus)="setTextAreaFocus(true)" 
+        (blur)="setTextAreaFocus(false)">
+      </textarea>
+      <div class="text-sent-input-placeholder"
+        [class.fade-out]="!isTextMessageSent"
+        [class.text-sent-input]="isTextMessageSent">
+          {{ commentInput }}
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="!isTextMessageSent"
+    class="ion-justify-content-center contact-section">
+    <ion-col size="auto">
+      <ion-button *ngIf="isTextAreaFocused || commentInput?.trim().length > 0"
+        class="text-button"
+        shape="round" 
+        color="primary"
+        [disabled]="commentInput?.trim().length < 3"
+        (click)="sendTextMessage()">
+        Send
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="showFollowUsOn"
+    class="ion-justify-content-center contact-section">
+    <ion-col size="auto">
+      <ion-button (click)="followOnFacebook()"
+        class="button-padding" fill="clear" shape="round">
+        <ion-icon class="rounded-icon" name="logo-facebook"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button (click)="followOnTwitter()"
+        class="button-padding" fill="clear" shape="round">
+        <ion-icon class="rounded-icon" name="logo-twitter"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button  
+        class="button-padding" 
+        fill="clear" 
+        shape="round"
+        (click)="mailto()">
+        <ion-icon class="rounded-icon" name="at-circle"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center contact-section">
+    <ion-col size="auto">
+      <div class="text-sent-placeholder"
+        [class.text-sent]="isTextMessageSent">
+        Thank You for your time!
+      </div>
+    </ion-col>
+  </ion-row>
+
+
+</ion-grid>

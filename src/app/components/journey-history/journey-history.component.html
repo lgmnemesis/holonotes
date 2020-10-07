@@ -1,0 +1,52 @@
+<ion-card>
+  <ion-item lines="none">
+    <ion-label class="font-t label-start" slot="start">{{ startOfDay | date:'EEE, dd MMM yyyy' }}</ion-label>
+    <ion-label class="font-t label-end large-width" slot="end">Total: <b>{{ totalTime }}</b></ion-label>
+    <ion-label class="font-t label-end small-width" slot="end"><b>{{ totalTime }}</b></ion-label>
+  </ion-item>
+  <ng-container *ngFor="let journey of list">
+    <ng-container *ngIf="journey.is_selected">
+      <div @heightDownFast class="edit-buttons">
+        <ion-button fill="clear" shape="round" (click)="cancelSelected(journey)">
+          <ion-icon color="dark" name="close"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" shape="round" [disabled]="!canSave" (click)="save(journey)">
+          <ion-icon color="medium" name="save"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" shape="round" (click)="delete(journey)">
+          <ion-icon color="danger" name="trash"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" shape="round" (click)="play(journey)">
+          <ion-icon name="play"></ion-icon>
+        </ion-button>
+      </div>
+    </ng-container>
+    <div class="item-container" (click)="openItemSelected(journey)" *ngIf="!journey.is_selected">
+      <ion-label color="font-t primary">{{ journey.name || 'Add Description' }}</ion-label>
+      <ion-label class="font-t time-label">
+        {{ journey.start_time | date:'hh:mm:ssaaa' }} - {{ journey.end_time | date:'hh:mm:ssaaa' }}
+        <b>{{ journey.start_time | eTimeStime:journey.end_time }}</b>
+      </ion-label>
+    </div>
+    <div class="edit-entry" *ngIf="journey.is_selected">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col class="input-col" size="auto">
+            <ion-input 
+              placeholder="Enter Description" 
+              [value]="journey.name" 
+              (ionChange)="inputNameChange(journey, $event)">
+            </ion-input>
+          </ion-col>
+          <ion-col size="auto">
+            <app-start-end-timepicker
+              [startTimeMilli]="journey.start_time"
+              [endTimeMilli]="journey.end_time"
+              (changeEvent)="setTimePicker(journey, $event)">
+            </app-start-end-timepicker>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ng-container>
+</ion-card>

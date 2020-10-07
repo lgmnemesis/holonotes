@@ -1,0 +1,17 @@
+.main {
+  transition: opacity 0.2s, max-height 0.3s ease-out;
+  max-height: 50px;
+}
+
+.isHidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.facebook {
+  color: dodgerblue;
+}
+
+.instagram {
+  color: rebeccapurple;
+}

@@ -1,0 +1,23 @@
+<ion-header class="ion-no-border">
+  <app-notes-toolbar
+    [showSearchBar]="false"
+    [showHomeButton]="showHomeButton"
+    [showLibraryButton]="auth.isLoggedIn()"
+    [showActivityButton]="auth.isLoggedIn()"
+    [showProfileButton]="true"
+    [showMoreOptionsButton]="false"
+    [isSmallDisplay]="sharedService.isLessThanMediumWindowWidth()"
+    (notesEvent)="notesEventHandler($event)">
+  </app-notes-toolbar>
+</ion-header>
+
+<ion-content #content class="help-content-scrollbar">
+  <app-welcome-view *ngIf="showWelcome"></app-welcome-view>
+  <app-contact-details *ngIf="showContact"></app-contact-details>
+  <app-support-us id="supportus" 
+    [showingComment]="showContact" 
+    (showCommentBoxEvent)="gotEventFromSupportUs()">
+  </app-support-us>
+  <app-help-footer></app-help-footer>
+</ion-content>
+  

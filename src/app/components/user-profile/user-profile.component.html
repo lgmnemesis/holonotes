@@ -1,0 +1,50 @@
+<ion-content>
+  <div class="line-content">
+    {{user?.display_name || user?.email}}
+  </div>
+  <div class="border-line"></div>
+  <ion-button *ngIf="isSignedIn" 
+    color="dark" fill="clear" expand="block" shape="round" (click)="gotoExplore()">
+    <ion-icon size="small" name="eye"></ion-icon>
+    <p>Explore</p>
+  </ion-button>
+  <ion-button *ngIf="isSignedIn"
+    color="dark" fill="clear" expand="block" shape="round" (click)="gotoMyJourney()">
+    <ion-icon size="small" name="school"></ion-icon>
+    <p>My Journey</p>
+  </ion-button>
+  <ion-button
+    color="dark" fill="clear" expand="block" shape="round" (click)="gotoNewsFeed()">
+    <ion-icon size="small" name="globe"></ion-icon>
+    <p>News Feed</p>
+  </ion-button>
+  <div class="border-line"></div>
+  <ion-button *ngIf="isSignedIn && !auth.isAnonymousLoggedIn()" 
+    color="dark" fill="clear" expand="block" shape="round" (click)="gotoProfile()">
+    <ion-icon size="small" name="person"></ion-icon>
+    <p>Profile</p>
+  </ion-button>
+  <ion-button *ngIf="promptForPWA"
+    color="dark" fill="clear" expand="block" shape="round" (click)="addToHomeScreen()">
+    <ion-icon size="small" name="tablet-portrait"></ion-icon>
+    <p>Install Holonotes</p>
+  </ion-button>
+  <ion-button color="dark" fill="clear" expand="block" shape="round" (click)="gotoHelp()">
+    <ion-icon size="small" name="help-circle"></ion-icon>
+    <p>Help</p>
+  </ion-button>
+  <ion-button color="dark" fill="clear" expand="block" shape="round" (click)="gotoSupportUs()">
+    <ion-icon size="small" name="help-buoy"></ion-icon>
+    <p>Support Us</p>
+  </ion-button>
+  <div class="border-line"></div>
+  <ion-button *ngIf="isSignedIn && auth.isAnonymousLoggedIn()" 
+    color="dark" fill="clear" expand="block" shape="round" (click)="gotoProfile()">
+    <ion-icon size="small" name="log-in"></ion-icon>
+    <p>Sign In</p>
+  </ion-button>
+  <ion-button *ngIf="isSignedIn" color="dark" fill="clear" expand="block" shape="round" (click)="signOut()">
+    <ion-icon size="small" name="log-out"></ion-icon>
+    <p>Sign Out{{ guestAccount }}</p>
+  </ion-button>
+</ion-content>

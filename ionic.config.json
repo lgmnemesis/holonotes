@@ -1,0 +1,13 @@
+{
+  "name": "holonotes",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular",
+  "hooks": {
+    "build:before": "./scripts/build-before.js",
+    "build:after": "./scripts/build-after.js"
+  },
+  "id": "6e9614c5"
+}

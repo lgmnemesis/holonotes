@@ -1,0 +1,86 @@
+<ion-toolbar color="tertiary">
+  <ion-label class="ion-text-center basic-text" color="dark">
+    <p class="content-title">{{modalTitle}}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" color="primary" shape="round"
+      (keypress)="close()" (click)="close()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button [disabled]="!canSave" slot="end" fill="clear" color="primary" shape="round"
+      (keypress)="save()" (click)="save()">
+      Save
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-toolbar color="tertiary">
+  <ion-item lines="none">
+    <ion-button slot="start" fill="clear" color="primary" shape="round"
+      (keypress)="toggleCheckAll()" (click)="toggleCheckAll()">
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-button>
+    <ion-button [disabled]="selectedCounter == 0" slot="end" 
+      fill="clear" color="danger" shape="round"
+      (keypress)="deleteSelected()"
+      (click)="deleteSelected()">
+      Delete Selected
+    </ion-button>
+  </ion-item>
+</ion-toolbar>
+
+<ion-content id="manage-all-i-content-scrollbar">
+
+  <ion-list>
+
+    <ng-container *ngIf="isManageBookmarks">
+      <div *ngFor="let pair of items | keyvalue; trackBy: trackByKey">
+        <ion-item>
+          <ion-input 
+            color="primary"
+            [maxlength]="nameMaxLength" 
+            [value]="pair.key | tagLabelDisplay" 
+            (ionChange)="inputName($event, pair.key)">
+          </ion-input>
+        </ion-item>
+
+        <ion-item lines="full" *ngFor="let bookmark of pair.value; trackBy: trackById">
+          <ion-checkbox color="primary" slot="start" mode="ios" 
+            [checked]="isItemSelected(bookmark.id)" (ionChange)="toggleSelectedItem($event, bookmark.id)">
+          </ion-checkbox>
+
+          <ion-label class="ion-text-wrap">
+            <h2>{{bookmark.name}}</h2>
+            <p *ngIf="bookmark.marker_name"
+              class="basic-text activeColor opacity-0-5 display-inline padding-right">
+              {{bookmark.marker_name}}
+            </p>
+            <p class="mediumColor opacity-0-5 display-inline">{{ bookmark | getTime }}</p>
+            <p>{{bookmark.description}}</p>
+          </ion-label>
+        </ion-item>
+
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isManageVideos">
+      <ion-item lines="full" *ngFor="let item of items; trackBy: trackById">
+
+        <ion-checkbox color="primary" slot="start" mode="ios" 
+          [checked]="isItemSelected(item.id)" (ionChange)="toggleSelectedItem($event, item.id)">
+        </ion-checkbox>
+
+        <ion-thumbnail slot="start">
+          <img [src]="item.thumbnail_url">
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap basic-text">
+          <h2>{{item.title}}</h2>
+        </ion-label>
+
+      </ion-item>
+    </ng-container>
+
+  </ion-list>
+</ion-content>

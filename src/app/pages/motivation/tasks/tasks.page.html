@@ -1,0 +1,178 @@
+<ion-header class="ion-no-border">
+  <app-notes-toolbar 
+    [showHomeButton]="showHomeButton" 
+    [showLibraryButton]="authService.isLoggedIn()"
+    [showActivityButton]="authService.isLoggedIn()"
+    [showProfileButton]="true"
+    [isActiveProfileButton]="isActiveProfileButton"
+    [showMoreOptionsButton]="false"
+    [showSearchBar]="false"
+    [isSmallDisplay]="sharedService.isLessThanMediumWindowWidth()"
+    (notesEvent)="notesEventHandler($event)">
+  </app-notes-toolbar>
+  <div class="tab-name-container" *ngIf="sharedService.isLessThanMediumWindowWidth()">
+    <div class="tab-name">Activity</div>
+  </div>
+</ion-header>
+
+<app-alarm-indication
+  *ngIf="authService.isLoggedIn() && sharedService.isLessThanMediumWindowWidth()"
+  [isFab]="true"
+  [isSecondFab]="true"
+  [withBackground]="true"
+  (animateEvent)="alarmIndicationEvent($event)">
+</app-alarm-indication>
+
+<div class="fab page-borders" [class.top-fab]="!sharedService.isLessThanMediumWindowWidth()">
+  <ion-fab vertical="bottom" horizontal="start" edge slot="fixed">
+    <ion-fab-button size="small">
+      <ion-icon color="tertiary" name="ribbon"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom" *ngIf="!sharedService.isLessThanMediumWindowWidth()">
+      <div class="fab-c" (click)="newTask()">
+        <ion-label class="fab-label">New Routine</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="good" name="flag"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="newChallenge()">
+        <ion-label class="fab-label">Start a Challenge</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="medium" name="trophy"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="gotoChallenges()">
+        <ion-label class="fab-label">Challenges Journal</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="chatbubbles"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="gotoJourney()">
+        <ion-label class="fab-label">My Journey</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="school"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </ion-fab-list>
+    <ion-fab-list side="top" *ngIf="sharedService.isLessThanMediumWindowWidth()">
+      <div class="fab-c" (click)="gotoJourney()">
+        <ion-label class="fab-label">My Journey</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="school"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="gotoChallenges()">
+        <ion-label class="fab-label">Challenges Journal</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="chatbubbles"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="newChallenge()">
+        <ion-label class="fab-label">Start a Challenge</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="medium" name="trophy"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="newTask()">
+        <ion-label class="fab-label">New Routine</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="good" name="flag"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </ion-fab-list>
+  </ion-fab>
+</div>
+
+<ion-content id="tasks-content-scrollbar">
+
+  <ion-grid class="ion-no-padding">
+
+    <ng-container>
+      <ion-row class="ion-justify-content-center page-borders">
+        <ion-col [class.got-it-animate-done]="gotItDoneAnimate" size="auto" *ngIf="showChallengeInfoMessage">
+          <ion-card class="c-info">
+            <ion-item class="item-info" lines="none">
+              <ion-icon class="icon-info" color="tertiary" name="ribbon" slot="start"></ion-icon>
+              <ion-label color="tertiary" class="content-text">Good to know</ion-label>
+            </ion-item>
+            <ion-card-content class="content-info">
+              <p class="p-info basic-text">Challenges Journal - Write down and share your progress with other participents.</p>
+              <p class="p-info basic-text">My Journey - See how much time you actualy spent working on your routines and challenges.</p>
+            </ion-card-content>
+            <ion-button 
+              class="b-info basic-text" 
+              color="tertiary" 
+              fill="clear" 
+              shape="round"
+              (click)="gotIt()">
+                Got it
+            </ion-button>
+          </ion-card>
+        </ion-col>
+        <ion-col @fade @translateXLeftLong class="col-action" size="auto" *ngFor="let action of actions; trackBy: trackById">
+          <ion-card class="tasks-info as-a-button" mode="ios" (click)="selectFromLibrary(action)">
+            <ion-card-content>
+              <p class="p-action-title content-text">Action</p>
+              <ion-item class="i-action" lines="none">
+                <ion-icon class="icon-action" size="small" color="tertiary" name="trophy" slot="start"></ion-icon>
+                <ion-label color="tertiary" class="basic-text ion-text-wrap">{{ action.name }}</ion-label>
+              </ion-item>
+              <p class="p-action basic-text">
+                Select a song from your library to add to {{action?.challenge?.id === 'new_song_each_time' ? 'this week\'s' : 'your'}} challenge.
+              </p>
+              <p class="p-action basic-text" *ngIf="action?.challenge?.is_public && !action?.challenge?.joined">
+                All participants will be notified about your selection
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+
+    <ion-row class="ion-justify-content-center ion-align-items-start">
+      <ion-col class="tasks-col" size="12" size-md="4">
+        <ion-grid class="ion-no-padding">
+          <!-- Today -->
+          <ion-row class="ion-justify-content-center ion-align-items-start">
+            <ion-col size="12">
+              <p class="header-section-title">Today</p>
+              <div class="under-line"></div>
+            </ion-col>
+          </ion-row>          
+          <ion-row *ngFor="let task of (tasks | filterTasks); trackBy: trackById"
+            class="ion-justify-content-center ion-align-items-start">
+            <ion-col size="12" *ngIf="task.timeInMinutes < 1440 && !task?.is_completed">
+              <app-task 
+                (clickEvent)="goTask(task)" 
+                [task]="task"
+                [isTaskStarted]="isTaskStarted[task.id]">
+              </app-task>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+
+      <ion-col class="tasks-col" size="12" size-md="4">
+        <ion-grid class="ion-no-padding">
+          <!-- Some Day -->
+          <ion-row class="ion-justify-content-center ion-align-items-start">
+            <ion-col size="12">
+              <p class="header-section-title">Upcoming</p>
+              <div class="under-line"></div>
+            </ion-col>
+          </ion-row>          
+          <ion-row *ngFor="let task of tasks | filterTasks; trackBy: trackById"
+            class="ion-justify-content-center ion-align-items-start">
+            <ion-col size="12" *ngIf="task.timeInMinutes >= 1440 && !task?.is_completed">
+              <app-task 
+                (clickEvent)="goTask(task)" 
+                [isTaskStarted]="isTaskStarted[task.id]"
+                [task]="task">
+              </app-task>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

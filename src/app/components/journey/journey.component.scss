@@ -1,0 +1,27 @@
+@import '../../styles/global-style';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 200px) {
+  .page-borders {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+}
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 400px) {
+  .page-borders {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+.input-col {
+  padding: 10px 0;
+}
+
+.history-col {
+  padding: 20px 0;
+}
+
+.margin-row {
+  margin: 10px 0;
+}

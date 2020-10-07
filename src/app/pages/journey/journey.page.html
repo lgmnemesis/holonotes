@@ -1,0 +1,29 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar page-borders" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+      <ion-button class="not-a-button capitalize" fill="clear" shape="round">
+        <ion-label class="ion-text-center header-label" color="primary">
+          My Journey
+        </ion-label>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-segment color="primary" value="TIME_TRACKER" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="TIME_TRACKER" layout="icon-start">
+        <ion-label class="basic-text capitalize hide-label">Time Tracker</ion-label>
+        <ion-icon name="time"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="REPORTS" layout="icon-start">
+        <ion-label class="basic-text capitalize hide-label">Reports</ion-label>
+        <ion-icon name="stats-chart"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content id="journey-content-scrollbar">
+  <app-journey [mode]="journeyMode"></app-journey>
+</ion-content>

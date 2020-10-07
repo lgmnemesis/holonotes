@@ -1,0 +1,48 @@
+@import '../../styles/global-style';
+
+@media only screen and (max-width: $MEDIUM_WINDOW_WIDTH - 1) {
+  ion-card {
+    min-width: 0;
+    margin: 0;
+  }
+}
+
+.about-section {
+  background: var(--ion-color-tertiary);
+}
+
+ion-card {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border-radius: 0;
+}
+
+iframe {
+  border: 0;
+}
+
+.section-global {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+}
+
+.section-header {
+  @extend .section-global;
+  text-transform: uppercase;
+  font-size: 23px;
+  font-weight: 300;
+  color: var(--ion-color-primary);
+}
+
+.section-sub-header {
+  @extend .section-global;
+  font-size: 20px;
+}
+
+.padding-top {
+  padding-top: 10px;
+}
+
+.padding-bottom {
+  padding-bottom: 20px;
+}

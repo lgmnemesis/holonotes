@@ -1,0 +1,28 @@
+{
+  "name": "functions",
+  "engines": {
+    "node": "10"
+  },
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc --skipLibCheck",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions --debug",
+    "logs": "firebase functions:log"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^8.12.1",
+    "firebase-functions": "^3.6.1",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "tslint": "^5.20.1",
+    "typescript": "^3.9.3"
+  },
+  "private": true
+}

@@ -1,0 +1,234 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar page-borders" color="tertiary">
+
+    <ion-buttons slot="start" *ngIf="isActiveSearchButton">
+      <ion-button color="primary" fill="clear" shape="round" (click)="cancelSearch()">
+        <ion-icon name="undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-searchbar *ngIf="!isLessThanMediumWindowWidth || isActiveSearchButton"
+      [class.search-bar-md]="!isActiveSearchButton"
+      [class.search-bar-focus]="isSearchBarFocused"
+      [class.search-bar-in-edit]="(isEditMode || isAddToCollection) && searchText"
+      [value]="searchText"
+      placeholder="Search Collection"
+      autocorrect="off" 
+      autocomplete="on" 
+      spellcheck="true" 
+      type="text"
+      mode="md"
+      animated="true"
+      debounce="100"
+      (ionFocus)="setSearchBarFocused(true)" 
+      (ionBlur)="setSearchBarFocused(false)"
+      (ionChange)="search($event)">
+    </ion-searchbar>
+    <ng-container *ngIf="!isActiveSearchButton">
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref="home"></ion-back-button>
+        <ion-button class="name-b capitalize" fill="clear" shape="round" (click)="goUp()">
+          <ion-label class="ion-text-center header-label" color="primary">{{collectionName}}</ion-label>
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <app-alarm-indication 
+          (animateEvent)="alarmIndicationEvent($event)">
+        </app-alarm-indication>
+        <ion-button class="search-button" *ngIf="isLessThanMediumWindowWidth" 
+          fill="clear" shape="round" (click)="gotoSearchBar()">
+          <ion-icon color="primary" name="search"></ion-icon>
+        </ion-button>
+        <ion-button 
+          class="more-button" 
+          fill="clear" 
+          shape="round"
+          [disabled]="selectingSongCategory?.isSelecting"
+          (click)="more()">
+          <ion-icon color="primary" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-container>
+  </ion-toolbar>
+</ion-header>
+
+<div class="loader-line" [class.loader-line-active]="isSearching"></div>
+
+<ion-item @fade @translateYUp  *ngIf="selectingSongCategory?.isSelecting"
+  color="medium" lines="none">
+  <ion-icon color="tertiary" [name]="selectingSongCategory.task?.challenge?.is_challenge ? 'trophy' : 'leaf'" slot="start"></ion-icon>
+  <ion-label color="tertiary" class="ion-text-wrap">
+    <p>Select a song to add to your {{ selectingSongCategory.task?.challenge?.is_challenge ? 'challenge' : 'routine' }} (tap to select)</p>
+  </ion-label>
+  <ion-button *ngIf="selectingSongCategory?.project"
+    color="tertiary" fill="solid" shape="round" (click)="doneSelectingSongCategory()">
+    Done
+  </ion-button>
+  <ion-button 
+    color="tertiary" fill="clear" shape="round" (click)="cancelSelectingSongCategory()">
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+</ion-item>
+
+<ion-toolbar @fade @translateYDown @heightDown *ngIf="isEditMode || isAddToCollection"
+  class="page-borders"
+  color="tertiary">
+  <p class="header-title">{{manageCollectionText}}</p>
+  <ion-buttons [slot]="isLessThanMediumWindowWidth ? 'start' : 'end'">
+    <ion-button color="primary" fill="clear" shape="round" (click)="cancel()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end" *ngIf="!isEditAllMode">
+    <ion-button [disabled]="!canSave" color="primary" 
+      fill="clear" shape="round" (click)="save()">
+      Save
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+<p *ngIf="isAddToCollection && projects?.length > 0" class="content-title">
+  {{checkMenuText}}
+</p>
+
+<cdk-virtual-scroll-viewport itemSize="5">
+
+  <div @fade @translateYDown @heightDown
+    class="page-borders" *ngIf="isEditMode || isAddToCollection">
+    <ng-container *ngIf="isEditMode && !isEditAllMode">
+      <ion-list *ngIf="!isEditProject">
+        <ion-item>
+          <ion-label class="basic-text" position="floating" autofocus="true">
+            Collection Name
+          </ion-label>
+          <ion-input 
+            [value]="collectionName" 
+            [maxlength]="nameMaxLength" 
+            debounce="100" 
+            (keypress)="saveOnEnter($event)" 
+            (ionChange)="inputId($event)">
+          </ion-input>
+        </ion-item>
+        <br>
+        <ion-button class="delete-button" shape="round"
+          color="danger" fill="clear" (click)="delete()">
+          <ion-label class="small-text ion-text-start">Delete Collection</ion-label>
+        </ion-button>
+        <p class="secondary-text">{{deleteMessageText}}</p>
+      </ion-list>
+    </ng-container>
+    <ng-container *ngIf="isEditMode && projects?.length > 0">
+      <ion-item class="edit-buttons" lines="none">
+        <ion-button class="select-all" *ngIf="projects?.length <= 100"
+          slot="end" fill="clear" shape="round" (click)="toggleSelectAll()">
+          <ion-label *ngIf="!isLessThanMediumWindowWidth && !isEditProject">
+            {{selectAllText}}
+          </ion-label>
+          <ion-icon *ngIf="isLessThanMediumWindowWidth && !isSelectAll && !isEditProject"
+            name="checkmark-circle-outline" size="default">
+          </ion-icon>
+          <ion-icon *ngIf="isLessThanMediumWindowWidth && isSelectAll && !isEditProject"
+            name="checkmark-circle" size="default">
+          </ion-icon>
+        </ion-button>
+        <ion-button [disabled]="!canEditCollections" class="rounded-button"
+          size="default" slot="end" color="primary" 
+          fill="outline" shape="round" (click)="addSelected()">
+            Add To
+        </ion-button>
+        <ion-button [disabled]="!canEditCollections" class="rounded-button"
+          size="default" slot="end" color="primary" 
+          fill="outline" shape="round" (click)="moveSelected()">
+            Move To
+        </ion-button>
+        <ion-button [disabled]="!canEditCollections" class="rounded-button" 
+          size="default" slot="end"
+          color="danger" fill="outline" shape="round"
+          (click)="deleteSelected()">
+            {{editModeDeleteText}}
+        </ion-button>
+      </ion-item>
+    </ng-container>
+  </div>
+
+  <ion-grid>
+
+    <div @fade @translateYUp *ngIf="!isEditMode && (projects && projects.length === 0)">
+      <div class="header-padding"></div>
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+        <ion-col size="auto">
+          <p class="header-title">Collection is empty</p>
+        </ion-col>
+      </ion-row>
+      <ng-container *ngIf="!selectingSongCategory?.isSelecting">
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="auto">
+            <p class="content-title">You can add existing projects or create new ones.</p>
+          </ion-col>
+        </ion-row>
+        <ion-row class="padding-top padding-bottom"></ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <ion-button
+              class="more-options-button"
+              color="primary"
+              shape="round"
+              (click)="more()">
+              <ion-label color="tertiary" class="basic-text capitalize">More Options</ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+    </div>
+
+    <ion-row @translateYUp class="ion-justify-content-center" *ngIf="projects && projects.length > 0">
+      <ion-col size="auto">
+        <ion-item lines="none" *ngIf="!isEditProject">
+          <ion-button fill="clear" shape="round" color="primary" (click)="toggleSortByFilter()">
+            <ion-label *ngIf="!isLessThanMediumWindowWidth"
+              class="basic-title capitalize">
+              Sorted By:
+            </ion-label>
+            <ion-icon *ngIf="isLessThanMediumWindowWidth" name="funnel"></ion-icon>
+          </ion-button>
+          <ion-label class="sort-by-filter-label">{{sortByFilterStr}}</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" [class.opacity-0]="isSearching">
+      <!-- <ion-col size="auto" *cdkVirtualFor="let project of projects"> -->
+      <ng-container *ngFor="let project of projects | searchFilter: searchText: sortByFilter">
+        <ng-container *ngIf="(!isEditProject && !project.dontShow && 
+        (!isAddToCollection || isAddToCollection && !project.collections?.includes(collectionId))) ||
+        isEditProject && editProject && editProject.id === project.id">
+          <ion-col size="auto">
+            <ion-checkbox *ngIf="isEditMode || isAddToCollection"
+              class="check-box" 
+              color="primary" 
+              mode="ios" 
+              [checked]="projectsToSelect.get(project)" 
+              (ionChange)="toggleSelectedItem($event, project)">
+            </ion-checkbox>
+          
+            <div class="feed with_cover"
+              [class.selecting-song-category]="selectingSongCategory?.isSelecting &&
+              selectingSongCategory?.project?.id === project.id">
+              <div (click)="gotoProject(project)">
+                <img class="img-feed" [src]="project.cover_img || defaultCoverImg" alt="Cover">
+                <div class="text-label">{{project.name}}</div>
+                <div class="text-artist">{{project.artist || ' '}}</div>
+              </div>
+              <div *ngIf="!isEditMode &&
+                !isEditAllMode && !isAddToCollection && !selectingSongCategory?.isSelecting"
+                class="more-options" (click)="projectMoreOptions(project)">
+                <ion-icon class="more-options-icon" size="default" name="ellipsis-vertical"></ion-icon>
+              </div>
+            </div>
+          </ion-col>
+        </ng-container>
+      </ng-container>
+
+    
+    </ion-row>
+  </ion-grid>
+</cdk-virtual-scroll-viewport>

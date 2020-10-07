@@ -1,0 +1,140 @@
+@import '../../../styles/global-style';
+@import '../../../styles/text-and-fonts';
+
+@media only screen and (max-width: $SMALL_WINDOW_WIDTH - 1px) {
+  .inner-active {
+    width: 320px !important;
+  }
+}
+
+.inner-container {
+ position: relative;
+ width: 44px;
+ opacity: 1;
+ transition: width .6s, opacity .5s;
+}
+
+.hide {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inner {
+  position: absolute;
+  width: 0;
+  height: 44px;
+  background: var(--ion-color-primary);
+  border: solid 1px;
+  border-color: var(--ion-color-tertiary);
+  border-radius: 20px;
+  top: -5px;
+  right: 0;
+  opacity: 0;
+  transition: width .6s, opacity .5s;
+}
+
+.inner-as-fab {
+  border: 0.01px solid;
+  border-color: var(--ion-color-primary);
+  top: 2px;
+  right: 3px;
+}
+
+.inner-round-as-fab {
+  top: 0 !important;
+  right: -3px !important;
+}
+
+.inner-close-icon-as-fab {
+  position: absolute !important;
+}
+
+.inner-active {
+  width: 350px;
+  opacity: 1;
+}
+
+.inner-round {
+  position: absolute;
+  background: var(--ion-color-tertiary);
+  width: 44px;
+  height: 44px;
+  right: -1px;
+  top: -1px;
+  border-radius: 50%;
+}
+
+.inner-close-icon {
+  position: relative;
+  font-size: 22px;
+  top: 10px;
+  right: calc(100% - 35px);
+  cursor: pointer;
+}
+
+.inner-label {
+  @extend .capitalize;
+  white-space: nowrap;
+  position: absolute;
+  color: var(--ion-color-tertiary);
+}
+
+.inner-title {
+  @extend .inner-label;
+  @extend .smallest-text;
+  top: -10px;
+  left: 42px;
+}
+
+.inner-text {
+  @extend .inner-label;
+  @extend .small-text;
+  top: 0px;
+  left: 42px;
+}
+
+.button-as-fab {
+  border-radius: 50%;
+  --padding-start: 10px;
+  --padding-end: 8px;
+  width: 40px;
+  height: 40px;
+}
+
+.button-with-notif-background {
+  background: #FADED8;
+}
+
+.button-with-hourglass-background {
+  background: #e6ffe6;
+}
+
+.as-fab {
+  position: absolute;
+  bottom: 8px;
+  right: 15px;
+  z-index: 99;
+}
+
+.as-second-fab {
+  right: 62px;
+}
+
+.your-done {
+  @extend .inner-text;
+  top: 6px !important;
+}
+
+.your-done-label {
+  @extend .basic-title;
+  @extend .capitalize;
+  margin-right: 10px;
+}
+
+.your-done-checkmark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}

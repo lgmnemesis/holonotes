@@ -1,0 +1,18 @@
+cdk-virtual-scroll-viewport {
+  height: 100vh;
+  background: var(--ion-color-tertiary);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    overflow: visible;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--ion-color-secondary);
+  }
+}

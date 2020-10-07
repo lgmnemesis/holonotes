@@ -1,0 +1,180 @@
+@import '../../../styles/text-and-fonts';
+
+.toolbar-title {
+  @extend .content-title;
+}
+
+.generic-button {
+  --border-radius: 15px;
+  --box-shadow: 0;
+}
+
+.task-begin-button {
+  @extend .generic-button;
+  margin: 10px 25px;
+  height: 50px;
+}
+
+.task-begin-button:hover,
+.generic-button:hover {
+  --ion-color-base: var(--ion-color-primary-shade) !important;
+}
+
+.generic-button-label {
+  @extend .basic-text;
+  text-transform: capitalize;
+  font-weight: normal;
+  color: var(--ion-color-tertiary);
+}
+
+.sub-text {
+  @extend .basic-text;
+  text-align: center;
+  color: var(--ion-color-secondary);
+  padding: 0 10px;
+}
+
+.alarm-duration {
+  // font-size: small;
+  @extend .basic-text;
+  margin-right: 15px;
+}
+
+.color-medium {
+  color: var(--ion-color-medium);
+}
+
+.color-primary {
+  color: var(--ion-color-primary);
+}
+
+.color-dark {
+  color: var(--ion-color-dark);
+}
+
+.margin-left {
+  margin-left: 10px;
+}
+
+.margin-bottom {
+  margin-bottom: 20px;
+}
+
+.bottom-line {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-light);
+}
+
+.day-button {
+  z-index: 99;
+  width: 25px;
+  height: 25px;
+  line-height: 24px;
+  // font-size: 13px;
+  font-family: serif;
+  font-weight: 100;
+  text-align: center;
+  margin-left: 7px;
+  margin-right: 7px;
+  border: 1px solid;
+  border-radius: 50%;
+  border-color: var(--ion-color-primary);
+  color: var(--ion-color-primary);
+  background: var(--ion-color-tertiary);
+  cursor: pointer;
+}
+
+.day-button-active {
+  color: var(--ion-color-tertiary) !important;
+  background: var(--ion-color-primary) !important;
+}
+
+.as-a-button {
+  cursor: pointer;
+}
+
+.play-button {
+  @extend .as-a-button;
+  z-index: 99;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ion-color-primary); 
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.play-button:hover {
+  background: var(--ion-color-light-tint);
+}
+
+.date-time {
+  position: absolute;
+  right: 5px;
+  top: 3px;
+  padding: 13px;
+}
+
+.started-task-buttons {
+  width: 100px;
+}
+
+.border-line {
+  border-top: 1px solid;
+  border-top-color: var(--ion-color-light);
+}
+
+.goto-tasks-button {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.goto-tasks-button-text {
+  @extend .basic-text;
+  @extend .capitalize;
+  margin-left: 5px;
+}
+
+.your-done {
+  position: relative;
+  text-align: center;
+}
+
+.your-done-label {
+  @extend .basic-title;
+  @extend .capitalize;
+  margin-right: 10px;
+}
+
+.your-done-checkmark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.spacing-up-down {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.alarm-item {
+  --background-hover: none;
+  --background-activated: none;
+  --background-focused: none;
+  --ripple-color: var(--ion-color-tertiary);
+}
+
+.extra-buttons {
+  text-align: center;
+}
+
+.g-reminder {
+  padding-left: 20px;
+}
+
+.g-reminder p {
+  color: var(--ion-color-secondary);
+}

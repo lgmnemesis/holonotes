@@ -1,0 +1,11 @@
+@import '../../styles/text-and-fonts';
+
+.content {
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow-x: hidden;
+}
+
+ion-item {
+  --border-color: var(--ion-color-light);
+}

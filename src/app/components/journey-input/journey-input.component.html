@@ -1,0 +1,46 @@
+<div class="with-box-shadow">
+  <ion-item lines="none">
+    <ion-label class="label-input basic-text" position="floating">{{inputPlaceHolder}}</ion-label>
+    <ion-input
+      class="name-input"
+      [autofocus]="false"
+      [value]="name"
+      (keydown.enter)="toggleStart()"
+      (ionChange)="setInputName($event)">
+    </ion-input>
+  </ion-item>
+  <ion-item class="timepicker-item" lines="none">
+    <ion-button class="journey-button" *ngIf="showJourneyLink && !isAddMode"
+      slot="start" fill="clear" shape="round" (click)="gotoMyJourney()">
+      <ion-label class="basic-text capitalize" color="primary">My Journey</ion-label>
+    </ion-button>
+    <app-start-end-timepicker *ngIf="isAddMode"
+      slot="end"
+      [startTimeMilli]="startTime"
+      [endTimeMilli]="endTime"
+      (changeEvent)="setTimePicker($event)">
+    </app-start-end-timepicker>
+    <ion-label class="time-label basic-text" slot="end" *ngIf="!isAddMode">
+      {{ time }}
+    </ion-label>
+    <ion-button 
+      class="start-button"
+      shape="round" 
+      slot="end"
+      [color]="isStarted ? 'danger' : isAddMode ? 'primary' : 'good'"
+      (click)="toggleStart()">
+      <ion-icon [name]="isStarted ? 'square' : isAddMode ? 'add' : 'play'"></ion-icon>
+    </ion-button>
+    <ion-button
+      class="select-button"
+      fill="clear" 
+      shape="round"
+      slot="end"
+      color="primary"
+      (click)="toggleAddTime()">
+      <ion-icon size="small" [color]="isStarted ? 'secondary' : 'primary'"
+        [name]="isAddMode ? 'stopwatch' : isStarted ? 'trash' : 'time'">
+      </ion-icon>
+    </ion-button>
+  </ion-item>
+</div>

@@ -1,0 +1,6 @@
+{
+  "appId": "io.holonotes",
+  "appName": "App",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

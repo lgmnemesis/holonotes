@@ -1,0 +1,202 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+
+@media only screen and (max-width: $MEDIUM_WINDOW_WIDTH - 1) {
+  ion-input {
+    width: 100% !important;
+  }
+
+  ion-button {
+    width: 100% !important;
+  }
+
+  .top-header {
+    font-size: 40px !important;
+    line-height: 40px !important;
+  }
+}
+
+.top-header {
+  @extend .basic-title;
+  font-size: 64px;
+  line-height: 74px;
+  transition: transform 0.6s ease-out;
+}
+
+.header-text-color {
+  color: var(--ion-color-primary);
+}
+
+.padding-top {
+  padding-top: 10px;
+}
+
+.padding-bottom {
+  padding-bottom: 20px;
+}
+
+ion-col {
+  text-align: center;
+}
+
+ion-input {
+  width: 300px;
+  height: 40px;
+  border: 1px solid;
+  border-color: var(--ion-color-primary);
+  border-radius: 20px;
+  --border-radius: 20px;
+  --padding-start: 20px;
+  opacity: 1;
+  text-align: start;
+  transition: transform 0.6s, opacity 0.4s ease-out;
+}
+
+ion-button {
+  text-transform: none;
+  height: 45px;
+  opacity: 1;
+  transition: transform 0.6s, opacity 0.4s ease-out;
+}
+
+.input-row {
+  max-height: 100px;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.hide-row {
+  max-height: 0;
+}
+
+.hide-item {
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+.transition-down {
+  transform: translateY(50px);
+}
+
+.transition-up {
+  transform: translateY(-50px);
+}
+
+.email-sent-row {
+  opacity: 0;
+  transition: transform 0.6s, opacity 1s ease-in-out;
+}
+
+.email-sent-sent {
+  @extend .transition-up;
+  opacity: 1;
+}
+
+.email-sent {
+  font-size: 18px;
+}
+
+.sign-button {
+  position: absolute;
+  top: -1px;
+  right: 5px;
+  z-index: 2;
+  --padding-start: 0;
+  --padding-end: 0;
+  width: 30px !important;
+
+  ion-icon {
+    font-size: 2em;
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.sign-in-email {
+  margin: 0;
+  color: var(--ion-color-dark);
+  padding: 10px;
+}
+
+#google-signin-button {
+  background: url('/assets/imgs/btn_google_signin_dark_normal_web.png') no-repeat;
+  background-size: 191px 46px;
+  width: 191px !important;
+  height: 46px;
+  margin-top: 10px;
+}
+
+#google-signin-button:hover {
+  background: url('/assets/imgs/btn_google_signin_dark_focus_web.png') no-repeat;
+}
+
+#google-signin-button:active {
+  background: url('/assets/imgs/btn_google_signin_dark_pressed_web.png') no-repeat;
+}
+
+.guest-signin-button {
+  width: 186px;
+  height: 42px;
+}
+
+#preload {
+  display: none;
+}
+
+// loader spiner
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--ion-color-light);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}

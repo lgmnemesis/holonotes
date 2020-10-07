@@ -1,0 +1,309 @@
+<ion-toolbar color="tertiary">
+  <ion-label color="dark">
+    <p class="toolbar-title">
+      {{isNewTask ? 'New Routine' : isEditMode ? 'Settings' : task?.name}}
+    </p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" shape="round" 
+      [color]="isNewTask || isEditMode ? 'primary' : 'tertiary'"
+      (keypress)="close()" (click)="close()"
+      [disabled]="!isNewTask && !isEditMode">
+      {{leftToolbarButtonText}}
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button fill="clear" shape="round" 
+      [color]="isPopoverMode || isComponentMode ? 'tertiary' : 'primary'" 
+      [disabled]="(isNewTask || isEditMode || isPopoverMode || isComponentMode) && !canSave"
+      (keypress)="save()" (click)="save()">
+      {{ rightToolbarButtonText }}
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-toolbar color="tertiary" *ngIf="!isNewTask && !isStartedTask">
+  <ion-item lines="none">
+    <p class="alarm-duration color-medium">
+      Alarm <span class="color-dark">{{ task | taskDisplayTime }}</span>
+    </p>
+    <p class="alarm-duration color-primary">
+      Duration <span class="color-dark">{{ totalDuration }}</span>
+    </p>
+  </ion-item>
+  <ion-buttons slot="end" *ngIf="!isEditMode">
+    <ion-button *ngIf="task?.challenge?.shared_id"
+      slot="end" fill="clear" shape="round" color="primary"
+      (keypress)="toggleShareChallengeButton()" (click)="toggleShareChallengeButton()">
+      <ion-icon name="share"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="taskCategories?.length > 0"
+      slot="end" fill="clear" shape="round" color="primary"
+      (keypress)="openCategories()" (click)="openCategories()">
+      <ion-icon name="leaf"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill="clear" shape="round" color="primary"
+      (keypress)="edit()" (click)="edit()">
+      <ion-icon name="settings"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<app-social-sharing *ngIf="task?.challenge?.is_challenge"
+  [params]="socialSharingParams"
+  [isHidden]="!showSocialSharing">
+</app-social-sharing>
+
+<ion-content class="task-details-content-scrollbar">
+
+  <app-countdown *ngIf="isStartedTask"
+    [totalTime]="taskStarted?.duration"
+    [timePassedSec]="taskStarted?.timePassed">
+  </app-countdown>
+
+  <ng-container *ngIf="isNewTask || isEditMode">
+    <ion-item lines="inset">
+      <ion-label position="floating">{{ componentName }} Name</ion-label>
+      <ion-input
+        debounce="100"
+        [value]="task?.name"
+        [maxlength]="100" 
+        (ionChange)="inputId($event)">
+      </ion-input>
+    </ion-item>
+
+    <div class="margin-bottom"></div>
+  
+    <ion-item lines="none">
+      <ion-icon color="medium" name="alarm"></ion-icon>
+      <ion-label class="margin-left">Alarm</ion-label>
+    </ion-item>
+
+    <ng-container *ngFor="let alarm of task?.alarms; let ai = index">
+      <div class="bottom-line"></div>
+      <ion-item class="alarm-item" lines="none">
+        <div *ngFor="let day of dateTimeService.days.short; let di = index"
+          class="day-button" 
+          [class.day-button-active]="alarm?.days[di]" 
+          (click)="toggleDayButton(alarm, di)">
+            {{ dateTimeService.days.short[di] }}
+        </div>
+        <ion-datetime
+          class="date-time"
+          display-format="HH:mm" 
+          [value]="alarm.time"
+          [pickerOptions]="getPickerOptions(ai)">
+        </ion-datetime>
+      </ion-item>
+    </ng-container>
+      
+    <ng-container *ngIf="task?.alarms && task.alarms.length > 0">
+      <div class="bottom-line"></div>
+      <ion-item lines="none">
+        <ion-label color="primary" class="basic-text g-reminder">
+          Remind me with google calender
+          <p class="basic-text ion-text-wrap" *ngIf="isDisableGoogleCalenderReminderStr === 'true'">
+            You will be asked to sign in to your google calendar and give holonotes permissions to add and remove reminders.
+          </p>
+        </ion-label>
+        <ion-toggle 
+          [checked]="task?.google_calender && isDisableGoogleCalenderReminderStr === 'false'" 
+          (ionChange)="toggleGoogleCalender($event)">
+        </ion-toggle>
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngIf="!isStartedTask &&
+      task.challenge?.is_challenge &&
+      task.challenge?.id === 'learn_song' &&
+      !task.challenge?.project &&
+      !task.challenge.joined">
+      <div class="bottom-line"></div>
+      <ion-button
+        class="capitalize"
+        color="primary"
+        expand="full" 
+        fill="clear"
+        (click)="selectFromLibrary($event)">
+        Add Project From Your Library
+      </ion-button>
+    </ng-container>
+
+    <div class="bottom-line"></div>
+    <ion-button
+      class="capitalize"
+      color="medium" 
+      expand="full" 
+      fill="clear" 
+      (click)="addAlarm()">
+      Add Alarm
+    </ion-button>
+    <div class="bottom-line"></div>
+
+    <ion-button *ngIf="isNewTask"
+      class="task-begin-button"
+      color="primary"
+      expand="block"
+      fill="solid"
+      shape="round"
+      (click)="openCategories()">
+      <ion-label class="generic-button-label">
+        Add Categories
+      </ion-label>
+    </ion-button>
+
+    <p class="sub-text" *ngIf="isNewTask">{{ numOfCategoriesSelectedStr }}</p>
+
+    <ng-container *ngIf="isEditMode">
+      <ion-button
+        class="capitalize"
+        color="danger" 
+        expand="full" 
+        fill="clear" 
+        (click)="delete()">
+        Delete {{ componentName }}
+      </ion-button>
+      <div class="bottom-line"></div>
+    </ng-container>
+
+  </ng-container>
+
+  <ng-container *ngIf="!isNewTask && !isEditMode">
+    <ng-container *ngIf="!isStartedTask && !(taskCategories && taskCategories.length > 0) && !task.challenge?.is_challenge">
+      <p class="sub-text">No categories added yet.</p>
+      <p class="sub-text">You can add or create suitable category(s) for this routine</p>
+    </ng-container>
+    <ion-button *ngIf="!isStartedTask"
+      class="task-begin-button"
+      color="primary"
+      expand="block"
+      fill="solid"
+      shape="round"
+      (click)="beginOrOpenCategories()">
+      <ion-label class="generic-button-label">
+        {{ taskCategories?.length > 0 || task.challenge?.is_challenge ? 'Begin' : 'Add Categories' }}
+      </ion-label>
+    </ion-button>
+
+    <ng-container *ngIf="task.challenge?.is_challenge && !isStartedTask">
+      <app-challenge
+        [challenge]="task.challenge"
+        [inTaskView]="true"
+        [inPopoverView]="isPopoverMode"
+        [animate]="animate"
+        [canSetPublic]="!authService.isAnonymousLoggedIn()"
+        (selectGoalEvent)="selectFromLibrary($event)"
+        (gotoProjectEvent)="gotoProject($event?.projectId)">
+      </app-challenge>
+    </ng-container>
+
+    <ng-container *ngIf="isStartedTask">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+          <ion-col size="auto">
+            <ion-button
+              class="generic-button started-task-buttons"
+              [disabled]="taskStarted?.state === 0"
+              color="primary"
+              expand="block"
+              fill="solid"
+              shape="round"
+              (click)="stopTask()">
+              <ion-label class="generic-button-label">
+                Done
+              </ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col size="auto" *ngIf="!task.challenge?.is_challenge">
+            <ion-button
+              class="generic-button started-task-buttons"
+              color="primary"
+              expand="block"
+              fill="solid"
+              shape="round"
+              [disabled]="taskStarted?.state === 0 ||
+                currentCategoryIndex === taskStarted?.task?.categories_ids?.length"
+              (click)="skipCategory()">
+              <ion-label class="generic-button-label">
+                Skip
+              </ion-label>
+            </ion-button>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-button
+              class="generic-button started-task-buttons"
+              color="primary"
+              expand="block"
+              fill="solid"
+              shape="round"
+              [disabled]="taskStarted?.state === 0"
+              (click)="pauseResumeTask()">
+              <ion-label class="generic-button-label">
+                {{ taskStarted?.state === 1 ? 'Pause' : 'Resume' }}
+              </ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+
+    <p class="sub-text" *ngIf="!task.challenge?.is_challenge">{{ numOfCategoriesSelectedStr }} {{ categoryOutOf }}</p>
+
+    <ion-list lines="none">
+      <ng-container *ngFor="let category of taskCategories; trackBy: trackByCategoryId">
+        <ion-item @fade @rollUp *ngIf="!isStartedTask 
+        || !isPopoverMode || (isStartedTask && category.id === taskStarted?.categoryId)"
+          class="as-a-button" 
+          (click)="openSelectedCategory(category)">
+          <ion-icon 
+            [color]="!isStartedTask || (isStartedTask && taskStarted.categoryId === category.id) ? 'primary' : 'secondary'" 
+            name="leaf"></ion-icon>
+          <ion-label class="ion-text-wrap margin-left"
+            [color]="!isStartedTask || (isStartedTask && taskStarted.categoryId === category.id) ? 'dark' : 'secondary'">
+            <p class="capitalize">{{ category.name }}</p>
+            <ion-text color="secondary">
+              <p>{{ category.duration | minHours }} </p>
+            </ion-text>
+          </ion-label>
+          <app-progress-bar-circle 
+            *ngIf="isStartedTask && taskStarted.categoryId === category.id"
+            [totalTime]="taskStarted?.categoryDuration"
+            [timePassedSec]="taskStarted?.categoryTimePassed">
+          </app-progress-bar-circle>
+          <div class="play-button" (click)="play($event, category)" *ngIf="!isStartedTask">
+            <ion-icon color="primary" name="play"></ion-icon>
+          </div>
+        </ion-item>
+      </ng-container>
+
+      <div class="your-done" @fade @rollUp *ngIf="taskStarted?.state === 0"
+        [class.spacing-up-down]="!isPopoverMode">
+        <ion-label class="your-done-label">Great work, all done!</ion-label>
+        <ion-icon 
+          class="your-done-checkmark" color="good" name="checkmark" size="large">
+        </ion-icon>
+      </div>
+
+    </ion-list>
+
+  </ng-container>
+
+</ion-content>
+
+<app-fireworks *ngIf="taskStarted?.state === 0"></app-fireworks>
+
+<ng-container *ngIf="showExtraButtons">
+  <div class="extra-buttons" [class.goto-tasks-button]="isStartedTask">
+    <div class="border-line"></div>
+    <ion-button *ngIf="task?.challenge?.is_challenge && showExtraButtons?.showJournal"
+      color="primary" fill="clear" shape="round" (click)="gotoMyChallenges()">
+      <ion-icon size="small" name="chatbubbles"></ion-icon>
+      <p class="goto-tasks-button-text">Journal</p>
+    </ion-button>
+    <ion-button *ngIf="showExtraButtons.showActivity"
+      color="primary" fill="clear" shape="round" (click)="gotoTasks()">
+      <ion-icon size="small" name="alarm"></ion-icon>
+      <p class="goto-tasks-button-text">Activity</p>
+    </ion-button>
+  </div>
+</ng-container>

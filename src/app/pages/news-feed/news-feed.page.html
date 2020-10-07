@@ -1,0 +1,42 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar page-borders" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+      <ion-button class="name-b capitalize" fill="clear" shape="round" (click)="scrollToTop()">
+        <ion-label class="ion-text-center header-label" color="primary">
+          News Feed
+        </ion-label>
+      </ion-button>
+      <ion-button @translateYDownSlow *ngIf="canUpdateFeeds"
+        fill="solid" color="welcome" shape="round" (click)="updateFeedsButton()">
+        <ion-label class="ion-text-center small-text t-t-u" color="tertiary">
+          Tap to update
+        </ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content id="news-feed-content-scrollbar">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-stretch">
+      <ion-col *ngFor="let feed of feeds | newsFeedPagination:paginationCounter:paginationSize; trackBy: trackById"
+        size="auto" 
+        (click)="gotoFeed(feed)">
+       <img class="feed-img" [src]="feed?.item?.enclosure?.url || feed?.item?.thumbnail?.$?.url" [alt]="feed?.item?.title">
+       <p class="header-5-text header-text-margin">{{ feed?.item?.title }}</p>
+       <p class="basic-text content-text-margin">{{ feed?.item?.contentSnippet || feed?.item?.content }}</p>
+       <ion-item lines="none"></ion-item>
+       <ion-item class="footer-item" lines="none">
+         <ion-icon name="sunny" size="small" color="medium"></ion-icon>
+         <ion-label class="text-label small-text">{{ feed?.date | timeAgo }}</ion-label>
+       </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="500px" (ionInfinite)="updatePaginationData($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

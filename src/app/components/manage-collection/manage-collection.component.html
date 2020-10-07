@@ -1,0 +1,86 @@
+<ion-toolbar color="tertiary">
+  <ion-label class="ion-text-center basic-text" color="dark">
+      <p class="toolbar-title">{{modalTitle}}</p>
+    </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" shape="round" color="primary"
+      (keypress)="close()" (click)="close()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button slot="end" fill="clear" shape="round"
+      color="primary" [disabled]="!canSave" (keypress)="save()" (click)="save()">
+      Save
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<cdk-virtual-scroll-viewport itemSize="5">
+
+  <ion-list lines="none">
+
+    <ion-item *ngIf="libraryCollections.length === 0">
+      <ion-label class="ion-text-wrap basic-title">
+        You have no collections in your library.
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="inset" *ngIf="isNewCollection">
+      <ion-label class="basic-text" position="floating" autofocus="true">Collection Name</ion-label>
+      <ion-input
+        [value]="name"
+        [maxlength]="nameMaxLength" 
+        debounce="100" 
+        (keypress)="saveOnEnter($event)"
+        (ionChange)="inputId($event)">
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="isNewCollection">
+      <ion-label class="ion-text-wrap error-label">{{errorMessage}}</ion-label>
+    </ion-item>
+
+    <ng-container *ngIf="!isNewCollection && libraryCollections.length > 0">
+      <ion-item>
+        <ion-label class="basic-text" color="primary">{{selectCollectionsText}}</ion-label>
+      </ion-item>
+
+      <ion-searchbar
+        class="search-bar-md"
+        [class.search-bar-focus]="isSearchBarFocused"
+        placeholder="Search Collections"
+        autocorrect="off" 
+        autocomplete="on" 
+        spellcheck="true" 
+        type="text"
+        animated="true"
+        debounce="100"
+        (ionFocus)="setSearchBarFocused(true)" 
+        (ionBlur)="setSearchBarFocused(false)"
+        (ionChange)="search($event)">
+      </ion-searchbar>
+
+      <ng-container *ngFor="let collection of libraryCollections| searchFilter: searchText">
+        <ion-item *ngIf="!collection.dontShow && !onlyOneProject.includes(collection.id)">
+          <ion-label class="basic-text">{{collection.name}}</ion-label>
+          <ion-checkbox *ngIf="action === 'add'"
+            slot="start" 
+            mode="ios" 
+            checked="false" 
+            (ionChange)="toggleManageCollectionChecked($event, collection)">
+          </ion-checkbox>
+          <ion-checkbox *ngIf="action === 'move'"
+            slot="start" 
+            mode="ios" 
+            [checked]="collectionsChecked.get(collection.id)" 
+            (ionChange)="toggleManageCollectionCheckedMove($event, collection)">
+          </ion-checkbox>
+        </ion-item>
+      </ng-container>
+
+    </ng-container>
+
+  </ion-list>
+
+</cdk-virtual-scroll-viewport>

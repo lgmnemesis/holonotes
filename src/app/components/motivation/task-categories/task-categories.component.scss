@@ -1,0 +1,66 @@
+@import '../../../styles/text-and-fonts';
+
+.toolbar-title {
+  @extend .content-title;
+}
+
+.search-bar-md {
+  --ion-color-contrast-rgb: var(--ion-color-tertiary);
+  --background: var(--ion-color-tertiary);
+}
+
+.search-bar-focus {
+  --ion-color-light: var(--ion-color-primary);
+}
+
+.bottom-line {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-light);
+}
+
+.margin-left {
+  margin-left: 10px;
+}
+
+.new-button {
+  visibility: visible;
+  --box-shadow: 0;
+  --border-radius: 15px;
+  max-height: 25px !important;
+}
+
+.new-button-hidden {
+  visibility: hidden;
+}
+
+.height-for-animation {
+  height: 48px;
+}
+
+.as-a-button {
+  cursor: pointer;
+}
+
+.check-box {
+  position: absolute;
+  right: 7px;
+  top: 0px;
+  width: 52px;
+  height: 52px;
+  padding: 13px;
+  --background-checked: var(--ion-color-tertiary);
+  --checkmark-color: var(--ion-color-primary);
+}
+
+.error-label {
+  text-align: center;
+}
+
+.reorder {
+  margin-inline-end: 0;
+  -webkit-margin-end: 0;
+}
+
+.is-checked-bottom-line {
+  @extend .bottom-line;
+}

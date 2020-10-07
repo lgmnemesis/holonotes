@@ -1,0 +1,112 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="header-toolbar page-borders" color="tertiary">
+
+    <ion-buttons slot="start" *ngIf="isActiveSearchButton">
+      <ion-button color="primary" fill="clear" shape="round" (click)="cancelSearch()">
+        <ion-icon name="undo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-searchbar *ngIf="!isLessThanMediumWindowWidth || isActiveSearchButton"
+      [class.search-bar-md]="!isActiveSearchButton"
+      [class.search-bar-focus]="isSearchBarFocused"
+      [value]="searchText"
+      placeholder="Search Feed"
+      autocorrect="off" 
+      autocomplete="on" 
+      spellcheck="true" 
+      type="text"
+      mode="md"
+      animated="true"
+      debounce="10"
+      (ionFocus)="setSearchBarFocused(true)" 
+      (ionBlur)="setSearchBarFocused(false)"
+      (keypress)="search($event)"
+      (ionChange)="search($event)">
+    </ion-searchbar>
+
+    <ng-container *ngIf="!isActiveSearchButton">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home" text=""></ion-back-button>
+        <ion-button class="name-b capitalize" fill="clear" shape="round" (click)="updateFeed()">
+          <ion-label class="ion-text-center header-label" color="primary">
+            Explore
+          </ion-label>
+        </ion-button>
+        <ion-button @fade @translateXLeft *ngIf="activeTag"
+          class="update-feed-indication"
+          fill="clear" shape="round" (click)="updateFeed()">
+          <ion-icon name="arrow-back"></ion-icon>
+          <ion-label>Tap to clear</ion-label>
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <app-alarm-indication 
+          (animateEvent)="alarmIndicationEvent($event)">
+        </app-alarm-indication>
+        <ion-button class="search-b" *ngIf="isLessThanMediumWindowWidth" 
+          fill="clear" shape="round" (click)="gotoSearchBar()">
+          <ion-icon color="primary" name="search"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ng-container>
+  </ion-toolbar>
+</ion-header>
+
+<div class="loader-line" [class.loader-line-active]="isSearching"></div>
+
+<app-alarm-indication 
+  *ngIf="authService.isLoggedIn() && sharedService.isLessThanMediumWindowWidth()"
+  [isFab]="true"
+  [withBackground]="true"
+  (animateEvent)="alarmIndicationEvent($event)">
+</app-alarm-indication>
+
+<div>
+  <ion-slides #tagSlider [options]="slideOpts">
+    <ion-slide class="slider"
+      *ngFor="let tag of tags">
+      <div class="inner-slider-width">
+        <ion-button
+          class="tag-button"
+          [class.active-tag]="activeTag === tag"
+          color="dark" 
+          fill="clear"
+          shape="round"
+          (click)="searchInternal(tag)">
+          <ion-label class="tag-label">{{tag}}</ion-label>
+        </ion-button>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</div>
+
+<cdk-virtual-scroll-viewport itemSize="5" (scrolledIndexChange)="nextScrollBatch($event)">
+
+  <ion-item class="ion-text-center empty-search" lines="none" *ngIf="isEmptySearch">
+    <ion-label class="ion-text-wrap empty-text">
+      No Results Found {{ preLastSearchText }} <b>{{ lastSearchText }}</b>
+    </ion-label>
+  </ion-item>
+    
+  <ion-grid class="home-grid">
+    <ion-row class="ion-justify-content-center">
+      
+      <ng-container *ngFor="let project of feed; trackBy: trackByIndex">
+        <ion-col size="auto" *ngIf="!project.dontShow">
+          <div class="feed with_cover">
+            <div (click)="gotoProject(project)">
+              <img class="img-feed" [src]="project.cover_img || defaultCoverImg" alt="Cover">
+              <div class="text-label">{{ project.name }}</div>
+              <div class="text-artist">{{ project.artist || ' ' }}</div>
+            </div>
+            <div class="more-options" (click)="projectMoreOptions(project)">
+              <ion-icon class="more-options-icon" size="default" name="ellipsis-vertical"></ion-icon>
+            </div>
+          </div>
+        </ion-col>
+      </ng-container>
+
+    </ion-row>
+  </ion-grid>
+</cdk-virtual-scroll-viewport>

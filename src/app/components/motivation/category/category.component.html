@@ -1,0 +1,169 @@
+<ion-toolbar color="tertiary">
+  <ion-label color="dark">
+    <p class="toolbar-title" *ngIf="isNewCategory || canEdit">{{ title }}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" shape="round" 
+      [color]="isNewCategory || canEdit || project ? 'primary' : 'tertiary'"
+      [disabled]="!isNewCategory && !canEdit && !project"
+      (keypress)="cancel()" (click)="cancel()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button slot="end" fill="clear" shape="round" 
+      color="primary"
+      [disabled]="(isNewCategory || canEdit || project) && !canSave"
+      (keypress)="close()" (click)="close()">
+      {{isNewCategory ? 'Create' : canEdit || project ? 'Save' : 'Done'}}
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+  <ng-container *ngIf="isNewCategory || canEdit">
+    <ion-list lines="none">
+      <ion-item lines="inset">
+        <ion-label position="floating">Category Name</ion-label>
+        <ion-input
+          debounce="100"
+          [value]="newCategory?.name"
+          [maxlength]="100" 
+          (ionChange)="inputId($event)">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label @fade color="danger" class="error-label" *ngIf="inputError !== ''">
+          {{ inputError }}
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="inset">
+        <ion-label position="floating">Category Description</ion-label>
+        <ion-textarea
+          debounce="100"
+          [value]="newCategory?.description"
+          [maxlength]="500" 
+          (ionChange)="descriptionInput($event)">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-item></ion-item>
+      <ion-item>
+        <ion-label>
+          <p>Category Duration</p>
+          <ion-text color="secondary">
+            <p>{{ newCategory?.duration | minHours }} </p>
+          </ion-text>
+        </ion-label>
+        <ion-icon color="primary" slot="end" name="hourglass"></ion-icon>
+        <ion-datetime
+          class="date-time"
+          display-format="HH:mm" 
+          [value]="newCategory?.duration"
+          [pickerOptions]="getPickerOptions()">
+        </ion-datetime>
+      </ion-item>
+
+    </ion-list>
+  </ng-container>
+
+  <ng-container *ngIf="canEdit">
+    <div class="bottom-line"></div>
+    <p class="sub-text">Note: will be permanently deleted from all of you'r routines</p>
+    <ion-button
+      class="capitalize"
+      color="danger" 
+      expand="full" 
+      fill="clear" 
+      (click)="delete()">
+      Delete Category
+    </ion-button>
+  </ng-container>
+
+  <ion-card class="card" mode="ios" *ngIf="!isNewCategory && !canEdit">
+    <ion-card-header class="card-header">
+      <ion-card-title color="primary">{{ title }}</ion-card-title>
+      <ion-card-subtitle color="primary"></ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ng-container *ngIf="category?.description">
+        <p class="card-content">{{ category.description }}</p>
+      </ng-container>
+      <ng-container *ngIf="!category?.description && !category?.type">
+        <p class="card-content">This is your own custom categoy.</p>
+        <p class="card-content">
+          you can also add your own description, notes and resources, to make it more efficient.
+        </p>
+      </ng-container>
+      <ng-container *ngIf="category?.type === 'song' && !project">
+        <p class="card-content">Take the time to learn a song.</p> 
+        <p class="card-content">Improve every day, feel good about yourself.</p>
+        <p class="card-content">Have another complete song to add to your repertoire.</p>
+        <p class="card-line-spacing"></p>
+        <p class="card-content secondary-text-color">
+          Start working on a song from your library
+        </p>
+        <ion-button
+          class="task-begin-button"
+          color="primary"
+          expand="block"
+          fill="solid"
+          shape="round"
+          (click)="selectFromLibrary()">
+          <ion-label class="generic-button-label">
+            Select From Library
+          </ion-label>
+        </ion-button>
+      </ng-container>
+      <ng-container *ngIf="category?.type === 'song' && project">
+        <p class="card-content secondary-text-color">
+          You can change (or leave) category name as you like.
+        </p>
+        <p class="card-content secondary-text-color">
+          Click the save button when you're done.
+        </p>
+        <p class="card-line-spacing"></p>
+        <ion-item lines="inset">
+          <ion-label position="floating">Category Name</ion-label>
+          <ion-input
+            autofocus="true"
+            debounce="100"
+            [value]="title"
+            [maxlength]="100" 
+            (ionChange)="inputSelectedSongCategoryName($event)">
+          </ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label @fade color="danger" class="error-label" *ngIf="inputError !== ''">
+            {{ inputError }}
+          </ion-label>
+        </ion-item>
+      </ng-container>
+      <ng-container *ngIf="category?.type === 'custom_song'">
+        <p class="card-content" *ngIf="category?.description">
+          {{ category.description }}
+        </p>
+        <ng-container *ngIf="!category?.description">
+          <p class="card-content">This is your own custom categoy.</p>
+          <p class="card-content">
+            you can also add your own description, notes and resources, to make it more efficient.
+          </p>
+        </ng-container>
+        <p class="card-line-spacing"></p>
+        <ion-button *ngIf="category?.project_id && (!isActiveCategory || !inProjectPage)"
+          class="task-begin-button"
+          color="primary"
+          expand="block"
+          fill="solid"
+          shape="round"
+          (click)="gotoProject()">
+          <ion-label class="generic-button-label">
+            {{ !inProjectPage && isActiveCategory ? 'Go to song project' : 'Work on song' }}
+          </ion-label>
+        </ion-button>
+      </ng-container>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

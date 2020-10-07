@@ -1,0 +1,19 @@
+<div class="container">
+  <div>
+    <ion-datetime 
+      display-format="D MMM YYYY H:mm"
+      [value]="startTime"
+      (ionChange)="setStartTime($event)">
+    </ion-datetime>
+  </div>
+  <div class="delimiter">
+    <ion-icon name="remove"></ion-icon>
+  </div>
+  <div>
+    <ion-datetime 
+      display-format="HH:mm"
+      [value]="endTime"
+      (ionChange)="setEndTime($event)">
+    </ion-datetime>
+  </div>
+</div>

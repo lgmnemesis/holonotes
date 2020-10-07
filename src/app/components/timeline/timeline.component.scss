@@ -1,0 +1,94 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+
+ion-item {
+  --border-color: var(--ion-color-light);
+  background: var(--ion-color-tertiary);
+  z-index: 11;
+}
+
+h2 {
+  color: var(--ion-color-dark);
+}
+
+.opacity-0-5 {
+  opacity: 0.5;
+}
+
+.mediumColor {
+  color: var(--ion-color-medium);
+}
+
+.activeColor {
+  color: var(--ion-color-primary);
+}
+
+.display-inline {
+  display: inline-block;
+}
+
+.padding-right {
+  padding-right: 10px;
+}
+
+.tag-label {
+  padding-left: 30px;
+  margin: 0;
+}
+
+ion-item {
+  --min-height: 40px;
+}
+
+.active {
+  @extend .activeColor;
+  background: var(--ion-color-light);
+  --background: var(--ion-color-light);
+}
+
+p {
+  @extend .basic-text;
+  color: var(--ion-color-secondary);
+}
+
+.as-a-button {
+  cursor: pointer;
+}
+
+.more-button {
+  color: var(--ion-color-tertiary);
+  --padding-end: 0;
+}
+
+ion-item:hover .more-button {
+  color: var(--ion-color-secondary);
+}
+
+@media only screen and (max-width: $MEDIUM_WINDOW_WIDTH - 1px) {
+  .more-button {
+    color: var(--ion-color-secondary);
+  }
+}
+
+.empty-text {
+  @extend .header-4-text;
+  text-align: center;
+  margin-top: 50px;
+  color: var(--ion-color-secondary);
+}
+
+.label-arrow-icon {
+  margin-right: 5px;
+}
+
+.timeline-pointer {
+  position: absolute;
+  height: 7px;
+  width: 7px;
+  background: var(--ion-color-primary);
+  border-radius: 50%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}

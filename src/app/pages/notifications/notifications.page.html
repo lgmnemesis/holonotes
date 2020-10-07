@@ -1,0 +1,28 @@
+<ion-header class="ion-no-border">
+  <app-notes-toolbar
+    [showSearchBar]="false"
+    [showHomeButton]="showHomeButton"
+    [showLibraryButton]="auth.isLoggedIn()"
+    [showActivityButton]="auth.isLoggedIn()"
+    [showProfileButton]="true"
+    [showMoreOptionsButton]="false"
+    [isSmallDisplay]="sharedService.isLessThanMediumWindowWidth()"
+    (notesEvent)="notesEventHandler($event)">
+  </app-notes-toolbar>
+</ion-header>
+
+<ion-toolbar class="page-borders padding-top with-border-bottom" color="tertiary">
+  <ion-label class="capitalize" color="dark ion-text-start">
+    <p class="toolbar-title">Notifications</p>
+  </ion-label>
+</ion-toolbar>
+
+<ion-content class="ion-padding">
+  <ion-grid class="page-borders">
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <p class="header-4-text text-center">No Notifications yet.</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

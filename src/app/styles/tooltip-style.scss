@@ -1,0 +1,44 @@
+$tooltip-width: 700px; // Also configured in global.scss
+@media only screen and (max-width: $tooltip-width + 20px) {
+  .tooltip .tooltip-text {
+    width: calc(100% - 20px) !important;
+    left: 10px !important;
+  }
+}
+
+.tooltip-small-delay {
+  transition: opacity 0.1s ease-in-out !important;
+}
+
+.tooltip {
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  padding: 16px;
+  position: fixed;
+  z-index: -1;
+  width: var(--tooltip-width);
+  left: calc((100% - var(--tooltip-width)) / 2);
+  top: 10px;
+  border: 1px solid;
+  border-color: var(--ion-color-primary);
+  border-radius: 15px;
+  color: var(--ion-color-tertiary);
+  background-color: var(--ion-color-primary);
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  pointer-events: none;
+}
+
+.tooltip:hover .tooltip-text {
+  opacity: 1;
+  z-index: 12;
+}

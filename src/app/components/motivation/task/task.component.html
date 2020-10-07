@@ -1,0 +1,30 @@
+<div 
+  class="task-container"
+  [class.challenge-completed]="task?.is_completed" 
+  (click)="gotoTask()">
+  <ion-item class="alarm-item" lines="none">
+    <ion-icon
+      slot="start"
+      size="small"
+      [color]="task?.alarms?.length < 1 || task?.timeInMinutes === weekInMinutes 
+        ? 'secondary' : 'medium'" 
+      [name]="task?.alarms?.length < 1 || task?.timeInMinutes === weekInMinutes 
+        ? 'moon' : 'alarm'">
+    </ion-icon>
+    <ion-label [color]="task?.timeInMinutes === weekInMinutes ? 'secondary' : 'medium'">
+      {{ task | taskDisplayTime:tasksSchedulerService.currentDay:dateTimeService.days.long }}
+    </ion-label>
+    <ion-icon *ngIf="task?.is_active"
+      slot="end" color="danger" name="notifications-outline">
+    </ion-icon>
+    <ion-icon *ngIf="isTaskStarted"
+      slot="end" color="good" name="hourglass">
+    </ion-icon>
+  </ion-item>
+  <div class="task-inner">
+    <p class="basic-text">{{ task?.name }}</p>
+    <ion-icon *ngIf="showIcon"
+      class="inner-icon" [name]="!task.challenge?.is_challenge ? 'flag' : 'trophy'">
+    </ion-icon>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH) {
+  .page-borders {
+    padding-left: 27%;
+    padding-right: 27%;
+  }
+}
+
+.header-hight {
+  height: 50px;
+}
+
+.toolbar-title {
+  @extend .header-text;
+  padding-left: 10px;
+}
+
+.top-border {
+  border-top: 1px solid;
+  border-top-color: var(--ion-color-light);
+}
+
+.bottom-border {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-light);
+}
+
+.as-button {
+  color: var(--ion-color-primary);
+  cursor: pointer;
+}
+
+#update-picture {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+ion-textarea {
+  --padding-bottom: 50px;
+}
+
+ion-footer {
+  --background: var(--ion-color-tertiary) !important;
+  background: var(--ion-color-tertiary) !important;
+}
+
+.footer-md::before {
+  background-image: none;
+}
+
+.footer-ios .toolbar-ios:first-child .toolbar-background-ios {
+  border-width: 0 0 0;
+}
+
+.padding-top {
+  padding-top: 20px;
+}
+
+.padding-bottom {
+  padding-bottom: 50px;
+}
+
+.profile-label {
+  margin-left: 5px;
+}
+
+.profile-error {
+  color: var(--ion-color-danger);
+}
+
+.delete-account {
+  @extend .header-3-text;
+  text-align: center;
+  color: var(--ion-color-dark);
+}

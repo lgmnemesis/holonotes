@@ -1,0 +1,178 @@
+// http://ionicframework.com/docs/theming/
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/core.css";
+
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+// ****************** Global classes ******************
+//
+:root {
+  --tooltip-width: 700px;
+}
+
+ion-avatar {
+  width: 48px;
+  height: 48px;
+}
+
+.global-menu {
+  position: absolute;
+  opacity: 0;
+}
+
+.keyboard-shortcuts-modal-medium-size .modal-wrapper {
+ width: 80%;
+ height: 80%;
+}
+
+.project-preview-modal-medium-size .modal-wrapper {
+  width: 80%;
+  height: 80%;
+}
+
+.project-options-action-sheet .action-sheet-wrapper .action-sheet-container,
+.collectios-more-action-sheet .action-sheet-wrapper .action-sheet-container {
+  justify-content: center;
+  flex-direction: column;
+}
+
+.project-options-action-sheet .action-sheet-wrapper .action-sheet-group,
+.collectios-more-action-sheet .action-sheet-wrapper .action-sheet-group {
+  overflow: hidden;
+}
+
+.collectios-more-action-sheet .action-sheet-wrapper .action-sheet-group .collectios-more-action-sheet-edit-button {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.app-toast-message {
+  color: var(--ion-color-tertiary);
+  font-family: 'Darker Grotesque', sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
+  box-shadow: none !important;
+  border: 1px solid;
+  border-color: var(--ion-color-light);
+  border-radius: 20px;
+  padding: 3px 50px;
+}
+
+.searchbar-search-icon.sc-ion-searchbar-md {
+  top: 9px;
+}
+
+.collectios-more-action-sheet .action-sheet-delete-button,
+.collections-delete-projects-css-class .alert-message.sc-ion-alert-ios,
+.collections-delete-projects-css-class .collections-delete-css-class {
+  color: var(--ion-color-danger);
+}
+
+.task-details-date-picker-remove {
+  color: var(--ion-color-danger) !important;
+}
+
+.notifications-center-popover {
+  --min-width: 345px;
+  --min-height: 420px;
+}
+ 
+.notifications-center-popover-md .popover-content::-webkit-scrollbar {
+  width: 8px;
+}
+.notifications-center-popover-md .popover-content::-webkit-scrollbar,
+.notifications-center-popover-md .popover-content::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  overflow: visible;
+}
+.notifications-center-popover-md .popover-content::-webkit-scrollbar-thumb {
+  background: var(--ion-color-secondary-shade);
+}
+
+.timeline-popover,
+.videos-popover
+ {
+  --min-width: 230px;
+}
+
+.timeline-component-action-sheet .action-sheet-open,
+.timeline-component-action-sheet .action-sheet-open ion-icon,
+.timeline-component-action-sheet .copy-link-url,
+.timeline-component-action-sheet .copy-link-url ion-icon,
+.videos-component-action-sheet .action-sheet-open,
+.videos-component-action-sheet .action-sheet-open ion-icon,
+.videos-component-action-sheet .copy-link-url,
+.videos-component-action-sheet .copy-link-url ion-icon {
+  color: var(--ion-color-primary);
+  font-size: 1.2rem;
+  font-family: 'Darker Grotesque', sans-serif !important;
+}
+
+.timeline-component-action-sheet .action-sheet-delete,
+.timeline-component-action-sheet .action-sheet-delete ion-icon,
+.videos-component-action-sheet .action-sheet-delete,
+.videos-component-action-sheet .action-sheet-delete ion-icon {
+  color: var(--ion-color-danger);
+  font-size: 1.2rem;
+  font-family: 'Darker Grotesque', sans-serif !important;
+}
+
+.journey-time-input-popover {
+  --min-width: 415px;
+}
+
+.journey-time-input-xsm-popover,
+.tasks-menu-popover,
+.share-challenge-popover,
+.user-profile-popover {
+  --min-width: 315px;
+}
+
+.hide-gl-fel-chat {
+  display: none;
+}
+
+.journey-time-input-mobile-popover .popover-content {
+  top: 50px !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: auto !important;
+}
+
+// Custom colors - Added to variable.scss also
+.ion-color-good {
+  --ion-color-base: #10dc60;
+  --ion-color-base-rgb: 16,220,96;
+  --ion-color-contrast: #ffffff;
+  --ion-color-contrast-rgb: 255,255,255;
+  --ion-color-shade: #0ec254;
+  --ion-color-tint: #28e070;
+}
+.ion-color-welcome {
+  --ion-color-base: #6495ed;
+  --ion-color-base-rgb: 100,149,237;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0,0,0;
+  --ion-color-shade: #5883d1;
+  --ion-color-tint: #74a0ef;
+}
+
+.ion-color-notif {
+  --ion-color-base: #fafad2;
+  --ion-color-base-rgb: 250,250,210;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0,0,0;
+  --ion-color-shade: #dcdcb9;
+  --ion-color-tint: #fbfbd7;
+}

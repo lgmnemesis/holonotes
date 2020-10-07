@@ -1,0 +1,179 @@
+<ion-toolbar color="tertiary">
+
+  <ng-container *ngIf="isSmallDisplay">
+    <ion-grid class="ion-no-padding" *ngIf="!isActiveSearchButton">
+      <ion-row class="ion-justify-content-center ion-align-items-center">
+
+        <ion-col size="auto" *ngIf="showHomeButton">
+          <ion-button
+            fill="clear"
+            [color]="'/home' | toolbarTabColor: router.url"
+            (click)="gotoHomePage($event)">
+            <ion-icon slot="icon-only" size="default" name="musical-notes"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="auto" *ngIf="showLibraryButton">
+          <ion-button
+            fill="clear"
+            [color]="'/library' | toolbarTabColor: router.url"
+            (click)="gotoLibraryPage($event)">
+            <ion-icon slot="icon-only" size="default" name="book"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="auto" *ngIf="showActivityButton">
+          <ion-button
+            fill="clear"
+            [color]="'/activity' | toolbarTabColor: router.url"
+            (click)="gotoActivityPage($event)">
+            <ion-icon slot="icon-only" size="default" name="pulse"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="auto" *ngIf="showSearchBar">
+          <ion-button fill="clear" color="dark" (click)="gotoSearchBar($event)">
+            <ion-icon slot="icon-only" size="default" name="search"></ion-icon>
+          </ion-button>
+        </ion-col>
+      
+        <ion-col size="auto" *ngIf="showProfileButton">
+          <ion-button fill="clear" (click)="userProfilePopoverEvent($event)">
+            <div class="notif-indication-small" *ngIf="isActiveNotifications"></div>
+            <ion-icon *ngIf="auth.isSubscribe && !auth.isLoggedIn()"
+              slot="icon-only"
+              name="log-in">
+            </ion-icon>
+            <ion-icon *ngIf="auth.isLoggedIn()"
+              slot="icon-only"
+              [color]="isActiveProfileButton ? 'primary' : 'dark'"  
+              name="apps">
+            </ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="auto" *ngIf="showMoreOptionsButton">
+          <ion-button fill="clear" (click)="moreOptionsPopoverEvent($event)">
+            <ion-icon slot="icon-only" size="default" color="secondary" name="ellipsis-vertical"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+    <ng-container *ngIf="isActiveSearchButton">
+      <ion-buttons slot="start">
+        <ion-button color="primary" fill="clear" (click)="cancelSearch($event)">
+          <ion-icon slot="icon-only" name="undo"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <ion-searchbar
+        [class.search-bar-focus]="isSearchBarFocused"
+        [placeholder]="searchPlaceHolder"
+        [value]="searchText"
+        autocorrect="off" 
+        autocomplete="on" 
+        spellcheck="true"
+        type="text"
+        mode="md"
+        animated="true"
+        debounce="10"
+        (ionFocus)="setSearchBarFocused(true)" 
+        (ionBlur)="setSearchBarFocused(false)"
+        (keypress)="search($event)"
+        (ionChange)="search($event)">
+      </ion-searchbar>
+    </ng-container>
+
+  </ng-container>
+      
+  <ng-container *ngIf="!isSmallDisplay">
+    <ion-buttons slot="start">
+      <ion-button 
+        *ngIf="showHomeButton" 
+        class="custome-header-button"
+        shape="round"
+        [color]="'/home' | toolbarTabColor: router.url"
+        (click)="gotoHomePage($event)">
+        <ion-label 
+          class="label-text"
+          [class.label-active]="('/home' | toolbarTabColor: router.url)==='primary'">
+          {{homeTooltipText}}
+        </ion-label>
+      </ion-button>
+
+      <ion-button 
+        *ngIf="showLibraryButton" 
+        class="custome-header-button"
+        shape="round"
+        [color]="'/library' | toolbarTabColor: router.url"
+        (click)="gotoLibraryPage($event)">
+        <ion-label 
+          class="label-text"
+          [class.label-active]="('/library' | toolbarTabColor: router.url)==='primary'">
+          {{libraryTooltipText}}
+        </ion-label>
+      </ion-button>
+
+      <ion-button 
+        *ngIf="showActivityButton" 
+        class="custome-header-button"
+        shape="round"
+        [color]="'/activity' | toolbarTabColor: router.url"
+        (click)="gotoActivityPage($event)">
+        <ion-label 
+          class="label-text"
+          [class.label-active]="('/activity' | toolbarTabColor: router.url)==='primary'">
+          {{activityTooltipText}}
+        </ion-label>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-searchbar *ngIf="showSearchBar"
+      class="search-bar-md"
+      [class.search-bar-focus]="isSearchBarFocused"
+      [placeholder]="searchPlaceHolder"
+      [value]="searchText"
+      autocorrect="off" 
+      autocomplete="on" 
+      spellcheck="true"
+      type="text"
+      mode="md"
+      animated="true"
+      debounce="10"
+      (ionFocus)="setSearchBarFocused(true)" 
+      (ionBlur)="setSearchBarFocused(false)"
+      (keypress)="search($event)"
+      (ionChange)="search($event)">
+    </ion-searchbar>
+
+    <ion-buttons slot="end">
+
+      <app-alarm-indication 
+        (animateEvent)="alarmIndicationEvent($event)">
+      </app-alarm-indication>
+  
+      <ion-button *ngIf="showProfileButton" 
+        [class.sign-in]="auth.isSubscribe && !auth.isLoggedIn()"
+        color="primary"
+        fill="clear"
+        shape="round"
+        (click)="userProfilePopoverEvent($event)">
+        <div class="notif-indication" *ngIf="isActiveNotifications"></div>
+        <ion-icon *ngIf="auth.isLoggedIn()"
+          [color]="isActiveProfileButton ? 'primary' : 'dark'"  
+          name="apps">
+        </ion-icon>
+        <ion-icon *ngIf="auth.isLoggedIn()" name="caret-down"></ion-icon>
+        <p *ngIf="auth.isSubscribe && !auth.isLoggedIn()">Sign In</p>
+      </ion-button>
+
+      <ion-button *ngIf="showMoreOptionsButton" (click)="moreOptionsPopoverEvent($event)">
+        <ion-icon size="default" color="secondary" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ng-container>
+
+</ion-toolbar>

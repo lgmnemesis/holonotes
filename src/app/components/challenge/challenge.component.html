@@ -1,0 +1,219 @@
+<ion-grid [@.disabled]="inTaskView || !animate">
+  <ion-row @slideXLeft class="ion-justify-content-center ion-align-items-center center-row" [class.popover-view]="inPopoverView" *ngIf="step === 1">
+
+    <ion-col size="12" *ngIf="!isNewCustomChallenge ||
+      internalChallenge?.id === 'learn_song' ||
+      internalChallenge?.id === 'new_song_each_time'">
+      <p class="header-5-text" *ngIf="!inTaskView &&
+        internalChallenge?.id !== 'learn_song' &&
+        internalChallenge?.id !== 'new_song_each_time'">
+        {{ internalChallenge?.name }}
+      </p>
+      <p class="title-no-margin white-space" *ngFor="let desc of internalChallenge?.description; let i = index"
+        [class.description]="i === 0">
+        {{ desc }}
+      </p>
+      <p *ngIf="withJourney">{{ internalChallenge?.journey_desc }}</p>
+    </ion-col>
+    <ng-container *ngIf="inTaskView">
+      <div class="c-info"></div>
+      <ion-col class="info-col" size="12" *ngIf="internalChallenge.id === 'learn_song' && internalChallenge?.project?.name">
+        <ion-item class="center-text">
+          <ion-label class="basic-text">Song</ion-label>
+          <ion-label class="basic-text white-space">
+            {{ internalChallenge?.project?.name }}
+            <p class="basic-text" *ngIf="internalChallenge?.project?.artist">{{ internalChallenge?.project?.artist }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col class="info-col" size="12" *ngIf="internalChallenge?.is_in_weeks && internalChallenge.days > 1">
+        <ion-item class="center-text">
+          <ion-label class="content-text white-space">This Week {{ internalChallenge?.id === 'new_song_each_time' ? '' : 'Goal' }}</ion-label>
+          <ion-label class="basic-text white-space" *ngIf="currentWeekGoalText || journalView || internalChallenge?.joined">
+            {{ currentWeekGoalText || 'Not Set' }}
+            <p class="basic-text" *ngIf="currentWeekGoalSubText">{{ currentWeekGoalSubText }}</p>
+          </ion-label>
+          <ion-button class="select-goal-button" *ngIf="!currentWeekGoalText && !journalView && !internalChallenge?.joined"
+            slot="end"
+            fill="clear" 
+            color="primary" 
+            shape="round"
+            (click)="selectGoal()">
+              Select from library
+          </ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col class="info-col" size="12" *ngIf="!isChallengeDone">
+        <ion-item class="center-text">
+          <ion-label class="content-text">Day</ion-label>
+          <ion-label class="current-day-label content-text">
+            {{ currentDay }}
+            <ion-icon *ngIf="!isDoneForToday"
+              class="current-day-icon" color="danger" name="stopwatch">
+            </ion-icon>
+            <ion-icon *ngIf="isDoneForToday"
+              class="current-day-icon" color="good" name="checkmark">
+            </ion-icon>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col class="info-col" size="12" *ngIf="internalChallenge?.is_in_weeks">
+        <ion-item class="center-text">
+          <ion-label class="content-text">Week</ion-label>
+          <ion-label class="current-day-label content-text">
+            {{ currentWeek }}
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col class="info-col" size="12">
+        <ion-item class="center-text">
+          <ion-label class="basic-text">Start</ion-label>
+          <ion-label class="basic-text">{{ startDayStr }}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col class="info-col" size="12">
+        <ion-item class="center-text">
+          <ion-label class="basic-text">End</ion-label>
+          <ion-label class="basic-text">{{ endDayStr }}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col class="info-col" size="12">
+        <ion-item class="center-text">
+          <ion-label class="basic-text">Length</ion-label>
+          <ion-label class="basic-text">{{ days }} {{ internalChallenge?.is_in_weeks ? 'Week' : 'Day' }}{{ days > 1 ? 's' : '' }}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col class="info-col" size="12" *ngIf="sharedChallenge?.stats?.participants">
+        <ion-item class="center-text">
+          <ion-label class="basic-text">Participants</ion-label>
+          <ion-label class="basic-text">{{ sharedChallenge?.stats?.participants }}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ng-container *ngIf="internalChallenge?.is_in_weeks">
+        <ion-col class="info-col" size="12" *ngFor="let goal of internalChallenge?.week_goal; let i = index">
+          <ion-item class="center-text">
+            <ion-label class="basic-text i-label ion-text-wrap">Week {{ i + 1 }}</ion-label>
+            <ion-button class="i-button" (click)="gotoProject(goal.project_id)"
+              fill="clear" 
+              color="primary" 
+              shape="round"
+              [disabled]="!goal?.text">
+                <ion-label class="b-i-label basic-text capitalize ion-text-wrap">
+                  {{ goal?.text || 'Not Set' }}
+                  <p class="basic-text" *ngIf="goal?.sub_text">{{ goal?.sub_text }}</p>
+                </ion-label>
+            </ion-button>
+          </ion-item>
+        </ion-col>
+      </ng-container>
+    </ng-container>
+    <ion-col size="12" *ngIf="internalChallenge?.goal && !inPopoverView && !inTaskView">
+      <p class="goal-title header-5-text">Goal</p>
+      <p class="title-no-margin white-space">{{ internalChallenge?.goal }}</p>
+    </ion-col>
+
+    <ng-container *ngIf="isNewCustomChallenge">
+      <ion-col size="12">
+        <ng-container *ngIf="internalChallenge?.description?.length === 0">
+          <p class="content-text white-space">Set your goal and challenge yourself.</p>
+          <p class="basic-text white-space">Whether it's practicing your guitar, prepering songs for you bend, anything, just pick the timeline that fits you best and start the challenge.</p>
+        </ng-container>
+        <ion-item>
+          <ion-label class="basic-text" position="floating">Challenge title?</ion-label>
+          <ion-input 
+            type="text" 
+            autofocus="false"
+            [value]="internalChallenge?.name"
+            [debounce]="10" 
+            [minlength]="nameMinLength" 
+            [maxlength]="nameMaxLength"
+            (ionChange)="setName($event)">
+          </ion-input> 
+        </ion-item>
+        <ion-item *ngIf="!internalChallenge?.goal">
+          <ion-label class="basic-text ion-text-wrap" position="floating">Describe your goal, What are you trying to achive?(optional)</ion-label>
+          <ion-textarea type="text"
+            [value]="internalChallenge?.goal"
+            [debounce]="10" 
+            [maxlength]="goalMaxLength"
+            (ionChange)="setGoal($event)">
+          </ion-textarea>
+        </ion-item>
+    
+        <div class="d-min" [class.d-min-margin]="!internalChallenge?.joined">
+          <p class="basic-text white-space">
+            {{ internalChallenge?.joined ? 'Time allocated each day:' : 'How much time will you allocate each day?' }}
+          </p>
+          <input 
+            id="i-min" type="number"
+            [class.i-min-c-select]="!internalChallenge?.joined"
+            [class.i-min-c-disabled]="internalChallenge?.joined"
+            [disabled]="internalChallenge?.joined" 
+            [value]="durationNumber" 
+            (keyup)="setDuration($event)">
+          <p class="basic-text white-space">minute(s)</p>
+          <p class="duration-error basic-text white-space" [class.hide]="!durationError">The maximum time is 300 minutes.</p>
+        </div>
+
+        <p class="p-range basic-text white-space">
+          {{ internalChallenge?.joined ? 'Challenge Duration:' : 'How long is the challenge?' }}
+          <b>{{ days }}</b> {{ daysText }}
+        </p>
+        <ion-item lines="none" *ngIf="!internalChallenge?.joined">
+          <ion-range 
+            [min]="minDays" [max]="maxDays" step="1" [value]="days" [debounce]="10" (ionChange)="setDays($event)">
+            <ion-icon color="medium" size="small" slot="start" name="stopwatch"></ion-icon>
+            <ion-icon color="medium" slot="end" name="stopwatch"></ion-icon>
+          </ion-range>
+        </ion-item>
+      </ion-col>
+    </ng-container>
+
+    <ion-col size="12" *ngIf="!inTaskView">
+      <ion-button [disabled]="!canNext" shape="round" (click)="gotoStep(2)">
+        <ion-label>Let's do this</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row @slideXLeft class="ion-justify-content-center ion-align-items-center center-row" [class.popover-view]="inPopoverView" *ngIf="step === 2">
+    <ion-col size="12">
+      <p class="title-no-margin white-space">
+        Pick a time of day that works best for you to do the challenge
+        <br>(You can always change it later)<br>
+      </p>
+      <ion-item lines="none" class="d-center">
+        <ion-datetime
+          color="primary"
+          display-format="HH:mm" 
+          [value]="internalChallenge?.time"
+          (ionChange)="setChallengeTime($event)">
+        </ion-datetime>
+      </ion-item>
+    </ion-col>
+    <!-- <ion-col size="12" *ngIf="!inStartView">
+      <ion-button shape="round" (click)="''">
+        <ion-label>Invite Friends</ion-label>
+      </ion-button>
+    </ion-col> -->
+    <ion-col size="12" *ngIf="canSetPublic && !internalChallenge?.joined">
+      <ion-item lines="none">
+        <ion-label class="ion-text-wrap basic-text">
+          Make your challenge public.
+          <p class="basic-text no-padding">(Let others join you and share each other progress)</p>
+        </ion-label>
+        <ion-checkbox 
+          slot="start" 
+          mode="ios" 
+          [checked]="false" 
+          (ionChange)="toggleChallengeIsPublic()">
+        </ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col size="12">
+      <ion-button shape="round" (click)="startChallenge()">
+        <ion-label class="basic-text">{{ startChallengeText }}</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

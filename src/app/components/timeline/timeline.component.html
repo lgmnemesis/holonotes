@@ -1,0 +1,50 @@
+<ion-content id="timeline-content-scrollbar">
+  <div @fade @translateYUp *ngIf="sharedService.timelineMap.size === 0">
+    <p class="empty-text">No Bookmarks</p>
+  </div>
+  <ng-container *ngFor="let pair of sharedService.timelineMap | keyvalue; trackBy: trackByKey">
+
+    <ion-item (click)="tagWasPressed($event, pair.key)"
+      lines="none"
+      class="as-a-button">
+      <ion-icon class="label-arrow-icon" *ngIf="sharedService.showBookmarksForTag.get(pair.key)"
+        slot="start" size="small" name="caret-up">
+      </ion-icon>
+      <ion-icon class="label-arrow-icon" *ngIf="!sharedService.showBookmarksForTag.get(pair.key)"
+        slot="start" size="small" name="caret-down">
+      </ion-icon>
+      <ion-label class="ion-text-wrap capitalize">
+        <h2 class="basic-text activeColor">{{ pair.key | tagLabelDisplay }}</h2>
+      </ion-label>
+    </ion-item>
+
+    <ng-container *ngIf="sharedService.showBookmarksForTag.get(pair.key)">
+      <ion-item @heightDownFast *ngFor="let bookmark of pair.value; trackBy: trackById"
+        lines="none"
+        class="as-a-button"
+        [class.active]="bookmark.id | isEqual: sharedService.activeBookmarkId"
+        (keypress)="bookmarkSelected($event, bookmark)" (click)="bookmarkSelected($event, bookmark)">
+      
+        <div class="timeline-pointer" *ngIf="bookmark.id | isEqual: sharedService.timelinePointerBookmarkId"></div>
+
+        <ion-label class="ion-text-wrap tag-label">
+          <h2 class="basic-text">{{bookmark.name}}</h2>
+          <p *ngIf="bookmark.marker_name"
+            class="activeColor opacity-0-5 display-inline padding-right">
+            {{bookmark.marker_name}}
+          </p>
+          <p class="mediumColor opacity-0-5 display-inline">
+            {{ bookmark | getTime }}
+          </p>
+          <p>{{bookmark.description}}</p>
+        </ion-label>
+      
+        <ion-button class="more-button" fill="clear" slot="end" shape="round" 
+          (click)="moreButtonWasPressed($event, bookmark)">
+          <ion-icon size="large" name="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      
+      </ion-item>
+    </ng-container>
+  </ng-container>
+</ion-content>

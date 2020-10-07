@@ -1,0 +1,158 @@
+<ion-toolbar color="tertiary">
+  <ion-label class="basic-text" color="dark">
+    <p class="toolbar-title">{{modalTitle}}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" shape="round" color="primary" 
+      (keypress)="close()" (click)="close()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button fill="clear" shape="round" color="primary" [disabled]="!isCanSave()" 
+      (keypress)="save()" (click)="save()">
+      {{saveButtonText}}
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content id="manage-proj-content-scrollbar">
+  <ion-list *ngIf="!showInstructions">
+    <ion-item>
+      <ion-label class="basic-text" position="floating">{{projectNameText}}</ion-label>
+      <ion-input 
+        debounce="100" 
+        [value]="name" 
+        [maxlength]="nameMaxLength" 
+        (keypress)="saveOnEnter($event)" (ionChange)="inputId($event)">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="basic-text" position="floating">Artist</ion-label>
+      <ion-input 
+        debounce="100" 
+        [value]="artist" 
+        [maxlength]="nameMaxLength" 
+        (keypress)="saveOnEnter($event)"
+        (ionChange)="inputArtist($event)">
+      </ion-input>
+    </ion-item>
+    <br>
+
+    <ng-container *ngIf="editedName">
+      <ion-item lines="none" *ngIf="authService.isLoggedIn() && project.videos?.length > 1">
+        <ion-label class="basic-text">Change Cover Picture</ion-label>
+        <ion-checkbox 
+          slot="start" 
+          mode="ios" 
+          [checked]="isChangeCoverPictureChecked" 
+          (ionChange)="toggleCoverPictureChecked()">
+        </ion-checkbox>
+      </ion-item>
+      <ion-grid @fade @translateYDown *ngIf="isChangeCoverPictureChecked">
+        <ion-row>
+          <ion-col *ngFor="let video of project.videos"
+            class="like-a-button"
+            [class.active-cover]="isActiveCover(video)"
+            (keypress)="coverPictureSelected(video)" 
+            (click)="coverPictureSelected(video)" 
+            size="4">
+            <img [src]="video.thumbnail_url">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-item lines="none" *ngIf="isProjectOwner()">
+        <ion-label class="basic-text" *ngIf="isProjectPublic">Project is public</ion-label>
+        <ion-label class="basic-text" *ngIf="!isProjectPublic">Set project as public</ion-label>
+        <ion-checkbox 
+          slot="start" 
+          mode="ios" 
+          [checked]="isProjectPublic" 
+          (ionChange)="toggleProjectIsPublic()">
+        </ion-checkbox>
+      </ion-item>
+
+      <ng-container *ngIf="dataStore.libraryCollections?.length > 0">
+        <ion-item lines="none">
+          <ion-label class="basic-text">Manage Collections</ion-label>
+          <ion-checkbox 
+            slot="start" 
+            mode="ios" 
+            checked="false" 
+            (ionChange)="toggleManageCollections()">
+          </ion-checkbox>
+        </ion-item>
+      </ng-container>
+
+      <ng-container *ngIf="isManageCollectionChecked">
+        <ion-item @fade @translateYDown lines="none">
+          <ion-label class="basic-text" color="primary">Add To or Remove From Collections</ion-label>
+        </ion-item>
+
+        <ion-searchbar @fade @translateYDown 
+          class="search-bar-md"
+          [class.search-bar-focus]="isSearchBarFocused"
+          placeholder="Search Collections"
+          autocorrect="off" 
+          autocomplete="on" 
+          spellcheck="true" 
+          type="text"
+          animated="true"
+          debounce="100"
+          (ionFocus)="setSearchBarFocused(true)" 
+          (ionBlur)="setSearchBarFocused(false)"
+          (ionChange)="search($event)">
+        </ion-searchbar>
+
+        <ng-container *ngFor="let collection of libraryCollections| searchFilter: searchText">
+          <ion-item @fade @translateYDown lines="none" *ngIf="!collection.dontShow">
+            <ion-label class="basic-text">{{collection.name}}</ion-label>
+            <ion-checkbox 
+              slot="start" 
+              mode="ios" 
+              [checked]="project.collections?.includes(collection.id)" 
+              (ionChange)="toggleManageCollectionChecked($event, collection)">
+            </ion-checkbox>
+          </ion-item>
+        </ng-container>
+      </ng-container>
+
+      <br>
+      <ion-button fill="clear" shape="round" color="primary" (click)="showKeyboardShortcuts()">
+        <ion-label class="ion-text-start basic-text">Keyboard Shortcuts</ion-label>
+      </ion-button>
+    </ng-container>
+  
+  </ion-list>
+
+  <ion-card *ngIf="showInstructions">
+    <iframe width="100%" height="380px" src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0&fs=0&loop=1&playsinline=1&rel=0&showinfo=0&start=20&end=25"></iframe>
+    <ion-card-content>
+      <br>
+      This is content, without any paragraph or header tags, within an ion-card-content element.
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer *ngIf="editedName && !showInstructions">
+  <ng-container  *ngIf="authService.isLoggedIn()">
+    <ion-button class="top-border" color="primary" expand="full" fill="clear" (click)="copy()">
+      <ion-label class="ion-text-center basic-text">{{ isMyProject ? 'Copy Project' : 'Add Project to Your Library' }}</ion-label>
+    </ion-button>
+    <ion-button [disabled]="!isProjectOwner()"
+      class="top-border" color="danger" expand="full" fill="clear" (click)="delete()">
+      <ion-label class="ion-text-center basic-text">Delete Project</ion-label>
+    </ion-button>
+    <p class="ion-text-center footer-text">{{deleteMessageText}}</p>
+  </ng-container>
+  <ng-container  *ngIf="!authService.isLoggedIn()">
+    <ion-button 
+      class="top-border bottom-border" 
+      color="primary" expand="full" fill="clear" (click)="signIn()">
+        Sign In
+    </ion-button>
+    <p class="ion-text-center footer-text">Sign in to add this project/song to your library</p>
+  </ng-container>
+</ion-footer>

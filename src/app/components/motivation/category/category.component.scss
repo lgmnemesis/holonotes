@@ -1,0 +1,65 @@
+@import '../../../styles/text-and-fonts';
+
+.toolbar-title {
+  @extend .content-title;
+}
+
+.error-label {
+  text-align: center;
+}
+
+.bottom-line {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-light);
+}
+
+.sub-text {
+  @extend .basic-text;
+  text-align: center;
+  color: var(--ion-color-secondary);
+  padding: 0 10px;
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.card-header {
+  text-align: center;
+}
+
+.card-content {
+  text-align: center;
+  @extend .basic-text;
+}
+
+.card-line-spacing {
+  padding: 10px 0;
+}
+
+.secondary-text-color {
+  color: var(--ion-color-dark);
+}
+
+.generic-button {
+  --border-radius: 15px;
+  --box-shadow: 0;
+}
+
+.task-begin-button {
+  @extend .generic-button;
+  margin: 10px 25px;
+  height: 44px;
+}
+
+.task-begin-button:hover,
+.generic-button:hover {
+  --ion-color-base: var(--ion-color-primary-shade) !important;
+}
+
+.generic-button-label {
+  @extend .basic-text;
+  text-transform: capitalize;
+  font-weight: normal;
+  color: var(--ion-color-tertiary);
+}

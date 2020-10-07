@@ -1,0 +1,61 @@
+@import '../../styles/text-and-fonts';
+@import '../../styles/global-style';
+
+@media only screen and (max-width: $MEDIUM_WINDOW_WIDTH) {
+  .header {
+    font-size: 1.4rem;
+  }
+
+  .container-top {
+    margin-top: 0;
+    margin-bottom: 20px !important;
+  }
+  
+  .container {
+    margin: 20px 0 !important;
+  }
+}
+
+.container-top {
+  margin-top: 0;
+  margin-bottom: 50px;
+}
+
+.container {
+  margin: 50px 0;
+}
+
+.with-box-shadow {
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+}
+
+.header {
+  @extend .header-3-text;
+  max-width: max-content;
+}
+
+.inner-container {
+  margin: 20px 0;
+}
+
+ion-icon {
+  padding-top: 4px;
+}
+
+ion-row {
+  align-items: center;
+}
+
+ion-button {
+  border: solid 1px;
+  border-color: var(--ion-color-tertiary);
+  height: 22px;
+  --padding-start: 5px;
+  --padding-end: 0;
+}
+
+ion-button:hover {
+  border-bottom-color: var(--ion-color-primary);
+}

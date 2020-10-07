@@ -1,0 +1,56 @@
+<ion-toolbar color="tertiary">
+  <ion-label class="ion-text-center" color="dark">
+    <p class="toolbar-title">{{modalTitle}}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" shape="round" color="primary" 
+      (keypress)="close()" (click)="close()">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button slot="end" fill="clear" color="primary" shape="round"
+      [disabled]="!canSave" (keypress)="save()" (click)="save()">
+      Save
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Search for a Song or Enter Video URL</ion-label>
+      <ion-input 
+        autofocus="true"
+        [value]="editFirstValue" 
+        [maxlength]="nameMaxLength" 
+        debounce="450"
+        (ionChange)="inputId($event)">
+      </ion-input>
+    </ion-item>
+    <div class="loader-line" [class.loader-line-active]="isSearching"></div>
+    <br>
+    <ion-item *ngIf="showMore">
+      <ion-thumbnail slot="start">
+        <img [src]="thumbnail_url">
+      </ion-thumbnail>
+      <ion-label class="ion-text-wrap">{{title}}</ion-label>
+    </ion-item>
+    <br>
+    <ion-item *ngIf="showMore">
+      <ion-label position="floating" autofocus="true">Title</ion-label>
+      <ion-input [maxlength]="nameMaxLength" [value]="title" (ionChange)="inputName($event)"></ion-input>
+    </ion-item>
+
+    <ion-item class="as-a-button" *ngFor="let item of searchRes"
+      (keypress)="clickedOnSearchRes(item)" (click)="clickedOnSearchRes(item)">
+      <ion-thumbnail slot="start">
+        <img [src]="item.snippet.thumbnails.default.url">
+      </ion-thumbnail>
+      <ion-label class="ion-text-wrap">{{item.snippet.title}}</ion-label>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

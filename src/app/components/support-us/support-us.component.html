@@ -1,0 +1,43 @@
+
+<ion-grid class="page-borders">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="auto">
+      <p class="s-h ion-text-wrap">Support Us</p>
+      <p class="content-text ion-text-wrap">
+        If you find Holonotes useful, there are many ways you can show your support.
+      </p>
+      <p class="content-text ion-text-wrap c-primary">Get in touch with us</p>
+      <p class="basic-text ion-text-wrap">
+        Leave a comment, ask questions, make a suggestion. you can do that in the 
+        <span class="comment-b" [class.comment-b-s]="showingComment" (click)="showCommentBox()">comment box</span>, via email or social media.
+      </p>
+      <p class="content-text ion-text-wrap c-primary">Contribute and share</p>
+      <p class="basic-text ion-text-wrap">
+        One of the easiest ways to help us is simply by creating and sharing your content.
+      </p>
+      <p class="content-text ion-text-wrap c-medium">Support us through Patreon</p>
+      <p class="basic-text ion-text-wrap">
+        A great way to support us monthly. you can cancel at any time!
+      </p>
+      <p class="content-text ion-text-wrap c-paypal">Support us through PayPal</p>
+      <p class="basic-text ion-text-wrap">
+        Quick and simple.
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="auto">
+      <img class="patron" (click)="openPatreon()" alt="Patreon" src="https://c5.patreon.com/external/logo/become_a_patron_button.png">
+    </ion-col>
+    <ion-col size="auto">
+      <img class="paypal" (click)="openPaypal()" alt="PayPal"
+        src="https://www.paypalobjects.com/digitalassets/c/website/marketing/apac/C2/logos-buttons/optimize/34_Blue_PayPal_Pill_Button.png">
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="auto">
+      <p class="content-text ion-text-wrap">"Musicians want to be the loud voice for so many quiet hearts."<b> - Billy Joel</b></p>
+    </ion-col>
+  </ion-row>
+  <ion-row><ion-col size="12" style="padding: 10px"></ion-col></ion-row>
+</ion-grid>

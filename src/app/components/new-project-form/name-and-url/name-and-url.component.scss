@@ -1,0 +1,112 @@
+@import '../../../styles/global-style';
+@import '../../../styles/text-and-fonts';
+@import '../../../styles/project-list-format-style';
+
+@media only screen and (max-width: $MEDIUM_WINDOW_WIDTH - 1px) {
+  .input-name {
+    width: 100% !important;
+  }
+
+  .input-col {
+    width: 100% !important;
+  }
+
+  .title {
+    margin-top: 10px !important;
+  }
+}
+
+.title {
+  @extend .basic-title;
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-top: 100px;
+}
+
+.input-name {
+  width: 450px;
+  margin-top: 2px;
+  border: 1px solid;
+  border-color: var(--ion-color-secondary);
+  border-radius: 20px;
+  --border-radius: 20px;
+  --padding-start: 20px;
+  max-height: 100px;
+}
+
+.input-focus {
+  border-color: var(--ion-color-primary) !important;
+}
+
+.back-button {
+  height: 40px;
+  width: 100px;
+  text-transform: none;
+  --box-shadow: none;
+  --border-width: 1px;
+  opacity: 0.7;
+  transition: opacity 0.4s ease-out;
+}
+
+.back-button-active:hover {
+  --ion-color-base: var(--ion-color-primary-shade) !important;
+  opacity: 1;
+}
+
+.next-button {
+  height: 40px;
+  width: 100px;
+  text-transform: none;
+  --box-shadow: none;
+  opacity: 0.4;
+  pointer-events: none;
+  transition: opacity 0.8s ease-out;
+}
+
+.next-button-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.next-button-active:hover {
+  --ion-color-base: var(--ion-color-primary-shade) !important;
+}
+
+.loader-line {
+  width: 0;
+  height: 1px;
+  background: var(--ion-color-primary);
+  -webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+  transition: width 1s;
+}
+
+.loader-line-active {
+  width: 100%;
+}
+
+.indication-tooltip {
+  @extend .basic-text;
+  position: absolute;
+  bottom: 100px;
+  color: var(--ion-color-primary);
+  background: var(--ion-color-tertiary);
+  border-radius: 20px;
+  border: 1px solid;
+  padding: 4px 15px;
+  right: 10px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+ion-item {
+  padding: 0 10px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.as-a-button {
+  cursor: pointer;
+}

@@ -1,0 +1,27 @@
+<ion-card>
+  <ion-item class="total" lines="none">
+    <ion-label class="font-t label-end" slot="end">Total: <b>{{ totalTime }}</b></ion-label>
+  </ion-item>
+  <ion-item class="sort" lines="full">
+    <ion-button color="dark" slot="start" fill="clear" (click)="toggleSortByName()">
+      <ion-label class="font-t">Description</ion-label>
+      <ion-icon
+        [name]="isSortNameDown ? 'caret-up' : 'caret-down'"
+        [color]="isSortNameActive ? 'dark' : 'tertiary'">
+      </ion-icon>
+    </ion-button>
+    <ion-button color="dark" slot="end" fill="clear" (click)="toggleSortByTime()">
+      <ion-label class="font-t">Duration</ion-label>
+      <ion-icon 
+        [name]="isSortTimeDown ? 'caret-down' : 'caret-up'" 
+        [color]="!isSortNameActive ? 'dark' : 'tertiary'">
+      </ion-icon>
+    </ion-button>
+  </ion-item>
+  <div class="item-container" *ngFor="let item of list">
+    <ion-label class="font-t label-name" color="primary">{{ item?.name || 'No Description' }}</ion-label>
+    <ion-label class="font-t time-label">
+      <b>{{ item?.displayTime }}</b>
+    </ion-label>
+  </div>
+</ion-card>

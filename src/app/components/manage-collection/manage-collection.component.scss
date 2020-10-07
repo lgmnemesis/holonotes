@@ -1,0 +1,22 @@
+@import '../../styles/global-scroll-style.scss';
+@import '../../styles/text-and-fonts';
+
+.toolbar-title {
+  @extend .content-title;
+}
+
+.search-bar-md {
+  --ion-color-contrast-rgb: var(--ion-color-tertiary);
+  --background: var(--ion-color-tertiary);
+}
+
+.search-bar-focus {
+  --ion-color-light: var(--ion-color-primary);
+}
+
+.error-label {
+  @extend .content-text;
+  color: var(--ion-color-danger);
+  margin-top: 40px;
+  opacity: 0.7;
+}

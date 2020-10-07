@@ -1,0 +1,61 @@
+<div class="footer-header"></div>
+<div class="page-borders">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto"> 
+        <ion-button 
+          class="button-padding" 
+          fill="clear" 
+          shape="round"
+          (click)="followOnFacebook()">
+          <ion-icon class="rounded-icon" name="logo-facebook"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto"> 
+        <ion-button 
+          class="button-padding" 
+          fill="clear" 
+          shape="round"
+          (click)="followOnTwitter()">
+          <ion-icon class="rounded-icon" name="logo-twitter"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button 
+          class="button-padding" 
+          fill="clear" 
+          shape="round"
+          (click)="mailto()">
+          <ion-icon class="rounded-icon" name="at-circle"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto" (click)="gotoHelpPage()">
+        <ion-button size="small" fill="clear" shape="round">
+          <ion-label>Help</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button size="small" fill="clear" shape="round" (click)="gotoTermsPage()">
+          <ion-label>Terms</ion-label>
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button size="small" fill="clear" shape="round" (click)="gotoPrivacyPage()">
+          <ion-label>Privacy</ion-label>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <img class="logo-img" src="/assets/imgs/holonotes-logo-clean-30px.png" alt="Logo">
+      </ion-col>
+      <ion-col size="auto">
+        <p class="logo-text">Holonotes</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

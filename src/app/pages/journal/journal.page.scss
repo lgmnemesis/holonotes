@@ -1,0 +1,71 @@
+@import '../../styles/segement-header-style';
+
+.menu {
+  position: relative;
+  opacity: 1;
+  z-index: 1000;
+}
+
+.large-input {
+  margin-left: 348px !important;
+  width: calc(100% - 360px) !important;
+}
+
+.left-menu-container {
+  float: left;
+  position: sticky;
+  left: 0;
+  top: 0;
+  min-width: 350px;
+  max-width: 350px;
+  background: var(--ion-color-tertiary);
+  overflow: auto;
+  height: 100%;
+  border-right: 1px solid var(--ion-color-light);
+}
+
+.main-container {
+  margin-left: 350px;
+  margin-top: 10px;
+}
+
+.s-bellow {
+  z-index: -1 !important;
+  opacity: 0.5;
+}
+
+ion-footer {
+  background: var(--ion-color-tertiary);
+}
+
+ion-textarea {
+  border-bottom: 1px solid var(--ion-color-light);
+}
+
+.active-input {
+  border-bottom: 1px solid var(--ion-color-primary);
+}
+
+.text-area {
+  border: 1px solid var(--ion-color-light);
+  border-radius: 10px;
+  margin: 5px;
+  width: calc(100% - 10px);
+}
+
+.nothing {
+  color: var(--ion-color-medium);
+  text-align: center;
+}
+
+#journal-m-content-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+#journal-m-content-scrollbar::-webkit-scrollbar,
+#journal-m-content-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  overflow: visible;
+}
+#journal-m-content-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--ion-color-secondary-shade);
+}

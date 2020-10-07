@@ -1,0 +1,176 @@
+@import '../../styles/text-and-fonts';
+
+ion-grid {
+  position: relative;
+  max-width: 800px;
+}
+
+ion-col {
+  text-align: center;
+  z-index: 2;
+}
+
+ion-button {
+  --color: white;
+  height: 50px;
+  min-width: 250px;
+}
+
+ion-datetime {
+  color: var(--ion-color-primary);
+}
+
+.select-goal-button {
+  height: initial;
+  min-width: initial;
+}
+
+.center-row2 { 
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.popover-view {
+  position: relative !important;
+}
+
+.goal-title {
+  margin-bottom: 0;
+  color: var(--ion-color-primary);
+}
+
+.white-space {
+  white-space: pre-line;
+}
+
+p {
+  padding: 0 10px;
+  line-height: 1.4;
+}
+
+.description {
+  @extend .header-5-text;
+  color: var(--ion-color-primary);
+}
+
+.p-range {
+  margin: 0;
+  margin-top: 10px;
+  text-align: start;
+}
+
+ion-datetime,
+ion-range {
+  padding: 0;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.d-min {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.d-min-margin {
+  margin-bottom: 20px;
+}
+
+#i-min {
+  width: 50px;
+  text-align: center;
+  border-radius: 10px;
+  padding: 10px 0;
+  outline: none;
+  background: var(--ion-color-tertiary);
+}
+
+.i-min-c-select {
+  border: 1px solid var(--ion-color-primary);
+}
+
+.i-min-c-disabled {
+  border: 1px solid var(--ion-color-secondary);
+}
+
+.duration-error {
+  position: absolute;
+  color: var(--ion-color-danger);
+  top: 30px;
+  left: 0;
+  right: 0;
+}
+
+.hide {
+  opacity: 0;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.current-day-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-center {
+  width: max-content;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.current-day-icon {
+  position: absolute;
+  padding-left: 60px;
+  padding-top: 4px;
+}
+
+.title-no-margin {
+  @extend .basic-title;
+  margin: 0;
+}
+
+
+.no-padding {
+  padding: 0;
+}
+
+.c-info {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.info-col {
+  padding: 0 10px;
+}
+
+.i-label {
+  min-width: 50%;
+  max-width: 50%;
+}
+
+.i-button {
+  min-width: 50%;
+  max-width: 50%;
+  height: max-content;
+}
+
+.b-i-label {
+  padding: 2px;
+}

@@ -1,0 +1,29 @@
+<ion-toolbar color="tertiary">
+  <ion-label color="dark">
+    <p class="toolbar-title">{{ title }}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" shape="round" 
+      color="tertiary"
+      [disabled]="true">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button slot="end" fill="clear" shape="round" 
+      color="primary"
+      (keypress)="close({isAdded: false})" (click)="close({isAdded: false})">
+      Close
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content id="challenge-c-m-content-scrollbar">
+  <app-challenge
+    [challenge]="challenge"
+    [isNewCustomChallenge]="true"
+    [animate]="animate"
+    [canSetPublic]="canSetPublic"
+    (startChallengeEvent)="addChallenge($event)">
+  </app-challenge>
+</ion-content>

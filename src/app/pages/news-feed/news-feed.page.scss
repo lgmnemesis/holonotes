@@ -1,0 +1,62 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+@import '../../styles/segement-header-style';
+
+@media only screen and (max-width: $SMALL_WINDOW_WIDTH) {
+  ion-col {
+    max-width: 100% !important;
+  }
+}
+
+ion-grid {
+  background-color: var(--ion-color-light);
+}
+ion-col {
+  max-width: 520px;
+  margin: 5px;
+  padding: 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  background-color: var(--ion-color-tertiary);
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+ion-item {
+  padding: 5px;
+}
+
+.footer-item {
+  position: absolute;
+  bottom: 0;
+}
+
+.feed-img {
+  max-width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.header-text-margin {
+  margin: 0;
+  padding: 0 10px;
+}
+
+.content-text-margin {
+  margin: 5px 0;
+  padding: 0 10px;
+}
+
+.text-label {
+  padding: 0 10px;
+  margin: 0;
+}
+
+.t-t-u {
+  text-transform: initial;
+}
+
+.name-b {
+  height: 48px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}

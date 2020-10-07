@@ -1,0 +1,161 @@
+@import '../../styles/global-style';
+@import '../../styles/project-list-format-style';
+@import '../../styles/global-scroll-style.scss';
+@import '../../styles/text-and-fonts';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 200px) {
+  .page-borders {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+}
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 400px) {
+  .page-borders {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media only screen and (max-width: $LARGE_WINDOW_WIDTH - 1) {
+  .header-label {
+    max-width: 350px !important;
+  }
+}
+
+@media only screen and (max-width: $SMALL_WINDOW_WIDTH - 1) {
+  .header-label {
+    max-width: 250px !important;
+  }
+
+  .edit-buttons {
+    margin-top: 15px;
+  }
+  
+  .edit-buttons ion-button {
+    --padding-start: 10px;
+    --padding-end: 10px;
+  }
+  
+  .select-all {
+    font-size: 16px !important;
+  }
+  
+}
+
+.header-toolbar {
+  border-bottom: 1px solid !important;
+  border-bottom-color: var(--ion-color-light) !important;
+  --min-height: 64px;
+}
+
+.search-button,
+.more-button {
+  height: 36px;
+}
+
+.more-options-button {
+  height: 46px;
+}
+
+.search-bar-md {
+  max-width: 300px;
+  left: calc(100% - 300px);
+  padding-right: 15px;
+  --ion-color-contrast-rgb: var(--ion-color-tertiary);
+  --background: var(--ion-color-tertiary);
+}
+
+.search-bar-focus {
+  --ion-color-light: var(--ion-color-primary);
+}
+
+.search-bar-in-edit {
+  --ion-color-light: var(--ion-color-danger);
+}
+
+.check-box {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  --background-checked: var(--ion-color-tertiary);
+  --checkmark-color: var(--ion-color-primary);
+}
+
+.toolbar-title {
+  font-size: 22px;
+  padding-left: 10px;
+}
+
+.delete-button {
+  height: 20px;
+  --padding-start: 10px;
+}
+
+.sort-by-filter-label {
+  @extend .basic-text;
+  @extend .capitalize;
+  width: 100px;
+}
+
+.margin-left {
+  margin-left: 10px;
+}
+
+.secondary-text {
+  @extend .basic-text;
+  margin: 0;
+  padding: 0 10px;
+  font-size: small;
+  color: var(--ion-color-secondary);
+}
+
+.rounded-button {
+  --border-width: 1px;
+  --border-radius: 15px;
+  margin-right: 1px;
+  margin-left: 1px;
+}
+
+.loader-line {
+  width: 0;
+  height: 1px;
+  background: var(--ion-color-primary);
+  -webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+  transition: width 1s;
+}
+
+.loader-line-active {
+  width: 100%;
+}
+
+ion-row {
+  opacity: 1;
+  transition: opacity 0.2s ease-out;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.header-label {
+  @extend .header-4-text;
+  max-width: 540px;
+  line-height: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.padding-top {
+  padding-top: 20px;
+}
+
+.public {
+  border-radius: 20px;
+}
+
+.name-b {
+  height: 48px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}

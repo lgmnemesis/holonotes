@@ -1,0 +1,21 @@
+<div class="main" [class.isHidden]="isHidden">
+
+  <ion-item lines="none">
+    <ion-button (click)="shareOnTwitter()" color="primary" slot="start" fill="clear" shape="round">
+      <ion-icon name="logo-twitter"></ion-icon>
+    </ion-button>
+    <ion-button (click)="shareOnFacebook()" slot="start" fill="clear" shape="round">
+      <ion-icon class="facebook" name="logo-facebook"></ion-icon>
+    </ion-button>
+    <ion-button (click)="shareOnPinterest()" color="danger" slot="start" fill="clear" shape="round">
+      <ion-icon name="logo-pinterest"></ion-icon>
+    </ion-button>
+    <ion-button (click)="shareOnWhatsapp()" color="warning" slot="start" fill="clear" shape="round">
+      <ion-icon name="logo-whatsapp"></ion-icon>
+    </ion-button>
+    <ion-button (click)="copyLink()" color="dark" slot="start" fill="clear" shape="round">
+      <ion-icon name="clipboard"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+</div>

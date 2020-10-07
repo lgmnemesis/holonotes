@@ -1,0 +1,44 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+
+.title-div {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  color: var(--ion-color-primary);
+}
+
+ion-footer {
+  --background: var(--ion-color-tertiary) !important;
+  background: var(--ion-color-tertiary) !important;
+}
+
+.footer-md::before {
+  background-image: none;
+}
+
+.footer-ios .toolbar-ios:first-child .toolbar-background-ios {
+  border-width: 0 0 0;
+}
+
+.footer-border {
+  border-top: 1px solid;
+  border-top-color: var(--ion-color-light);
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-light);
+}
+
+ion-label {
+  text-transform: capitalize;
+}
+
+.toolbar-title {
+  @extend .content-title;
+}
+
+.footer-text {
+  @extend .basic-text;
+  margin-bottom: 30px;
+  padding: 0;
+  font-size: small;
+  color: var(--ion-color-secondary);
+}

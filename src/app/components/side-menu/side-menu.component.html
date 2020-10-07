@@ -1,0 +1,26 @@
+<div (click)="close()"
+  [class.small-mode-backdrop]="isSmallMode"
+  [class.small-mode-backdrop-active]="isActiveMenu"
+  [class.p-fixed]="isFixedPosition">
+  <div class="list-container" [class.small-mode-list]="isSmallMode" (swipeleft)="close()">
+    <ion-list>
+      <ion-item lines="full">
+        <ion-label class="content-text" color="dark">{{ title }}</ion-label>
+        <ion-button *ngIf="challenges?.completed?.length > 0"
+          size="default" fill="clear" shape="round" (click)="toggleActiveChallenges($event)">
+          <ion-icon name="swap-horizontal"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item lines="full" *ngFor="let challenge of challengesToShow; trackBy: trackById"
+        button="true"
+        [color]="challenge?.id === selectedChallenge?.id ? 'welcome' : 'tertiary'"
+        (click)="switchChallenge(challenge)">
+          <ion-label 
+            class="ion-text-wrap basic-text text-initial"
+            [color]="challenge?.id === selectedChallenge?.id ? 'tertiary' : 'primary'">
+            {{ challenge.name }}
+          </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</div>

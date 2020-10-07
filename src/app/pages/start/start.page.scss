@@ -1,0 +1,114 @@
+@import '../../styles/text-and-fonts';
+
+
+@media only screen and (max-width: 350px) {
+  .center {
+    height: auto !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .active-col-1 {
+    max-width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 950px) {
+  .center-grid {
+    width: 800px !important
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .center-grid {
+    width: calc(100% - 10px) !important;
+  }
+}
+
+ion-col {
+  text-align: center;
+}
+
+ion-header,
+ion-back-button {
+  position: absolute;
+  z-index: 2;
+}
+
+ion-back-button {
+  top: 5px;
+  left: 5px;
+  background: #3aafe0;
+  border-radius: 50%;
+}
+
+ion-button {
+  height: 45px;
+}
+
+.center {
+  display: grid;
+  align-items: center;
+  height: 100%;
+  background: linear-gradient(145deg,#3aafe0,#67a7ff);
+}
+
+.center-grid {
+  position: relative;
+  contain: content;
+  overflow: hidden;
+  width: 950px;
+  background: var(--ion-color-tertiary);
+}
+
+.center-row { 
+  min-height: 500px;
+}
+
+.with-box-shadow {
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.5);
+}
+
+.skip-button {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  z-index: 3;
+}
+
+p {
+  @extend .content-text;
+  padding: 0 10px;
+}
+
+.quote-title {
+  margin: 0;
+}
+
+.quote-signature {
+  color: var(--ion-color-dark);
+  margin: 2px;
+  opacity: 0.7;
+}
+
+.p-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.p-frame p {
+  max-width: 650px;
+}
+
+.p-bold {
+  font-size: 1.1rem;
+}
+
+.active-col-1 {
+  max-width: 500px;
+}

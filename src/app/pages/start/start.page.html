@@ -1,0 +1,75 @@
+<ion-header class="ion-no-border">
+  <ion-back-button color="tertiary" mode="md" text="" defaultHref="home" *ngIf="activeStep === 1"></ion-back-button>
+</ion-header>
+
+<ion-content>
+
+  <div class="center">
+    <ion-grid class="center-grid with-box-shadow">
+
+      <ion-button *ngIf="activeStep > 1"
+        class="skip-button" 
+        fill="clear" 
+        shape="round"
+        (click)="skip()">
+          skip
+      </ion-button>
+
+      <ion-row class="ion-justify-content-center ion-align-items-center center-row" *ngIf="activeStep === 1">
+        <ion-col class="active-col-1" size="auto">
+          <p class="quote-title header-4-text">"Relax. Be Yourself. Play ALOT."</p>
+          <p class="quote-signature">Joe Satriani</p>
+          <p>The only way to get better is to learn other people's styles and songs.</p>
+          <p>
+            By getting started, you already took the biggest step to imporve your playing.
+          </p>
+        </ion-col>
+        <ion-col class="active-col-1" size="auto">
+          <app-sign-in
+            [isEmailAnonymous]="true"
+            [showTitle]="false"
+            [showGuestLogin]="true"
+            [showEmailSentMessage]="false"
+            (successSigninEvent)="successSignin($event)">
+          </app-sign-in>
+        </ion-col>
+      </ion-row>
+
+      <ion-row @slideXLeft class="ion-justify-content-center ion-align-items-center center-row" *ngIf="activeStep === 2">
+        <ion-col size="12">
+          <div class="p-frame">
+            <p> 
+              Setting goals and breaking them into smaller, easier daily/weekly routines makes us much more efficient, organized, focused and motivated to become a better player and a better musician.
+            </p>
+          </div>
+          <p class="quote-title header-4-text">"If you aim at nothing, you will hit it every time."</p>
+          <p class="quote-signature">Zig Ziglar</p>
+          <div class="p-frame">
+            <p>
+              You can choose from our list of recommended routines and challenges or create your own.
+            </p>
+          </div>
+          <p class="p-bold">Let's start small, take the first step</p>
+          <ion-button color="primary" shape="round" (click)="openChallenge()">
+            <ion-label color="tertiary">Start Your First Challenge</ion-label>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row @slideXLeft class="ion-justify-content-center ion-align-items-center center-row" *ngIf="activeStep === 3">
+        <ion-col size="12">
+          <app-challenge
+            [challenge]="firstChallenge" 
+            [withJourney]="true"
+            [inStartView]="true"
+            [canSetPublic]="false"
+            [animate]="true"
+            (startChallengeEvent)="startChallenge()">
+          </app-challenge>
+        </ion-col>
+      </ion-row>
+    
+    </ion-grid>
+  </div>
+
+</ion-content>

@@ -1,0 +1,130 @@
+<ion-toolbar color="tertiary">
+  <ion-label class="ion-text-wrap ion-text-center basic-text" color="dark">
+    <p class="toolbar-title">{{modalTitle}}</p>
+  </ion-label>
+  <ion-buttons slot="start">
+    <ion-button fill="clear" color="tertiary" disabled="true" shape="round">
+      Cancel
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button slot="end" fill="clear" color="primary" shape="round" 
+      (keypress)="close()" (click)="close()">
+      Close
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content id="keyboard-s-content-scrollbar" class="ion-padding">
+  <ion-list>
+    <ion-list-header>
+      <ion-label class="ion-text-wrap content-text" color="primary">Player Shortcuts</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Toggle Play/Pause</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">space or k</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Fast forward 5 seconds</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">RIGHT</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Rewind 5 seconds</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">LEFT</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Fast forward 10 seconds</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">l</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Rewind 10 seconds</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">j</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Fast forward by 0.1 seconds</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">.</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Rewind by 0.1 seconds</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">,</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Seek to the end of the video</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">END</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Seek to the beginning of the video</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">HOME</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Seek to specific point in the video</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">0..9</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Increase playback rate</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">SHIFT+RIGHT or SHIFT+.</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Decrease playback rate</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">SHIFT+LEFT or SHIFT+,</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Normal playback rate</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">n</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Increase volume</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">UP</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Decrease volume</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">DOWN</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Toggle mute</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">m</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Toggle full screen</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">f</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Toggle loop</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">u</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Mark loop start time</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">i</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Mark loop end time</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">o</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Rewind to loop start time</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">y</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Save bookmark</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">s</ion-label>
+    </ion-item>
+
+    <br>
+    <ion-list-header>
+      <ion-label class="ion-text-wrap content-text" color="primary">Project Shortcuts</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Switch active video player</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">a</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Switch between video displays</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">g</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="ion-text-wrap basic-text" color="dark">Show keyboard shortcuts</ion-label>
+      <ion-label class="ion-text-wrap basic-text" text-end color="dark">? (SHIFT+/)</ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -1,0 +1,291 @@
+<!-- Left side content  -->
+<div *ngIf="!sharedService.isLessThanMediumWindowWidth()" class="left-side-content-md">
+  <ion-button fill="clear" shape="round" class="left-side-back-button"
+    (keypress)="goBackButton($event)" (click)="goBackButton($event)">
+    <ion-icon color="dark" name="arrow-back"></ion-icon>
+  </ion-button>
+  <div class="border-line"></div>
+  
+  <!-- Main menu buttons (Large size window view)  -->
+  <ion-list>
+    <ion-button 
+      class="left-side-button"
+      [class.left-side-button-active]="leftsideViewNameToDisplay === 'timeline'"
+      fill="clear" shape="round"
+      (keypress)="toggleLeftMenu($event, 'timeline')" 
+      (click)="toggleLeftMenu($event, 'timeline')">
+      <ion-icon name="bookmark"></ion-icon>
+    </ion-button>
+    <ion-button 
+      class="left-side-button"
+      [class.left-side-button-active]="leftsideViewNameToDisplay === 'videos'"
+      fill="clear" shape="round"
+      (keypress)="toggleLeftMenu($event, 'videos')" 
+      (click)="toggleLeftMenu($event, 'videos')">
+      <ion-icon name="film"></ion-icon>
+    </ion-button>
+    <div class="border-line"></div>
+    <ion-button 
+      class="left-side-button"
+      fill="clear" shape="round"
+      (keypress)="editProject($event)" (click)="editProject($event)">
+      <ion-icon name="options"></ion-icon>
+    </ion-button>
+    <ion-button
+      class="left-side-button" 
+      fill="clear" shape="round" color="good"
+      (keypress)="timerInputButtonClicked($event)" (click)="timerInputButtonClicked($event)">
+      <ion-icon name="time"></ion-icon>
+    </ion-button>
+  </ion-list>
+</div>
+
+<ion-content scroll-y="false" class="ion-no-padding">
+  <div [class.medium-size-container]="sharedService.isLessThanMediumWindowWidth()">
+    <!-- Main content -->
+    <div class="main-content-md z-index-10">
+
+      <div *ngIf="sharedService.isLessThanMediumWindowWidth()"
+        class="back-button-on-top"
+        [class.back-button-on-top-active]="isControlsShown"
+        (keypress)="goBackButton($event)"
+        (click)="goBackButton($event)"> 
+        <ion-icon color="tertiary" size="large" name="arrow-back"></ion-icon>
+      </div>
+      
+      <div *ngIf="!sharedService.isLessThanMediumWindowWidth() && !noVideosInViews"
+        [class.leftside-menu-button]="showLeftSideMenu"
+        [class.leftside-menu-button-full]="!showLeftSideMenu">
+        <ion-button color="tertiary" fill="clear" shape="round"
+          (keypress)="toggleLeftMenu($event, 'menu')" (click)="toggleLeftMenu($event, 'menu')">
+          <ion-icon class="leftside-menu-icon" name="caret-back" *ngIf="showLeftSideMenu">
+          </ion-icon>
+          <ion-icon class="leftside-menu-icon" name="caret-forward" *ngIf="!showLeftSideMenu">
+          </ion-icon>
+        </ion-button>
+
+        <ion-button color="tertiary" fill="clear" shape="round"
+          (keypress)="toggleSplitMode($event)" (click)="toggleSplitMode($event)">
+          <ion-icon class="leftside-menu-icon" color="tertiary" name="grid">
+          </ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="leftside-container"
+        [class.leftside-container-hide]="!showLeftSideMenu">
+        <app-leftside-container [viewName]="leftsideViewNameToDisplay"
+          (selectedEvent)="eventFromMenu($event)">
+        </app-leftside-container>
+      </div>
+    
+      <div class="video-container"
+        [class.hide-me]="noVideosInViews"
+        [class.video-container-full]="!showLeftSideMenu && !isWidthSplitMode"
+        [class.not-active-video]="!isVideoPlayerActive && !isWidthSplitMode && !videoService.isHeightSplitMode"
+        [class.active-video]="isVideoPlayerActive && !isWidthSplitMode && !videoService.isHeightSplitMode"
+        [class.lesson-split-mode]="showLeftSideMenu && isWidthSplitMode"
+        [class.lesson-split-mode-full]="!showLeftSideMenu && isWidthSplitMode">
+        <app-video-player 
+          #lessonPlayer
+          [class.hide-me]="l_player_video_url === 'initial'"
+          [videoUrl]="l_player_video_url" 
+          [videoType]="l_player_video_type" 
+          [isActive]="isVideoPlayerActive"
+          [isSwitchable]="true"
+          [viewName]="videoService.lessonPlayerViewName"
+          [showViewName]="videoService.showViewName"
+          [hasExternalcontrolButtons]="true">
+        </app-video-player>
+        <div *ngIf="l_player_video_url === 'initial'">
+          <p class="empty-text">{{ videoService.lessonPlayerViewName }}</p>
+          <p class="empty-text">No Video Here</p>
+        </div>
+      </div>
+
+      <div id="source-player" class="video-container"
+        [class.hide-me]="noVideosInViews"
+        [class.video-container-full]="!showLeftSideMenu && !isWidthSplitMode"
+        [class.not-active-video]="isVideoPlayerActive && !isWidthSplitMode && !videoService.isHeightSplitMode" 
+        [class.active-video]="!isVideoPlayerActive && !isWidthSplitMode && !videoService.isHeightSplitMode"
+        [class.source-split-mode]="showLeftSideMenu && isWidthSplitMode"
+        [class.source-split-mode-full]="!showLeftSideMenu && isWidthSplitMode">
+        <app-video-player 
+          #sourcePlayer
+          [class.hide-me]="s_player_video_url === 'initial'"
+          [videoUrl]="s_player_video_url" 
+          [videoType]="s_player_video_type"
+          [isActive]="!isVideoPlayerActive" 
+          [isSwitchable]="true"
+          [viewName]="videoService.sourcePlayerViewName"
+          [showViewName]="videoService.showViewName"
+          [hasExternalcontrolButtons]="true">
+        </app-video-player>
+        <div *ngIf="s_player_video_url === 'initial'">
+          <p class="empty-text">{{ videoService.sourcePlayerViewName }}</p>
+          <p class="empty-text">No Video Here</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-container active-video" *ngIf="noVideosInViews">
+      No Videos in project
+    </div>
+
+    <app-alarm-indication
+      class="alarm-indication-in-project"
+      [isFab]="true"
+      [withBackground]="false"
+      [withNotifications]="false"
+      (animateEvent)="alarmIndicationEvent($event)">
+    </app-alarm-indication>
+
+    <div @fade @translateXLeftLong class="j-ch-bt" *ngIf="canJoinChallenge">
+      <div id="j-ch-bt-d" *ngIf="sharedService.sharedChallenge?.challenge?.goal">
+        <ion-button id="j-ch-bt-db" fill="clear" shape="round" (click)="joinChallenge()">
+          <ion-icon name="trophy" color="medium"></ion-icon>
+          <ion-label id="j-ch-bt-dl" class="basic-text">challenge goal</ion-label>
+        </ion-button>
+      </div>
+      <ion-button id="j-ch-bt-jb" color="good" shape="round" (click)="joinChallenge()">
+        <ion-icon slot="start" name="trophy"></ion-icon>
+        <ion-label class="basic-text">Join Challenge</ion-label>
+      </ion-button>
+    </div>
+
+    <div @fade @translateXLeftLong class="j-ch-bt" *ngIf="joinedChallenge">
+      <ion-card class="j-ch-c-info">
+        <ion-card-content class="j-ch-content-info">
+          <br>
+          <p class="j-ch-p-info basic-text">Great to have you on board!</p>
+          <p class="j-ch-p-info basic-text">Challenge was added to your activities.</p>
+          <p class="j-ch-p-info basic-text">You can find it under the 'Activity' tab.</p>
+          <br>
+          <p class="j-ch-p-info basic-text">Keep on rocking</p>
+        </ion-card-content>
+        <ion-button 
+          class="j-ch-b-info basic-text" 
+          color="tertiary" 
+          fill="clear" 
+          shape="round"
+          (click)="gotIt()">
+            Got it
+        </ion-button>
+      </ion-card>
+    </div>
+
+    <!-- End of main content div -->
+
+    <!-- Small mode view -->
+    <ng-container *ngIf="videoService.isSmallModeView">
+      <!-- Header for small mode view -->
+      <div style="position: relative">
+        <ion-item @translateYUpAll class="header-small-mode">
+          <ion-button fill="clear" slot="start" shape="round" (click)="smallModeOpen()">
+            <ion-icon color="primary" name="open"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="isTimelineSmallModeView" 
+            fill="clear" slot="start" shape="round" (click)="smallModeSort()">
+            <ion-icon color="primary" name="reorder-three"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="isVideosSmallModeView" 
+            fill="clear" slot="start" shape="round" (click)="smallModeAdd()">
+            <ion-icon color="primary" name="add"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="sharedService.isFreeHeightRes()"
+            fill="clear" slot="end" shape="round" (click)="smallModeToggleFooter()">
+            <ion-icon 
+              [color]="isHideFooter ? 'primary' : 'danger'"
+              [name]="isHideFooter ? 'unlock' : 'lock'">
+            </ion-icon>
+          </ion-button>
+          <ion-button fill="clear" slot="end" shape="round" (click)="closeSmallModeView()">
+            <ion-icon color="dark" name="caret-down"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+
+      <!-- Detailed small mode view -->
+      <app-timeline @translateYUpAll *ngIf="isTimelineSmallModeView"
+        [inputEvent]="appTimelineEvent" 
+        (selectedEvent)="eventFromMenu($event)">
+      </app-timeline>
+      <app-videos @translateYUpAll *ngIf="isVideosSmallModeView"
+        (selectedEvent)="eventFromMenu($event)">
+      </app-videos>
+    </ng-container>
+
+  </div>
+
+</ion-content>
+
+<div *ngIf="sharedService.isLessThanMediumWindowWidth() 
+  && !videoService.isSmallModeView 
+  && !isTimelineSmallModeView 
+  && !isVideosSmallModeView && isFreeHeightResForTimelineSlide">
+  <ion-slides *ngIf="sharedService.isLessThanMediumWindowWidth()"
+    mode="ios" [options]="timelineSlideOptions">
+    <ng-container *ngFor="let pair of sharedService.timelineMap | keyvalue; trackBy: trackByKey">
+      <ng-container *ngIf="sharedService.showBookmarksForTag.get(pair.key)">
+        <ion-slide class="timeline-slide" *ngFor="let bookmark of pair.value; trackBy: trackById">
+          <ion-item lines="none" class="timeline-as-a-button"
+            [class.timeline-active]="bookmark.id | isEqual: sharedService.activeBookmarkId"
+            (keypress)="loadSelectedBookmark(bookmark)" (click)="loadSelectedBookmark(bookmark)">
+          
+            <div class="timeline-pointer" *ngIf="bookmark.id | isEqual: sharedService.timelinePointerBookmarkId"></div>
+    
+            <ion-label class="ion-text-wrap timeline-label">
+              <h2 [class.medium-color]="!bookmark.name">{{bookmark.name ? bookmark.name : bookmark | getTime }}</h2>
+              <p>{{ pair.key | tagLabelDisplay }}</p>
+            </ion-label>
+          
+          </ion-item>
+        </ion-slide>
+      </ng-container>
+    </ng-container>
+  </ion-slides>
+</div>
+
+<!-- Video player buttons videoService.isSmallModeView -->
+<footer [class.hide-footer]="videoService.isSmallModeView &&
+  (isHideFooter || !sharedService.isFreeHeightRes())">
+  <!-- Menu buttons for medium size width -->
+  <ion-slides *ngIf="sharedService.isLessThanMediumWindowWidth()"
+    mode="ios" class="medium-size-menu-container" 
+    [options]="buttonsSlideOptions">
+    <ion-slide>
+      <ion-button class="med-buttons"
+        [class.med-buttons-active]="isTimelineSmallModeView" 
+        fill="clear" shape="round"
+        (click)="setTimelineSmallModeView()">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-button>
+    </ion-slide>
+    <ion-slide>
+      <ion-button class="med-buttons"
+        [class.med-buttons-active]="isVideosSmallModeView"
+        fill="clear" shape="round" 
+        (click)="setVideosSmallModeView()">
+        <ion-icon name="film"></ion-icon>
+      </ion-button>
+    </ion-slide>
+    <ion-slide>
+      <ion-button fill="clear" shape="round" (click)="editProject($event)">
+        <ion-icon color="primary" name="options"></ion-icon>
+      </ion-button>
+    </ion-slide>
+    <ion-slide>
+      <ion-button fill="clear" shape="round" (click)="timerInputButtonClicked($event)">
+        <ion-icon color="good" name="time"></ion-icon>
+      </ion-button>
+    </ion-slide>
+  </ion-slides>
+
+  <app-video-player-buttons
+    [useActivePlayer]="true" 
+    [showSwitchButton]="!sharedService.isLessThanMediumWindowWidth()"
+    [subTags]="sharedService.subTags"
+    (switch)="switchButtonWasPressed($event)"
+    (markerEvent)="loadSelectedItem($event)"
+    (tagEvent)="loadSelectedItem($event)">
+  </app-video-player-buttons>
+</footer>

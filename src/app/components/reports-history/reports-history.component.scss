@@ -1,0 +1,56 @@
+@import '../../styles/text-and-fonts';
+
+ion-card {
+  margin: 0;
+}
+
+ion-label {
+  white-space: pre-line !important;
+  padding: 0 15px;
+}
+
+.font-t {
+  @extend .basic-text;
+}
+
+.total {
+  --background: var(--ion-color-light);
+}
+
+.label-end {
+  text-align: end;
+  margin: 0;
+  padding: 0;
+}
+
+.time-label {
+  text-align: end;
+}
+
+.label-name { 
+  min-width: 200px;
+}
+
+b {
+  margin-left: 10px;
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ion-color-secondary);
+  padding: 20px 0;
+}
+
+.sort {
+  margin-top: 20px;
+  --inner-padding-end: 0;
+  --padding-start: 10px;
+}
+
+.sort ion-label {
+  padding: 0;
+  text-transform: capitalize;
+  border-bottom: 1px solid;
+}

@@ -1,0 +1,8 @@
+<app-journey-input
+  [name]="journeyService?.currentJourney?.name"
+  [time]="journeyService?.timerCounter"
+  [isStarted]="journeyService?.isTimerStarted"
+  [showJourneyLink]="showJourneyLink"
+  [isLessThanMediumWindowWidth]="isLessThanMediumWindowWidth"
+  (changeEvent)="timerAction($event)">
+</app-journey-input>

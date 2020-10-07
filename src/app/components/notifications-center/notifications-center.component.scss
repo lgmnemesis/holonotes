@@ -1,0 +1,49 @@
+@import '../../styles/text-and-fonts';
+
+.alarm-duration {
+  font-size: small;
+  margin-right: 15px;
+}
+
+.color-medium {
+  color: var(--ion-color-medium);
+}
+
+.color-primary {
+  color: var(--ion-color-primary);
+}
+
+.color-dark {
+  color: var(--ion-color-dark);
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.as-a-button {
+  cursor: pointer;
+  margin: 5px 3px;
+  --background: var(--ion-color-notif);
+}
+
+.as-a-button:hover {
+  --background: var(--ion-color-notif-shade);
+}
+
+.with-border {
+  --border-width: 1px;
+  --inner-border-width: 0;
+  --border-color: var(--ion-color-light);
+  --border-radius: 15px;
+}
+
+.alert-label {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.notif-title {
+  @extend .content-text;
+  padding-bottom: 5px;
+}

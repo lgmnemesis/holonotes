@@ -1,0 +1,20 @@
+<div class="reports">
+
+  <div class="chart-container">
+    <ion-spinner name="crescent" *ngIf="useSpinner"></ion-spinner>
+    <ion-item class="top" lines="none">
+      <ion-label class="font-t label-start" slot="start">Total: {{ list.total }}</ion-label>
+      <ion-button slot="end" (click)="presentTimePickerPopover($event)">
+        <ion-label class="font-t capitalize">{{ timeSelected.picker }}</ion-label>
+      </ion-button>
+    </ion-item>
+    <app-bar-chart 
+      [chartData]="chartData"
+      [chartType]="chartType">
+    </app-bar-chart>
+  </div>
+
+  <div style="padding: 20px 0;"></div>
+  <app-reports-history [journeyList]="list?.list"></app-reports-history>
+
+</div>

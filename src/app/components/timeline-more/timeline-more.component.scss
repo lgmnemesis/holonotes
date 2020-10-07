@@ -1,0 +1,7 @@
+@import '../../styles/text-and-fonts';
+
+p {
+  @extend .basic-text;
+  text-transform: capitalize;
+  margin-left: 5px;
+}

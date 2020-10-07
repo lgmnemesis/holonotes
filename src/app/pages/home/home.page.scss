@@ -1,0 +1,140 @@
+@import '../../styles/project-list-format-style';
+@import '../../styles/text-and-fonts';
+
+@media only screen and (max-width: $SMALL_WINDOW_WIDTH) {
+  .container {
+    padding: 10px !important;
+  }
+
+  .slider-project,
+  .inner-slider-project-width {
+    width: 300px !important;
+  }
+}
+
+.container {
+  padding: 20px;
+}
+
+.slider {
+  @extend .inner-slider-width;
+}
+
+.inner-slider-width {
+  width: 300px;
+}
+
+.slider-project {
+  @extend .inner-slider-project-width;
+}
+
+.inner-slider-project-width {
+  width: 400px;
+}
+
+.loader-line {
+  width: 0;
+  height: 1px;
+  background: var(--ion-color-primary);
+  -webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+  transition: width 1s;
+}
+
+.loader-line-active {
+  width: 100%;
+}
+
+.info-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px;
+  margin: 0;
+  min-height: 50px;
+  background: linear-gradient(129deg, #41B6F0 0%, #8DC8E5 100%) 
+    no-repeat 50% 50% / 100% 100%;
+  color: var(--ion-color-tertiary);
+}
+
+.info-card-no-hover {
+  @extend .info-card;
+  pointer-events: none;
+}
+
+.info-card:hover {
+  background: linear-gradient(129deg, #8DC8E5 0%, #41B6F0 100%) !important;
+}
+
+.info-card-content {
+  @extend .content-text;
+}
+
+.info-card-content p {
+  margin: 10px 0;
+  line-height: 1;
+}
+
+.as-a-button {
+  cursor: pointer;
+}
+
+.bold {
+  color: var(--ion-color-tertiary);
+  padding: 10px 15px;
+}
+
+.col-info {
+  max-width: 460px;
+}
+
+.col-install {
+  max-width: 350px;
+}
+
+.card-info {
+  position: relative;
+  margin: 5px;
+  min-width: 280px;
+  max-width: 450px;
+  --background: var(--ion-color-welcome-shade);
+}
+
+.card-p-info {
+  color: var(--ion-color-tertiary);
+}
+
+.card-p-install {
+  text-align: center;
+}
+
+.card-b-info {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  --padding-end: 10px;
+  --padding-start: 10px;
+  text-transform: none;
+}
+
+.card-b-install {
+  position: absolute;
+  bottom: 12px;
+  right: 10px;
+  --padding-end: 20px;
+  --padding-start: 20px;
+  text-transform: none;
+}
+
+.card-b-cancel {
+  position: absolute;
+  bottom: 12px;
+  right: 105px;
+  --padding-end: 10px;
+  --padding-start: 10px;
+  text-transform: none;
+  opacity: 0.7;
+}
+
+.info-space {
+  margin-bottom: 10px;
+}

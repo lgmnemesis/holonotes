@@ -1,0 +1,22 @@
+<ng-container *ngFor="let message of chat?.messages; trackBy: trackById">  
+  <div class="date-outer" *ngIf="message.createdAt | chatTimeUnique:timeInABottle">
+    <div class="date-inner small-text">
+      {{ message.createdAt | date }}
+    </div>
+  </div>
+  <div class="m-outer"
+    [class.outer-start-side]="message.user_id !== myUserId"
+    [class.outer-end-side]="message.user_id === myUserId">
+    <div class="m-c basic-text" 
+      [class.m-bubble-start-side]="message.user_id !== myUserId"
+      [class.m-bubble-end-side]="message.user_id === myUserId">
+      <div class="m-c-inner">
+        <p *ngIf="message.user_id !== myUserId"
+          class="user" (click)="showUserInfo(message)">
+          {{ message.user_name }}
+        </p>
+        <div class="inner-html" [innerHTML]="message.content"></div>
+      </div>
+    </div>
+  </div>
+</ng-container>

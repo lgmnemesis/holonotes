@@ -1,0 +1,51 @@
+@import '../../styles/global-style';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH) {
+  .page-borders {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media only screen and (min-width: $EXTRA_LARGE_WINDOW_WIDTH) {
+  .page-borders {
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+}
+
+ion-col {
+  display: grid;
+  align-items: center;
+}
+
+.footer-header {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-light);
+}
+
+.rounded-icon {
+  padding: 5px;
+}
+
+.button-padding {
+  --padding-start: 10px;
+  --padding-end: 10px;
+}
+
+.text-header {
+  font-size: 17px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  font-size: large;
+  padding-bottom: 4px;
+}
+
+.logo-text {
+  color: var(--ion-color-primary);
+  font-size: small;
+  padding-bottom: 4px;
+}

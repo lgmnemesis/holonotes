@@ -1,0 +1,19 @@
+.loader-line {
+  width: 0;
+  height: 1px;
+  background: var(--ion-color-primary);
+  -webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+  transition: width 1s;
+}
+
+.loader-line-active {
+  width: 100%;
+}
+
+.as-a-button {
+  cursor: pointer;
+}
+
+.toolbar-title {
+  font-size: 16px;
+}

@@ -1,0 +1,174 @@
+<ion-header class="ion-no-border" *ngIf="authService.isLoggedIn()">
+  <app-notes-toolbar 
+    [showSearchBar]="showSearchBarButton"
+    [showCancelButton]="true"
+    [showHomeButton]="showHomeButton" 
+    [showLibraryButton]="isLoggedIn"
+    [showActivityButton]="isLoggedIn"
+    [showProfileButton]="true"
+    [isActiveProfileButton]="isActiveProfileButton"
+    [showMoreOptionsButton]="!isLoggedIn"
+    [isSmallDisplay]="isLessThanMediumWindowWidth"
+    (notesEvent)="notesEventHandler($event)">
+  </app-notes-toolbar>
+</ion-header>
+
+<app-alarm-indication 
+  *ngIf="isLoggedIn && isLessThanMediumWindowWidth"
+  [isFab]="true"
+  [withBackground]="true"
+  (animateEvent)="alarmIndicationEvent($event)">
+</app-alarm-indication>
+
+<ion-content id="home-content-scrollbar" class="ion-no-padding">
+  <app-welcome-view showSignUpButton="true" (welcomeEvent)="handleWelcomeEvent($event)"
+    *ngIf="isSubscribeToAuth && !isLoggedIn">
+  </app-welcome-view>
+
+  <div class="container">
+  
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col class="col-info" @fade @translateYDown *ngIf="isWelcomeMessage">
+          <ion-card class="card-info">
+            <ion-card-content>
+              <p class="card-p-info content-text">Welcome!</p>
+              <p class="card-p-info basic-text info-space">Few tips to get you started:</p>
+              <p class="card-p-info basic-text info-space">Find the songs you want to learn. add them to your library.</p>
+              <p class="card-p-info basic-text info-space">You can import songs and video lessons from YouTube and create your own projects, set bookmarks for easy access and future reference.</p>
+              <p class="card-p-info basic-text info-space">Start a daily practice routines, include songs from your library, join a public challenge to keep you motivated. try to commit to the schedule.</p>
+              <br>
+            </ion-card-content>
+            <ion-button 
+              class="card-b-info basic-text" 
+              color="tertiary" 
+              fill="clear" 
+              shape="round"
+              (click)="gotItWelcomeMessage()">
+                Got it
+            </ion-button>
+          </ion-card>
+        </ion-col>
+        <ion-col class="col-install" @fade @translateYDown *ngIf="isLoggedIn && canInstallAsApp">
+          <ion-card class="card-info">
+            <ion-card-content>
+                <p class="card-p-info card-p-install content-text">Holonotes - Get the app</p>
+              <p class="card-p-info card-p-install basic-text">Install instantly, find what you need faster, anytime.</p>
+              <br><br><br>
+            </ion-card-content>
+            <ion-button 
+              class="card-b-install basic-text" 
+              color="tertiary"
+              fill="solid"
+              shape="round"
+              (click)="installAsApp()">
+                Install
+            </ion-button>
+            <ion-button 
+              class="card-b-cancel basic-text" 
+              color="tertiary" 
+              fill="clear" 
+              shape="round"
+              (click)="cancelCanInstallAsApp()">
+                Not now
+            </ion-button>
+          </ion-card>
+        </ion-col>
+        <ion-col class="col-info" @fade @translateYDown *ngIf="isFirstChallenge">
+          <ion-card class="card-info">
+            <ion-card-content>
+              <p class="card-p-info content-text">Great to have you on board!</p>
+              <p class="card-p-info basic-text">Challenge was added to your activities.</p>
+              <p class="card-p-info basic-text">You can find it under the 'Activity' tab.</p>
+              <br>
+              <p class="card-p-info basic-text">Keep on rocking</p>
+            </ion-card-content>
+            <ion-button 
+              class="card-b-info basic-text" 
+              color="tertiary" 
+              fill="clear" 
+              shape="round"
+              (click)="gotItFirstChallenge()">
+                Got it
+            </ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <app-feed-slider *ngIf="authService.isLoggedIn()"
+      feedTitle="Today's Activity" linkButton="Activity" 
+      [containerTop]="true" (linkEvent)="go('activity')"
+      [withBoxShadow]="isLessThanMediumWindowWidth">
+      <ng-container *ngFor="let task of tasks | filterTasks; trackBy: trackByTaskId">
+        <ion-slide @fade @heightDown class="slider" *ngIf="task.timeInMinutes < 1440 && !task?.is_completed">
+          <div class="inner-slider-width">
+            <app-task 
+              [task]="task" 
+              [showIcon]="true"
+              [isTaskStarted]="isTaskStarted[task.id]"
+              (clickEvent)="goTask(task)">
+            </app-task>
+          </div>
+        </ion-slide>
+      </ng-container>
+
+      <ng-container *ngIf="tasks?.length > 0 && !isTodayTasks">
+        <ion-card class="info-card-no-hover" mode="ios">
+          <div class="info-card-content">
+            No scheduled routines for today
+          </div>
+        </ion-card>
+      </ng-container>
+      
+      <ng-container *ngIf="tasks?.length === 0">
+        <ion-card class="info-card as-a-button" mode="ios" (click)="openNewTask()">
+          <div class="info-card-content">
+            <p>A good practice routine is the most effective way to grow as a musician.</p>
+            <p>Sometimes you need to do less in order to ultimately do more.</p>
+            <p class="bold">Start by setting a short daily routine</p>
+          </div>
+        </ion-card>
+      </ng-container>
+
+    </app-feed-slider>
+
+    <app-feed-slider *ngIf="recentlyAddedFeed?.length > 0"
+      [feedTitle]="authService.isSubscribe && !authService.isLoggedIn() ? 'See what others are playing' : authService.isLoggedIn() ? 'Recently Added' : ''" 
+      linkButton="Explore" (linkEvent)="go('explore')"
+      [withBoxShadow]="isLessThanMediumWindowWidth">
+      <ng-container *ngFor="let project of recentlyAddedFeed; trackBy: trackByIndex"> 
+        <ion-slide @fade @heightDown class="slider-project">
+          <div class="inner-slider-project-width" *ngIf="!project.dontShow">
+            <div class="feed-100 with_cover" (click)="gotoProject(project)">
+              <img class="img-feed-auto" [src]="project.cover_img || defaultCoverImg" alt="Cover">
+              <div class="text-label">{{ project.name }}</div>
+              <div class="text-artist">{{ project.artist || ' ' }}</div>
+            </div>
+          </div>
+        </ion-slide>
+      </ng-container>
+    </app-feed-slider>
+
+    <app-feed-slider *ngIf="authService.isLoggedIn() && lastUpdatedFeed?.length > 0"
+      feedTitle="Continue Work on"
+      [withBoxShadow]="isLessThanMediumWindowWidth">
+      <ng-container *ngFor="let project of lastUpdatedFeed; trackBy: trackByIndex"> 
+        <ion-slide @fade @heightDown class="slider-project">
+          <div class="inner-slider-project-width" *ngIf="!project.dontShow">
+            <div class="feed-100 with_cover" (click)="gotoProject(project)">
+              <img class="img-feed-auto" [src]="project.cover_img || defaultCoverImg" alt="Cover">
+              <div class="text-label">{{ project.name }}</div>
+              <div class="text-artist">{{ project.artist || ' ' }}</div>
+            </div>
+          </div>
+        </ion-slide>
+      </ng-container>
+    </app-feed-slider>
+  </div>
+
+  <ng-container *ngIf="authService.isSubscribe && !authService.isLoggedIn()">
+    <app-contact-details *ngIf="!sharedService.isPwa()"></app-contact-details>
+    <app-help-footer *ngIf="!sharedService.isPwa()"></app-help-footer>
+  </ng-container>
+</ion-content>

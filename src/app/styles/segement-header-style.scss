@@ -1,0 +1,40 @@
+@import './global-style';
+@import './text-and-fonts';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 200px) {
+  .page-borders {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+}
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 400px) {
+  .page-borders {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media only screen and (max-width: $SMALL_WINDOW_WIDTH) {
+  .hide-label {
+    display: none;
+  }
+}
+
+.header-label {
+  @extend .header-4-text;
+}
+
+.not-a-button {
+  pointer-events: none;
+}
+
+ion-header {
+  z-index: 0;
+}
+
+.header-toolbar {
+  border-bottom: 1px solid !important;
+  border-bottom-color: var(--ion-color-light) !important;
+  --min-height: 64px;
+}

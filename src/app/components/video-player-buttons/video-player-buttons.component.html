@@ -1,0 +1,167 @@
+<div *ngIf="videoService.isRangeButtonsOn">
+  
+  <!-- Show sub subtags on small screens -->
+  <ion-item lines="none" detail="false" *ngIf="!showSwitchButton && subTags?.length > 0">
+    <ion-badge @fade @leftAndBlink *ngFor="let tag of subTags; trackBy: trackById"
+      slot="start" 
+      class="badge-like-a-button sub-tags tooltip"
+      (keypress)="loadSelectedTag($event, tag)" (click)="loadSelectedTag($event, tag)">
+      {{ tag | getTime }}
+      <span class="tooltip-text tooltip-small-delay" *ngIf="!sharedService.isMobileApp()">
+        {{ tag | getTime: isBothViews }}
+      </span>
+    </ion-badge>
+  </ion-item>
+
+  <ion-item class="top-buttons-item" lines="none" detail="false">
+    <ion-button class="witch-button-small-view" *ngIf="!showSwitchButton"
+      slot="start" size="small" fill="clear" shape="round" 
+        (keypress)="switchPlayer($event)" (click)="switchPlayer($event)">
+      <ion-icon color="primary" name="switch"></ion-icon>
+    </ion-button>
+
+    <!-- Show sub subtags on large screens -->
+    <ng-container *ngIf="showSwitchButton">
+      <ion-badge @fade @leftAndBlink *ngFor="let tag of subTags; trackBy: trackById"
+        slot="start" 
+        class="badge-like-a-button sub-tags tooltip"
+        (keypress)="loadSelectedTag($event, tag)" (click)="loadSelectedTag($event, tag)">
+        {{ tag | getTime }}
+        <span class="tooltip-text tooltip-small-delay" *ngIf="!sharedService.isMobileApp()">
+          {{ tag | getTime: isBothViews }}
+        </span>
+      </ion-badge>
+    </ng-container>
+
+    <div slot="end" class="extra-like-a-button tooltip"
+      (keypress)="saveMarker($event)" (click)="saveMarker($event)">
+      <ion-icon color="medium" name="save"></ion-icon>
+      <span class="tooltip-text" *ngIf="!sharedService.isMobileApp()">
+        {{tooltipTextForSave}}
+      </span>
+    </div>
+
+    <div slot="end" class="extra-like-a-button tooltip"
+      (keypress)="rewindToStartLoop($event)" (click)="rewindToStartLoop($event)">
+      <span class="tooltip-text" *ngIf="!sharedService.isMobileApp()">
+        {{tooltipTextForRepeat}}
+      </span>
+      <ion-icon color="medium" name="repeat"></ion-icon>
+    </div>
+
+    <div slot="end" class="extra-like-a-button tooltip"
+      (keypress)="enableDisableLoop($event)" (click)="enableDisableLoop($event)">
+      <span class="tooltip-text" *ngIf="!sharedService.isMobileApp()">
+        {{tooltipTextForLoopOnOff}}
+      </span>
+      <ion-icon color="medium" [name]="videoPlayer?.loop.isLoopOn ? 'radio-button-on' : 'radio-button-off'"></ion-icon>
+    </div>
+
+    <ion-badge slot="end" class="badge-like-a-button tooltip" 
+      (keypress)="setStartTimeLoopButton($event)" (click)="setStartTimeLoopButton($event)" [color]="videoPlayer?.loop.isLoopOn | loopColor">
+      {{loopRangeLowerToDisplay}}
+      <span class="tooltip-text" *ngIf="!sharedService.isMobileApp()">
+        {{tooltipTextForLoopStartTime}}
+      </span>
+    </ion-badge>
+
+    <ion-badge slot="end" class="badge-like-a-button tooltip" 
+      (keypress)="setEndTimeLoopButton($event)" (click)="setEndTimeLoopButton($event)"
+      [color]="videoPlayer?.loop.isLoopOn | loopColor">
+      {{loopRangeUpperToDisplay}}
+      <span class="tooltip-text" *ngIf="!sharedService.isMobileApp()">
+        {{tooltipTextForLoopEndTime}}
+      </span>
+    </ion-badge>
+  </ion-item>
+
+  <div class="range-and-markers z-index-10">
+    <div class="marker-position">
+      <ion-range
+        color="medium"
+        mode="md"
+        step="1"
+        debounce="5" 
+        dual-knobs="true"
+        min="0" 
+        [max]="durationTime"
+        [value]="loopRange"
+        (ionChange)="loopRangeOnChange($event)">
+      </ion-range>
+    </div>
+  </div>
+
+</div>
+
+<div class="range-and-markers">
+  <div class="marker-position" *ngIf="showSwitchButton">
+    <ng-container *ngFor="let timeline of this.sharedService.currentProject?.bookmarks; trackBy: trackById">
+      <div @fade @translateYDown *ngIf="timeline.marker_name"
+        class="marker"
+        [ngStyle]="timeline | markerPosition: videoService.getActivePlayerId(): durationTime">
+          <div class="tooltiptext">{{ timeline.marker_name }}</div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="marker-position">
+    <ion-range
+      color="primary"
+      mode="md"
+      debounce="5"
+      min="0" 
+      [max]="durationTime"
+      [value]="videoPlayer?.playerCurrentTime"
+      (mousedown)="playerSeekValueOnChangeCanUpdate(true)"
+      (touchstart)="playerSeekValueOnChangeCanUpdate(true)"
+      (ionChange)="playerSeekValueOnChange($event)">
+    </ion-range>
+    <div class="after-range">{{currentTimeToDisplay}}</div>
+  </div>
+</div>
+
+<ion-grid class="ion-no-padding">
+  <ion-row class="ion-justify-content-center player-buttons">
+    <ion-col size="auto" *ngIf="showSwitchButton">
+      <ion-button size="small" fill="clear" shape="round"
+        (keypress)="switchPlayer($event)" (click)="switchPlayer($event)">
+        <ion-icon color="primary" name="toggle"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button size="small" fill="clear" shape="round"
+        (keypress)="lessSpeed($event)" (click)="lessSpeed($event)">
+        <ion-icon color="primary" name="return-down-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button size="small" fill="clear" shape="round"
+        (keypress)="backward($event)" (click)="backward($event)">
+        <ion-icon color="primary" name="play-back"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button size="small" fill="clear" shape="round"
+        (keypress)="playPause($event)" (click)="playPause($event)">
+        <ion-icon color="primary" [name]="isVideoIsPlaying() ? 'pause' : 'play'"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button size="small" fill="clear" shape="round"
+        (keypress)="forward($event)" (click)="forward($event)">
+        <ion-icon color="primary" name="play-forward"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-button size="small" fill="clear" shape="round"
+        (keypress)="moreSpeed($event)" (click)="moreSpeed($event)">
+        <ion-icon color="primary" name="return-down-forward"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="auto" *ngIf="showSwitchButton">
+      <ion-button size="small" fill="clear" shape="round"
+        (keypress)="toggleRangeButtons($event)" (click)="toggleRangeButtons($event)">
+        <ion-icon color="primary" [name]="toggleRangeButtonsIconName"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

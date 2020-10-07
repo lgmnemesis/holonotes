@@ -1,0 +1,26 @@
+<ion-content id="videos-content-scrollbar">
+  <div *ngIf="sharedService.currentProject.videos.length === 0">
+    <p class="empty-text">No Videos</p>
+  </div>
+  <ion-item @fade @translateYDown 
+    *ngFor="let video of sharedService.currentProject?.videos; trackBy: trackById"
+    lines="full"
+    class="as-a-button"
+    [class.active]="isButtonActive(video.id)"
+    (keypress)="videoSelected($event, video.id)" (click)="videoSelected($event, video.id)">
+
+    <ion-thumbnail slot="start">
+      <img [src]="video.thumbnail_url">
+    </ion-thumbnail>
+
+    <ion-label class="ion-text-wrap">
+      <h2 class="basic-text">{{video.title}}</h2>
+    </ion-label>
+
+    <ion-button class="more-button" fill="clear" slot="end" shape="round"
+      (click)="moreButtonWasPressed($event, video)">
+      <ion-icon size="large" name="ellipsis-vertical"></ion-icon>
+    </ion-button>
+    
+  </ion-item>
+</ion-content>

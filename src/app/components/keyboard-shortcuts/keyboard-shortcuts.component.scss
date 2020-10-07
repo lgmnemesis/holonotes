@@ -1,0 +1,5 @@
+@import '../../styles/text-and-fonts';
+
+.toolbar-title {
+  @extend .content-title;
+}

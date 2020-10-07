@@ -1,0 +1,37 @@
+@import '../../styles/text-and-fonts';
+
+.small-mode-backdrop {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  opacity: 1;
+  transition: .3s linear all;
+  transform: translateX(-100vw);
+  z-index: 99;
+  content: " ";
+}
+
+.small-mode-backdrop-active {
+  position: fixed;
+  transform: translateX(0);
+}
+
+.p-fixed {
+  position: fixed !important;
+}
+
+.list-container {
+  position: relative;
+  height: 100%;
+  background: var(--ion-color-tertiary);
+  overflow: auto;
+}
+
+.small-mode-list {
+  width: 300px;
+  border-right: 1px solid var(--ion-color-light);
+}

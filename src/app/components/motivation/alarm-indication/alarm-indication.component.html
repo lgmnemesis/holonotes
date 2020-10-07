@@ -1,0 +1,39 @@
+<div class="inner-container"
+  [class.as-fab]="isFab" [class.as-second-fab]="isFab && isSecondFab" [class.hide]="!isStarted && !isActiveAlert && !isActiveNotif">
+  <div 
+    class="inner" 
+    [class.inner-as-fab]="isFab"
+    [class.inner-active]="isInnerActive">
+    <div class="inner-round" [class.inner-round-as-fab]="isFab"></div>
+    <ion-icon (click)="closeInner()" 
+      class="inner-close-icon" 
+      [class.inner-close-icon-as-fab]="isFab" 
+      color="tertiary" name="close">
+    </ion-icon>
+    <ng-container *ngIf="!isDone && !isEmptyText">
+      <p class="inner-title">{{ innerTitle }}</p>
+      <p class="inner-text">{{ innerText }}</p>
+    </ng-container>
+    <ng-container *ngIf="isDone">
+      <div class="your-done">
+        <ion-label class="your-done-label">Great work, all done!</ion-label>
+        <ion-icon 
+          class="your-done-checkmark" color="good" name="checkmark" size="large">
+        </ion-icon>
+      </div>
+    </ng-container>    
+  </div>
+  <ion-button
+    [class.button-as-fab]="isFab"
+    [class.button-with-notif-background]="(isActiveAlert || isActiveNotif) && withBackground"
+    [class.button-with-hourglass-background]="isStarted && withBackground"
+    color="tertiary" shape="round"
+    (keypress)="open($event)" (click)="open($event)">
+    <ng-container *ngIf="isActiveAlert || (isActiveNotif && !isStarted)">
+      <ion-icon
+        color="danger" name="notifications-outline">
+      </ion-icon>
+    </ng-container>
+    <ion-icon class="hourglass2" color="good" name="hourglass" *ngIf="isStarted"></ion-icon>
+  </ion-button>
+</div>

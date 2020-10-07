@@ -1,0 +1,109 @@
+@import '../../styles/global-style';
+@import '../../styles/text-and-fonts';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 200px) {
+  ion-toolbar {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+}
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 400px) {
+  ion-toolbar {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+ion-grid {
+  --ion-grid-column-padding-xs: 0;
+}
+
+ion-toolbar {
+  border-bottom: 1px solid !important;
+  border-bottom-color: var(--ion-color-light) !important;
+  --min-height: 64px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+ion-button {
+  --ion-color-dark: #77808c;
+}
+
+.search-bar-md {
+  max-width: 300px;
+  padding-right: 15px;
+  left: calc(100% - 300px);
+  --ion-color-contrast-rgb: var(--ion-color-tertiary);
+  --background: var(--ion-color-tertiary);
+}
+
+.search-bar-focus {
+  --ion-color-light: var(--ion-color-primary);
+}
+
+.custome-header-button {
+  margin-right: 10px;
+}
+
+.bold-button {
+  margin-left: 20px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  height: 40px;
+  --box-shadow: 
+    0 3px 1px -2px rgba(0,0,0,0.2),
+    0 2px 2px 0 rgba(0,0,0,0.14),
+    0 1px 5px 0 rgba(0,0,0,0.12);
+}
+
+.bold-button:hover {
+  --ion-color-base: var(--ion-color-primary-shade) !important;
+}
+
+.bold-button-label {
+  @extend .basic-text;
+  text-transform: capitalize;
+  font-weight: normal;
+  color: var(--ion-color-tertiary);
+}
+
+.sign-in {
+  @extend .basic-text;
+  text-transform: capitalize;
+  padding: 0px 10px;
+  margin-left: 20px;
+}
+
+.profile_img {
+  border-radius: 50px;
+  height: 30px;
+  max-width: 30px;
+  background: var(--ion-color-light);
+}
+
+.label-text {
+  @extend .basic-text;
+  text-transform: capitalize
+}
+
+.label-active {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-primary);
+}
+
+.notif-indication {
+  position: absolute;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  left: 15px;
+  top: 0;
+  background: var(--ion-color-danger);
+}
+
+.notif-indication-small {
+  @extend .notif-indication;
+  left: unset;
+}

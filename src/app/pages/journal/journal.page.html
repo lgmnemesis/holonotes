@@ -1,0 +1,115 @@
+<ion-header class="ion-no-border" [class.s-bellow]="isActiveSlide">
+  <ion-toolbar class="header-toolbar page-borders" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="home"></ion-back-button>
+      <ion-button *ngIf="isLessThanMediumWindowWidth && (challenges?.length > 0 || completedChallenges?.length > 0)"
+        fill="clear"
+        (click)="toggleActiveSlide()">
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-label *ngIf="challenges && !(challenges?.length > 0) && completedChallenges && !(completedChallenges?.length > 0)" 
+      class="header-4-text capitalize" color="primary">
+        Challenges Journal
+    </ion-label>
+  
+    <ion-segment *ngIf="challenges?.length > 0 || completedChallenges?.length > 0" 
+      color="primary"
+      [value]="segmentMode"
+      (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="INFO" layout="icon-start">
+        <ion-label class="basic-text capitalize">Details</ion-label>
+        <ion-icon name="information-circle-outline" *ngIf="!isLessThanMediumWindowWidth"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="JOURNAL" layout="icon-start">
+        <ion-label class="basic-text capitalize">Journal</ion-label>
+        <ion-icon name="chatbubbles" *ngIf="!isLessThanMediumWindowWidth"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+  </ion-toolbar>
+</ion-header>
+
+<app-side-menu *ngIf="isLessThanMediumWindowWidth"
+  [challenges]="{active: challenges, completed: completedChallenges}"
+  [selectedChallenge]="selectedChallenge"
+  [isSmallMode]="isLessThanMediumWindowWidth"
+  [isActiveMenu]="isActiveSlide"
+  (closeMenuEvent)="closeActiveSlide()"
+  (selectedChallengeEvent)="gotSelectedChallenge($event)">
+</app-side-menu>
+
+<ion-content #content id="journal-content-scrollbar" (swiperight)="openActiveSlideWithSwipe()">
+  <ng-container *ngIf="challenges && !(challenges?.length > 0) && completedChallenges && !(completedChallenges?.length > 0)">
+    <ion-card>
+      <ion-card-content>
+        <p class="nothing content-title">There are no active or finished challenges.</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+  <ng-container *ngIf="challenges?.length > 0 || completedChallenges?.length > 0">
+    <div id="journal-m-content-scrollbar" class="left-menu-container" *ngIf="!isLessThanMediumWindowWidth">
+      <app-side-menu
+        [challenges]="{active: challenges, completed: completedChallenges}"
+        [selectedChallenge]="selectedChallenge"
+        [isSmallMode]="false"
+        [isActiveMenu]="false"
+        (selectedChallengeEvent)="gotSelectedChallenge($event)">
+      </app-side-menu>
+    </div>
+    <div [class.main-container]="!isLessThanMediumWindowWidth" [class.s-bellow]="isActiveSlide">
+      <app-challenge *ngIf="segmentMode === 'INFO' && selectedChallenge?.challenge"
+        [challenge]="selectedChallenge?.challenge"
+        [inTaskView]="true"
+        [journalView]="true"
+        [canSetPublic]="!authService.isAnonymousLoggedIn()"
+        [animate]="false"
+        (gotoProjectEvent)="gotoProject($event)">
+      </app-challenge>
+      <app-chat-container *ngIf="segmentMode === 'JOURNAL' && selectedChallenge"
+        [myUserId]="user?.user_id"
+        [chatId]="selectedChallenge?.challenge?.shared_id ? selectedChallenge.challenge.shared_id : selectedChallenge?.id"
+        [action]="chatAction"
+        (chatUpdateEvent)="chatUpdated($event)">
+      </app-chat-container>
+    </div>
+  </ng-container>
+</ion-content>
+<ion-footer class="ion-no-border" *ngIf="segmentMode === 'JOURNAL' && !isActiveSlide && (challenges?.length > 0 || completedChallenges?.length > 0)">
+  <div class="text-area basic-text"
+    [class.large-input]="!isLessThanMediumWindowWidth">
+    <ion-textarea #textarea (keydown.control.enter)="ctrlEnterPressed()"
+      [class.active-input]="isActiveInput"
+      rows="1" 
+      [disabled]="!user || user.isAnonymous"
+      [autoGrow]="inputAutoGrow"
+      spellcheck="true"
+      [placeholder]="user && !user.isAnonymous ? 'Say something...' : 'Please login, not as a guest, to comment'"
+      [value]="messageText"
+      (ionFocus)="isActiveInput = true"
+      (ionBlur)="isActiveInput = false"
+      (ionChange)="inputChange($event)">
+    </ion-textarea>
+    <ion-item lines="none">
+      <ion-label slot="start" class="basic-text" *ngIf="!inputDisabled && !sharedService.isMobileApp()">
+        Ctrl + Enter for next line.
+      </ion-label>
+      <ion-button slot="end" fill="clear" (click)="toggleEmoji()" *ngIf="!sharedService.isMobileApp() && user && !user.isAnonymous">
+        <ion-icon name="happy"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" [disabled]="inputDisabled || !user || user.isAnonymous" (click)="sendMessage()">
+        <ion-label class="basic-text capitalize" color="tertiary">Post</ion-label>
+      </ion-button>
+    </ion-item>
+  </div>
+
+  <emoji-mart *ngIf="showEmojiPicker"
+    title=""
+    emoji=""
+    (emojiSelect)="emojiSelected($event)"
+    set="google"
+    [style]="emojiCssStyle">
+  </emoji-mart>
+
+</ion-footer>

@@ -1,0 +1,135 @@
+@import '../../styles/project-list-format-style';
+@import '../../styles/global-scroll-style';
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 200px) {
+  .page-borders {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+}
+
+@media only screen and (min-width: $LARGE_WINDOW_WIDTH + 400px) {
+  .page-borders {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+ion-slides {
+  background: var(--ion-color-tertiary);
+}
+
+.tags-container {
+  width: 100%;
+  max-height: 0;
+  opacity: 0;
+  -webkit-transition: max-height 0.4s, opacity 0.4s; /* For Safari 3.1 to 6.0 */
+  transition: max-height 0.4s, opacity 0.4s;
+  text-align: center;
+}
+
+.tags-container-animated-one-line {
+  max-height: 70px;
+  opacity: 1;
+}
+
+.tags-container-animated-two-lines {
+  max-height: 140px;
+  opacity: 1;
+}
+
+.home-grid {
+  z-index: 2;
+  background: var(--ion-color-tertiary);
+  position: relative;
+}
+
+.tag-button {
+  @extend .inner-slider-width;
+  height: 50px;
+  margin: 10px 0;
+  border-radius: 50px;
+  border: 1px solid;
+  border-color: var(--ion-color-secondary);
+  opacity: 0.7;
+}
+
+.tag-label {
+  @extend .basic-text;
+  max-width: 265px;
+  overflow-wrap: break-word;
+  text-transform: capitalize;
+}
+
+.active-tag {
+  background: var(--ion-color-secondary);
+}
+
+.empty-search {
+  margin-top: 40px;
+}
+
+.loader-line {
+  width: 0;
+  height: 1px;
+  background: var(--ion-color-primary);
+  -webkit-transition: width 1s; /* For Safari 3.1 to 6.0 */
+  transition: width 1s;
+}
+
+.loader-line-active {
+  width: 100%;
+}
+
+.empty-text {
+  @extend .content-title;
+}
+
+.header-label {
+  @extend .header-4-text;
+}
+
+.header-toolbar {
+  border-bottom: 1px solid !important;
+  border-bottom-color: var(--ion-color-light) !important;
+  --min-height: 64px;
+}
+
+.search-bar-md {
+  max-width: 300px;
+  left: calc(100% - 300px);
+  padding-right: 15px;
+  --ion-color-contrast-rgb: var(--ion-color-tertiary);
+  --background: var(--ion-color-tertiary);
+}
+
+.search-bar-focus {
+  --ion-color-light: var(--ion-color-primary);
+}
+
+.update-feed-indication {
+  color: var(--ion-color-dark);
+  font-size: x-small;
+  text-transform: initial;
+  background: var(--ion-color-light);
+  border-radius: 20px;
+  height: 25px;
+}
+
+.slider {
+  @extend .inner-slider-width;
+}
+
+.inner-slider-width {
+  width: max-content;
+}
+
+.name-b {
+  height: 48px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.search-b {
+  height: 36px;
+}

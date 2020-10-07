@@ -1,0 +1,149 @@
+@import '../../styles/global-style';
+@import '../../styles/tooltip-style';
+
+@media only screen and (max-width: $SMALL_WINDOW_WIDTH - 1) {
+  .player-buttons {
+    ion-col {
+      ion-button {
+        --padding-start: 10px;
+        --padding-end: 10px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .extra-like-a-button {
+    margin: 0px !important;
+  }
+}
+
+.top-buttons-item {
+  --inner-padding-end: 0;
+}
+
+.like-a-button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  contain: none;
+}
+
+.badge-like-a-button {
+  @extend .like-a-button;
+  border: 1px solid;
+  border-color: var(--ion-color-medium);
+  border-radius: 20px;
+  margin-inline-start: 0;
+  margin: 0 10px;
+  --padding-top: 7px;
+  --padding-bottom: 6px;
+  --padding-start: 6px;
+  --padding-end: 6px;
+}
+
+.extra-like-a-button {
+  @extend .like-a-button;
+  padding: 10px;
+  margin: 0 5px;
+}
+
+.nice-border {
+  border: 1px solid;
+  border-color: var(--ion-color-primary);
+  border-radius: 20px;
+}
+
+ion-item {
+  --background-active: var(--ion-color-tertiary);
+  --background: var(--ion-color-tertiary);  
+}
+
+ion-range {
+  padding: 0;
+  --ion-background-color-step-250: var(--ion-color-light);
+  --bar-height: 1px;
+}
+
+.player-buttons {
+  padding-bottom: 10px;
+  ion-col {
+    padding: 5px 10px !important;
+  }
+}
+
+.marker {
+  position: absolute;
+  bottom: -20px;
+  margin-left: -1px;
+  padding: 5px 0px;
+  border: 1px solid;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-color: var(--ion-color-primary);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.marker:hover {
+  opacity: 1;
+}
+
+.tooltiptext {
+  visibility: visible;
+  color: var(--ion-color-tertiary);
+  background: var(--ion-color-primary);
+  position: absolute;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin-top: -16px;
+  margin-left: -1px;
+  padding: 3px 5px;
+  text-align: center;
+  font-size: x-small;
+  width: max-content;
+}
+
+.marker:hover .tooltiptext {
+  visibility: visible;
+}
+
+.range-and-markers {
+  padding-left: 40px;
+  padding-right: 70px;
+}
+
+.marker-position {
+  position: relative;
+}
+
+.after-range {
+  position: absolute;
+  top: 12px;
+  right: -55px;
+}
+
+.z-index-10 {
+  z-index: 10;
+  background: var(--ion-color-tertiary);
+}
+
+.sub-tags {
+  background: var(--ion-color-medium);
+  color: var(--ion-color-tertiary);
+  font-weight: 400;
+  font-size: x-small;
+  margin: 0 5px;
+  z-index: 2;
+}
+
+.loop-buttons-tooltip {
+  color: red;
+}
+
+.witch-button-small-view {
+  margin-inline-end: 0;
+}

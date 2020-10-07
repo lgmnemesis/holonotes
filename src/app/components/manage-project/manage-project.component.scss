@@ -1,0 +1,75 @@
+@import '../../styles/global-scroll-style';
+@import '../../styles/text-and-fonts';
+
+ion-footer {
+  --background: var(--ion-color-tertiary) !important;
+  background: var(--ion-color-tertiary) !important;
+}
+
+.footer-md::before {
+  background-image: none;
+}
+
+.footer-ios .toolbar-ios:first-child .toolbar-background-ios {
+  border-width: 0 0 0;
+}
+
+.top-border {
+  border-top: 1px solid;
+  border-top-color: var(--ion-color-light);
+}
+
+.bottom-border {
+  border-bottom: 1px solid;
+  border-bottom-color: var(--ion-color-light);
+}
+
+ion-label {
+  text-transform: none;
+}
+
+.toolbar-title {
+  @extend .content-title;
+}
+
+.footer-text {
+  @extend .basic-text;
+  margin-bottom: 30px;
+  padding: 0;
+  font-size: small;
+  color: var(--ion-color-secondary);
+}
+
+img {
+  border-radius: 20px;
+}
+
+ion-card {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+iframe {
+  border-width: 0;
+}
+
+.like-a-button {
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.active-cover {
+  border: 1px solid;
+  border-color: var(--ion-color-primary);
+  border-radius: 20px;
+}
+
+.search-bar-md {
+  --ion-color-contrast-rgb: var(--ion-color-tertiary);
+  --background: var(--ion-color-tertiary);
+}
+
+.search-bar-focus {
+  --ion-color-light: var(--ion-color-primary);
+}

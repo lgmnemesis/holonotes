@@ -1,0 +1,104 @@
+<ion-grid class="ion-no-padding section-space">
+  <div class="header-container">
+    <div class="s-bt">
+      <ion-button *ngIf="showSignUpButton"
+        class="sign-in-button"
+        shape="round" 
+        mode="md"
+        strong="false"
+        color="tertiary"
+        (click)="signup()">
+          Sign In
+      </ion-button>
+    </div>
+    <ion-row class="ion-justify-content-center ion-align-items-center section-space">
+      <ion-col class="img-col-large" size="auto">
+        <div class="box-card">
+          <img src="assets/imgs/welcome-250.png" alt="Collections"/>
+        </div>
+      </ion-col>
+      <ion-col class="top-col" size="auto">
+        <p class="top-header">
+          Perfecting Your Repertoire
+        </p>
+        <p class="header-4-text">
+          Holonotes lets you organize and learn your favorite songs to play, in a way that will help you expand your repertoire day by day.
+        </p>
+        <div class="get-started-c" [class.hide]="!showSignUpButton">
+          <ion-button
+            class="get-started-button"
+            mode="md"
+            shape="round" 
+            size="large"
+            strong="false"
+            color="tertiary"
+            (click)="getStarted()">
+            Get Started - It's Free!
+          </ion-button>
+        </div>
+        <div class="top-col-t-s">
+          <ion-icon class="i-welcome" name="musical-notes"></ion-icon>
+          <p>Work on your favorite songs</p>
+        </div>
+        <div class="top-col-t-s">
+          <ion-icon class="i-welcome" name="trophy"></ion-icon>
+          <p>Join our challenges to stay motivated</p>
+        </div>
+        <div class="top-col-t-s">
+          <ion-icon class="i-welcome" name="flag"></ion-icon>
+          <p>Reach your goals one step at a time</p>
+        </div>
+      </ion-col>
+      <ion-col class="img-col-med img-col-med-show" size="auto">
+        <div class="box-card">
+          <img src="assets/imgs/welcome-250.png" alt="Collections"/>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-row class="content-row content-row-small ion-justify-content-center ion-align-items-center">
+    <ion-col size="auto">
+      <div class="content-container">
+        <ion-icon src="assets/imgs/sol-key.svg"></ion-icon>
+      </div>
+    </ion-col>
+    <ion-col size="auto" class="text-col">
+      <p class="header-4-text header-ex">
+        Manage your music video lessons
+      </p>
+      <p class="content-text header-5-text">
+        Import your videos into dedicated projects and collections. Work on lessons others have created and shared. Be organized and achieve more.
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row class="content-row ion-justify-content-center ion-align-items-center">
+    <ion-col size="auto">
+      <div class="content-container">
+        <ion-icon src="assets/imgs/metal.svg"></ion-icon>
+      </div>
+    </ion-col>
+    <ion-col size="auto" class="text-col">
+      <p class="header-4-text header-ex">
+        Have more control under your fingers
+      </p>
+      <p class="content-text header-5-text">
+        Bookmark relevant sections, add markers to video timeline for easy access, create loops, slow down video.
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row class="content-row ion-justify-content-center ion-align-items-center">
+    <ion-col size="auto">
+      <div class="content-container">
+        <ion-icon src="assets/imgs/tune.svg"></ion-icon>
+      </div>
+    </ion-col>
+    <ion-col size="auto" class="text-col">
+      <p class="header-4-text header-ex">
+        Stay on track
+      </p>
+      <p class="content-text header-5-text">
+        Build routines, monitor your time, to keep you on track and be more productive. Collaborate with others.
+      </p>
+    </ion-col>
+  </ion-row>
+</ion-grid>

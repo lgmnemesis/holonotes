@@ -1,0 +1,114 @@
+<ion-header class="ion-no-border">
+  <app-notes-toolbar 
+    [showSearchBar]="showSearchBarButton" 
+    [showHomeButton]="showHomeButton" 
+    [showLibraryButton]="auth.isLoggedIn()"
+    [showActivityButton]="auth.isLoggedIn()"
+    [showProfileButton]="true"
+    [isActiveProfileButton]="isActiveProfileButton"
+    [showMoreOptionsButton]="false"
+    [isSmallDisplay]="sharedService.isLessThanMediumWindowWidth()"
+    searchPlaceHolder="Search Library"
+    (notesEvent)="notesEventHandler($event)">
+  </app-notes-toolbar>
+  <div class="tab-name-container" *ngIf="sharedService.isLessThanMediumWindowWidth()">
+    <div class="tab-name">Library</div>
+  </div>
+</ion-header>
+
+<app-alarm-indication 
+  *ngIf="auth.isLoggedIn() && sharedService.isLessThanMediumWindowWidth() && !selectingSongCategory?.isSelecting"
+  [isFab]="true"
+  [isSecondFab]="true"
+  [withBackground]="true"
+  (animateEvent)="alarmIndicationEvent($event)">
+</app-alarm-indication>
+
+<div *ngIf="!selectingSongCategory?.isSelecting"
+  class="fab fab-borders" [class.top-fab]="!sharedService.isLessThanMediumWindowWidth()">
+  <ion-fab vertical="bottom" horizontal="start" edge slot="fixed">
+    <ion-fab-button size="small">
+      <ion-icon color="tertiary" name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom" *ngIf="!sharedService.isLessThanMediumWindowWidth()">
+      <div class="fab-c" (click)="createCollection()">
+        <ion-label class="fab-label">New Collection</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="albums"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="createProject()">
+        <ion-label class="fab-label">New Project</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="musical-note"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </ion-fab-list>
+    <ion-fab-list side="top" *ngIf="sharedService.isLessThanMediumWindowWidth()">
+      <div class="fab-c" (click)="createProject()">
+        <ion-label class="fab-label">New Project</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="musical-note"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="fab-c" (click)="createCollection()">
+        <ion-label class="fab-label">New Collection</ion-label>
+        <ion-fab-button size="small">
+          <ion-icon color="primary" name="albums"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </ion-fab-list>
+  </ion-fab>
+</div>
+
+<ion-item @fade @translateYUp  *ngIf="selectingSongCategory?.isSelecting"
+  color="medium" lines="none">
+  <ion-icon color="tertiary" [name]="selectingSongCategory.task?.challenge?.is_challenge ? 'trophy' : 'leaf'" slot="start"></ion-icon>
+  <ion-label color="tertiary" class="ion-text-wrap">
+    <p>Select a song to add to your {{ selectingSongCategory.task?.challenge?.is_challenge ? 'challenge' : 'routine' }}</p>
+  </ion-label>
+  <ion-button 
+    color="tertiary" fill="clear" shape="round" (click)="cancelSelectingSongCategory()">
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+</ion-item>
+  
+<cdk-virtual-scroll-viewport itemSize="5" (scrolledIndexChange)="nextScrollBatch($event)">
+
+  <ion-grid class="ion-no-padding page-borders">
+
+    <ion-row @translateYUp class="ion-justify-content-center" *ngIf="dataStore.libraryCollections && dataStore.libraryCollections.length > 0">
+      <ion-col size="auto">
+        <ion-item lines="none">
+          <ion-button fill="clear" color="primary" shape="round" (click)="toggleSortByFilter()">
+            <ion-label class="basic-title capitalize">Sorted By:</ion-label>
+          </ion-button>
+          <ion-label class="sort-by-filter-label">{{sortByFilterStr}}</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center">
+  
+      <ion-col class="animate-collection" @fade @translateYDownLong size="auto">
+        <ion-item class="library-item" (click)="listAllProjects()">
+          <ion-label class="ion-text-wrap item-label" color="primary">
+            ALL
+            <p class="item-desc">All Projects</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      
+      <ng-container *ngFor="let collection of dataStore.libraryCollections | searchFilter: searchText: sortByFilter">
+       <ion-col class="animate-collection" size="auto" *ngIf="!collection.dontShow">
+          <ion-item class="library-item" (click)="gotoCollection(collection)">
+            <ion-label class="ion-text-wrap item-label" color="primary">{{collection.name}}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ng-container>
+
+    </ion-row>
+  </ion-grid>
+
+
+</cdk-virtual-scroll-viewport>

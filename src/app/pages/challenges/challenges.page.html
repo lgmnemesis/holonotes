@@ -1,0 +1,76 @@
+<ion-header class="ion-no-border" *ngIf="!sharedChallengeLink || (sharedChallengeLink && canShow)">
+  <ion-toolbar class="header-toolbar page-borders" color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button 
+        text="" 
+        defaultHref="home" 
+        [icon]="sharedChallengeLink && sharedChallenge && !isJoined[sharedChallenge.id] ? 'home' : null">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-label class="header-4-text capitalize" color="primary">
+      {{ sharedChallengeLink && sharedChallenge && !isJoined[sharedChallenge.id] ? 'Challenge Invitation' : 'Choose your challenge' }}
+    </ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="challenges-content-scrollbar" class="ion-padding">
+
+  <app-shared-challenge-preview *ngIf="sharedChallengeLink && sharedChallenge"
+    [sharedChallenge]="sharedChallenge"
+    (projectEvent)="gotoProject($event)"
+    (joinChallengeEvent)="joinChallenge($event)">
+  </app-shared-challenge-preview>
+
+  <app-feed-slider *ngIf="canShow && publicChallenges?.length > 0"
+    [feedTitle]="'Join a Public Challenge'" [containerTop]="true">
+    <ion-slide class="slider" *ngFor="let task of publicChallenges; trackBy: trackById">
+      <div class="card public-card" 
+        [class.as-a-button]="!isJoined[task.id]" mode="ios" (click)="openChallenge(task.challenge, true, isJoined[task.id])">
+        <div class="public-card-text">
+          <p class="card-p public-card-p content-text">{{ task?.challenge?.name }}</p>
+          <p class="card-p public-card-p basic-text">{{ task?.challenge?.description[0] }}</p>
+        </div>
+        <p class="d-time p-good basic-text" *ngIf="task?.challenge?.days > 0">
+          {{ task?.challenge?.days }} {{ task?.challenge?.is_in_weeks ? 'week' : 'day' }}{{ task?.challenge?.days > 1 ? 's' : '' }} challenge
+        </p>
+        <p class="p-n-2 p-medium basic-text" [class.p-n-1]="task?.challenge?.stats?.participants > 0">
+          {{ task?.challenge | challengeTimeLeft }}
+        </p>
+        <p *ngIf="task?.challenge?.stats?.participants > 0" class="p-n-2 p-good basic-text">
+          {{ task.challenge.stats.participants }} Joined
+        </p>
+        <ng-container *ngIf="isJoined[task.id]">
+          <div class="p-joined">
+            <ion-icon color="good" size="large" name="checkmark-circle-outline"></ion-icon>
+          </div>
+          <ion-button class="share" color="primary" fill="clear" shape="round" (click)="share($event, task)">
+            <ion-icon name="share"></ion-icon>
+          </ion-button>
+        </ng-container>
+      </div>
+    </ion-slide>
+  </app-feed-slider>
+
+  <app-feed-slider [feedTitle]="'Featured Challenges'" *ngIf="canShow">
+    <ion-slide class="slider" *ngFor="let challenge of challenges; trackBy: trackById">
+      <div *ngIf="!(challenge?.dev_mode && isProduction)"
+        class="card as-a-button" mode="ios" (click)="openChallenge(challenge)">
+        <div class="card-img" [style.background-image]="challenge?.img_url"></div>
+        <div class="card-text">
+          <p class="card-p content-text">{{ challenge?.name }}</p>
+          <p class="card-p basic-text">{{ challenge?.description[0] }}</p>
+        </div>
+      </div>
+    </ion-slide>
+
+    <ion-slide class="slider">
+      <div class="card as-a-button" mode="ios" (click)="customChallenge()">
+        <div class="card-img n-c-i"></div>
+        <div class="card-text">
+          <p class="card-p content-text">Start your own challenge</p>
+          <p class="card-p basic-text"></p>
+        </div>
+      </div>
+    </ion-slide>
+  </app-feed-slider>
+</ion-content>

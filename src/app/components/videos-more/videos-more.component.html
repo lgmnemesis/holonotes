@@ -1,0 +1,30 @@
+<ion-content>
+
+  <ion-button *ngIf="!isOnSplayer"
+    color="primary" fill="clear" expand="block" shape="round" (click)="playOn(true)">
+    <ion-icon size="small" name="play"></ion-icon>
+    <p>Play on {{sourcePlayerViewName}}</p>
+  </ion-button>
+
+  <ion-button *ngIf="!isOnLplayer"
+    color="primary" fill="clear" expand="block" shape="round" (click)="playOn(false)">
+    <ion-icon size="small" name="play"></ion-icon>
+    <p>Play on {{lessonPlayerViewName}}</p>
+  </ion-button>
+
+  <ion-button color="primary" fill="clear" expand="block" shape="round" (click)="edit()">
+    <ion-icon size="small" name="create"></ion-icon>
+    <p>Edit Video</p>
+  </ion-button>
+
+  <ion-button color="primary" fill="clear" expand="block" shape="round" (click)="copyURL()">
+    <ion-icon size="small" name="copy"></ion-icon>
+    <p>Copy Video URL</p>
+  </ion-button>
+
+  <ion-button color="danger" fill="clear" expand="block" shape="round" (click)="delete()">
+    <ion-icon size="small" name="trash"></ion-icon>
+    <p>Delete Video</p>
+  </ion-button>
+
+</ion-content>

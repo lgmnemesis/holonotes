@@ -1,0 +1,35 @@
+<ion-content>
+  <ion-list>
+    <ng-container *ngIf="!isNotifications">
+      <ion-list-header *ngIf="activeAlerts.length > 0">
+        <ion-label>Current Activites</ion-label>
+      </ion-list-header>
+      <ion-item lines="none" *ngFor="let task of activeAlerts | filterTasks; trackBy: trackByTaskId"
+        class="as-a-button with-border" (click)="goTask(task)">
+        <ion-label class="alert-label">
+          <p>{{ task.name }}</p>
+          <p class="inline-block alarm-duration color-medium">
+            Alarm <span class="color-dark">{{ task | taskDisplayTime }}</span>
+          </p>
+          <p class="inline-block alarm-duration color-primary">
+            Duration <span class="color-dark">{{ task | taskDuration }}</span>
+          </p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngIf="isNotifications">
+      <ion-list-header>
+        <ion-label class="ion-text-center header-4-text">Notifications</ion-label>
+      </ion-list-header>
+      <ion-item lines="none" *ngFor="let notif of activeNotifs; trackBy: trackByNotifId"
+        class="as-a-button with-border" (click)="runNotif(notif)">
+        <ion-label class="ion-text-wrap ion-text-center">
+          <p class="notif-title">{{ notif.title }}</p>
+          <p class="basic-text">{{ notif.content }} </p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+    
+  </ion-list>
+</ion-content>

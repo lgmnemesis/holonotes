@@ -1,0 +1,94 @@
+@media only screen and (max-width: 768px) {
+  .header-title {
+    padding: 0 !important;
+    font-size: 1.4rem !important;
+    font-weight: 500 !important;
+  }
+
+  .header-padding {
+    padding-top: 0px !important;
+  }
+}
+
+.header-padding {
+  padding-top: 50px;
+}
+
+.basic-text {
+  font-size: 1.2rem;
+  font-family: 'Darker Grotesque', sans-serif !important;
+}
+
+.basic-title {
+  @extend .basic-text;
+  text-align: center;
+}
+
+.header-text {
+  @extend .basic-text;
+  font-size: 2.7rem;
+  font-weight: 500;
+  max-width: 700px;
+}
+
+.header-title {
+  @extend .header-text;
+  padding: 0 50px;
+  text-align: center;
+}
+
+.header-2-text {
+  @extend .basic-text;
+  font-size: 2rem;
+}
+
+.header-3-text {
+  @extend .basic-text;
+  font-size: 1.8rem;
+}
+
+.header-4-text {
+  @extend .basic-text;
+  font-size: 1.6rem;
+}
+
+.header-5-text {
+  @extend .basic-text;
+  font-size: 1.5rem;
+}
+
+.content-text {
+  @extend .basic-text;
+  font-size: 1.4rem;
+}
+
+.content-title {
+  @extend .content-text;
+  text-align: center;
+}
+
+.small-text {
+  @extend .basic-text;
+  font-size: 16px;
+}
+
+.smallest-text {
+  @extend .basic-text;
+  font-size: 12px;
+}
+
+.padding-top {
+  padding-top: 10px;
+}
+
+.padding-bottom {
+  padding-bottom: 10px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.text-center {
+  text-align: center;
+}
